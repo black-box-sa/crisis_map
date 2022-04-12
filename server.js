@@ -9,24 +9,19 @@ const client = new Client({
     user: process.env.USER || "floodmapping",
     port: 5432,
     password: process.env.PASSWORD || "floodmapping",
-    database: process.env.DATABASE ||"floodmapping"
+    database: process.env.DATABASE || "floodmapping"
 })
 client.connect()
 // Body Parser Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-if (process.env.NODE_ENV === "production") {
-    app.use(express.static('build'));
-    app.get('*', (req, res) => {
-        res.sendFile(path.resolve(__dirname, 'build', 'index.html'))
-    })
-}
 
 app.post('/new_need', (req, res) => {
     const need = req.body;
-    let insertQuery = `insert into Need(full_name, location, type, description, phone_number) 
-                       values('${need.full_name}', '${need.location}', '${need.type}', '${need.description}', '${need.phone_number}')`
+    console.log(need)
+    let insertQuery = `insert into public."needs"(phone_number, full_name, lat, long, type, description ) 
+    values('${need.phone_number}', '${need.full_name}', '${need.location[0]}', '${need.location[1]}', '${need.type}', '${need.description}')`
     client.query(insertQuery, (err, result) => {
         if (!err) {
             res.send('Insertion was successful')
@@ -40,8 +35,9 @@ app.post('/new_need', (req, res) => {
 
 app.post('/new_resource', (req, res) => {
     const need = req.body;
-    let insertQuery = `insert into Resources(phone_number, full_name, location, type, description, upload_details ) 
-                       values('${need.full_name}', '${need.full_name}', '${need.location}', '${need.type}', '${need.description}', '${need.upload_details}')`
+    console.log(need)
+    let insertQuery = `insert into public."resources"(phone_number, full_name, lat, long, type, description ) 
+                       values('${need.phone_number}', '${need.full_name}', '${need.location[0]}', '${need.location[1]}', '${need.type}', '${need.description}')`
     client.query(insertQuery, (err, result) => {
         if (!err) {
             res.send('Insertion was successful')
@@ -54,7 +50,7 @@ app.post('/new_resource', (req, res) => {
 })
 
 app.get('/resources', (req, res) => {
-    client.query(`Select * from Resources`, (err, result) => {
+    client.query(`Select * from public."resources"`, (err, result) => {
         if (!err) {
             res.send(result.rows);
         }
@@ -63,10 +59,18 @@ app.get('/resources', (req, res) => {
 })
 
 app.get('/needs', (req, res) => {
-    client.query(`Select * from Need`, (err, result) => {
+    client.query(`Select * from public."needs"`, (err, result) => {
         if (!err) {
             res.send(result.rows);
         }
     });
     client.end;
 })
+
+if (process.env.NODE_ENV !== "production") {
+    app.use(express.static('build'));
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'build', 'index.html'))
+    })
+}
+app.listen(port, () => `Server running on port ${port}`);
