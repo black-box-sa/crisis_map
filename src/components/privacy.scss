@@ -16,7 +16,7 @@
   }
   
   &--wrapper {
-    z-index: 9999999;
+    z-index: 99999999;
     position: fixed;
     right: 0;
     left: 0;
@@ -104,11 +104,12 @@
         color: $font-general;
         opacity: 1;
         text-transform: capitalize;
+        margin-bottom: 0;
       }
 
       .indicator {
         position: absolute;
-        top: 13px;
+        top: 11px;
         right: 15px;
         text-align: right;
         font: 13px/18px 'Montserrat';
