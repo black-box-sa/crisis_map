@@ -1,0 +1,75 @@
+@import "./variables";
+@import './mixins.scss';
+
+.cookies {
+    width: 100vw;
+    padding: 20px;
+    background: #FFFFFF;
+    border-radius: 16px 16px 0px 0px;
+    position: fixed;
+    bottom: 0;
+    z-index: 9999999;
+
+    p {
+        text-align: left;
+        font: 13px/16px 'Montserrat';
+        letter-spacing: 0.97px;
+        color: #000000;
+        margin: 0;
+    }
+    .btn {
+        display: inline-flex;
+        margin-top: 0;
+        font: 600 12px/20px 'Montserrat';
+        color: #2F2D41;
+        letter-spacing: 0.9px;
+        &--settings{
+            text-decoration: underline !important;
+            margin-right: 20px;
+            color: $font-general !important;
+        }
+        &--accept{
+            background-color: #e6e6e6;
+            border-radius: 28px;
+            padding: 11px 25px;
+            &:hover {
+                 box-shadow: $box-shadow-hover;
+            }
+        }
+    }
+
+// Mobile specific styling
+  @media (max-width: $tablet) {
+    padding: 20px;
+
+    .btn {
+        margin-top: 20px;
+    }
+  }
+}
+
+@keyframes slideInFromBottom {
+    0% {
+      transform: translateY(100%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+@keyframes slideOutToBottom {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(100%);
+    }
+  }
+
+
+.hide-cookie-container {
+    animation: 0.5s ease-out 0s 1 slideOutToBottom;
+}
+.show-cookie-container {
+    animation: 0.5s ease-out 0s 1 slideInFromBottom;
+}
