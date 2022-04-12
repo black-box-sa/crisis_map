@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import PropTypes from 'prop-types';
@@ -9,6 +10,119 @@ import './button.scss'
 const Sidebar = (props) => {
   const [sidebar, setSidebar] = useState("");
   const [value, setValue] = useState('need');
+
+  const [phone_number, setPhoneNumber] = useState();
+  const [full_name, setFullName] = useState();
+  const [location, setLocation] = useState();
+  const [type, setType] = useState();
+  const [description, setDescription] = useState();
+  const [terms_and_c, setTandC] = useState(false);
+  const [error, setError] = useState({
+    phone_number : false,
+    full_name: false,
+    location:false,
+    type: false,
+    description: false
+  })
+
+  const checkErrors = ()=>{
+    let err = error;
+    if(phone_number){
+      err['phone_number'] = false
+    }
+    else{
+      err['phone_number'] = true
+    }
+
+    if(full_name){
+      err['full_name'] = false
+    }
+    else{
+      err['full_name'] = true
+    }
+
+    if(location){
+      err['location'] = false
+    }
+    else{
+      err['location'] = true
+    }
+
+    if(type){
+      err['type'] = false
+    }
+    else{
+      err['type'] = true
+    }
+
+
+    if(description){
+      err['description'] = false
+    }
+    else{
+      err['description'] = true
+    }
+
+    setError(err)
+    return err.phone_number && err.full_name && err.location && err.type && err.description && terms_and_c
+  }
+  const savePosition = position =>{
+    setLocation([position.coords.latitude.toString(), position.coords.longitude.toString()] )
+  }
+  const getLocation = ()=>{
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(savePosition);
+    }
+    else{
+      alert("Geolocation is not supported by this browser.")
+    }
+  }
+  const new_need = e=>{
+    e.preventDefault()
+    const any_errors = checkErrors()
+    if(!any_errors){
+      let data = {
+        phone_number:phone_number,
+        full_name: full_name,
+        location: location,
+        type: type,
+        description: description
+      }
+      axios.post('/new_need', data)
+      .then(res => {
+        console.log(res)
+        props.getNeeds()
+      })
+      .catch(err=>{
+        console.log(err)
+      })
+    }
+
+
+  }
+  const new_resource = e=>{
+    e.preventDefault()
+    const any_errors = checkErrors()
+    if(!any_errors){
+      let data = {
+        phone_number:phone_number,
+        full_name: full_name,
+        location: location,
+        type: type,
+        description: description
+      }
+      axios.post('/new_resource', data)
+      .then(res => {
+        console.log(res)
+        props.getResources()
+      })
+      .catch(err=>{
+        console.log(err)
+      })
+    }
+
+
+  }
 
   // Function that adjusts state to open or close sidebar by adding or removing the "open" class
   const sidebarTrigger = () => {
@@ -54,15 +168,15 @@ const Sidebar = (props) => {
         }
         {/**Need form */}
         {value === "need" ?
-          <form onSubmit=''>
+          <form onSubmit={new_need}>
             <label>Phone number</label>
-            <input className='text-field' onChange='' value='' type="number" id="name" placeholder='Phone Number' /><br />
+            <input className={error['phone_number'] ? 'text-field error': 'text-field'} onChange={e => { setPhoneNumber(e.target.value) }} type="number" id="name" placeholder='Phone Number' /><br />
             <label>Full name</label>
-            <input className='text-field' onChange='' value='' type="text" id="name" placeholder='Full Name' /><br />
+            <input className={error['full_name'] ? 'text-field error': 'text-field'}  onChange={e => { setFullName(e.target.value) }} type="text" id="name" placeholder='Full Name' /><br />
             <label>location</label>
-            <input className='text-field' onChange='' value='' type="text" id="name" placeholder='Location / Address *' /><br />
+            <input className={error['location'] ? 'text-field error': 'text-field'}  onChange={e => { getLocation() }} value={ location ? location[0] + ","+location[1] : ""} type="text" id="name" placeholder='Location / Address *' /><br />
             <label>Need type:</label>
-            <select className='select-need' value={value} onChange={handleChange}>
+            <select className={error['type'] ? 'select-need error': 'select-need'} value={value} onChange={handleChange}>
               <option value="Shelter">Shelter</option>
               <option value="Food">Food</option>
               <option value="Clothing">Clothing</option>
@@ -71,24 +185,24 @@ const Sidebar = (props) => {
               <option value="Electricity">Electricity (charging)</option>
             </select><br />
             <label>Need description</label>
-            <textarea name="" rows="4" cols="">  </textarea>
+            <textarea className={error['description'] ? 'error': ''} onChange={e => { setDescription(e.target.value) }} name="" rows="4" cols="">  </textarea>
             <div className='terms-box'>
-              <input className='' type="checkbox" id="checkbox1" name="checkbox1" onChange='' />
+              <input onChange={e => { setTandC(e.target.checked) }}  className='' type="checkbox" id="checkbox1" name="checkbox1"  />
               <span>I agree to making my
                 mobile number public to those wanting to reach out to me, and theses term's and conditions. </span>
             </div>
-            <button class="submit green" type='submit'>Submit</button>
+            <button onClick={new_need} class="submit green" type='submit'>Submit</button>
           </form>
           : value === "resource" ?
-          <form onSubmit=''>
+          <form onSubmit={new_resource}>
             <label>Phone number</label>
-            <input className='text-field' onChange='' value='' type="text" id="name" placeholder='Phone Number' /><br />
+            <input className={error['phone_number'] ? 'text-field error': 'text-field'} onChange={e => { setPhoneNumber(e.target.value) }}  value='' type="text" id="name" placeholder='Phone Number' /><br />
             <label>Full name</label>
-            <input className='text-field' onChange='' value='' type="text" id="name" placeholder='Full Name' /><br />
+            <input className={error['full_name'] ? 'text-field error': 'text-field'}  onChange={e => { setFullName(e.target.value) }} value='' type="text" id="name" placeholder='Full Name' /><br />
             <label>location</label>
-            <input className='text-field' onChange='' value='' type="text" id="name" placeholder='Location / Address *' /><br />
+            <input className={error['location'] ? 'text-field error': 'text-field'}  onChange={e => { getLocation() }} value={ location ? location[0] + ","+location[1] : ""} type="text" id="name" placeholder='Location / Address *' /><br />
             <label>Resource type:</label>
-            <select className='select-resource' value={value} onChange={handleChange}>
+            <select className={error['type'] ? 'select-resource error': 'select-resource'} value={value} onChange={handleChange}>
               <option value="Shelter">Shelter</option>
               <option value="Food">Food</option>
               <option value="Clothing">Clothing</option>
@@ -97,13 +211,13 @@ const Sidebar = (props) => {
               <option value="Electricity">Electricity (charging)</option>
             </select><br />
             <label>Resource description</label>
-            <textarea name="" rows="4" cols="">  </textarea>
+            <textarea className={error['description'] ? 'error': ''} onChange={e => { setDescription(e.target.value) }}  name="" rows="4" cols="">  </textarea>
             <div className='terms-box'>
-              <input className='' type="checkbox" id="checkbox1" name="checkbox1" onChange='' />
+              <input type="checkbox" id="checkbox1" name="checkbox1" onChange={e => { setTandC(e.target.checked) }} />
               <span>I agree to making my
                 mobile number public to those wanting to reach out to me, and theses term's and conditions. </span>
             </div>
-            <button class="submit green" type='submit'>Submit</button>
+            <button onClick={new_resource}  class="submit green" type='submit'>Submit</button>
           </form>
            : value === "want-to-assist" ?
            <form onSubmit=''>
@@ -113,9 +227,9 @@ const Sidebar = (props) => {
               in a short paragraph that
               ends in an ellipses...</p>
            <label>Phone number</label>
-           <input className='text-field filled-in' onChange='' value='' type="text" id="name" placeholder='Phone Number' /><br />
+           <input className={error['phone_number'] ? 'text-field filled-in error': 'text-field filled-in'} onChange={e => { setPhoneNumber(e.target.value) }}   value='' type="text" id="name" placeholder='Phone Number' /><br />
            <label>location</label>
-           <input className='text-field filled-in' onChange='' value='' type="text" id="name" placeholder='Location / Address *' /><br />
+           <input className={error['location'] ? 'text-field error': 'text-field'}  onChange={e => { getLocation() }} value={ location ? location[0] + ","+location[1] : ""} type="text" id="name" placeholder='Location / Address *' /><br />
 
            <label>Assistance logged</label>
            <textarea className='filled-in empty' name="" rows="4" cols="">  </textarea>
