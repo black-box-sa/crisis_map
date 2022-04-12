@@ -1,6 +1,7 @@
 import React from "react";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
-import Sidebar_left from "./sidebar/sidebar";
+import Sidebar_left from "./sidebar";
+import Footer_thin from "./Footer_thin";
 import 'leaflet/dist/leaflet.css'
 
 const Map = () => {
@@ -18,6 +19,7 @@ const Map = () => {
                 </Popup>
             </Marker>
         </MapContainer>
+        <Footer_thin />
 
         </div>
     )
