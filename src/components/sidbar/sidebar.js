@@ -35,12 +35,19 @@ const Sidebar = (props) => {
 
         <div className="sidebar_right--panel container">
          <h3>I have a:</h3>
-        <select value={value} onChange={handleChange}>
+        {value === 'need' ?  
+              <select className='select-need' value={value} onChange={handleChange}>
+              <option value="need">Need</option>
+              <option value="resource">Resource</option>
+          </select>
+        : value === 'resource'   ?  
+        <select className='select-resource' value={value} onChange={handleChange}>
             <option value="need">Need</option>
             <option value="resource">Resource</option>
-        </select>
+        </select> : ''}
         {/**Need form */}
          {value === "need" ? 
+
         <form onSubmit=''>
                   <label>Phone number</label>
                   <input  className='text-field' onChange='' value='' type="text" id="name" placeholder='Phone Number' /><br/>
@@ -66,7 +73,7 @@ mobile number public to those wanting to reach out to me, and theses term's and 
                 </div>
                 <button type='submit'>Submit</button>
         </form>
-        :
+        : value === "resource" ? 
         <form onSubmit=''>
         <label>Phone number</label>
         <input  className='text-field' onChange='' value='' type="text" id="name" placeholder='Phone Number' /><br/>
@@ -92,7 +99,39 @@ mobile number public to those wanting to reach out to me, and theses term's and 
       </div>
       <button type='submit'>Submit</button>
 </form>
-        
+        : value === "log_need" ? 
+        <form onSubmit=''>
+          <label className='tag tag--need'>
+            Need
+          </label>
+         <h1>Need Type</h1>
+         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+         <h4>Logged  By:</h4>
+          <p>Name Surname</p>
+        <label>Phone number</label>
+        <input  className='text-field filled-in' onChange='' value='' type="text" id="name" placeholder='Phone Number' /><br/>
+        <label>Location / Address</label>
+        <input  className='text-field filled-in' onChange='' value='' type="text" id="name" placeholder='Location Address' /><br/>
+
+      <label>Assistance Logged</label>
+      <textarea className='filled-in empty'  name="" rows="4" cols=""></textarea>
+
+      <a onClick={() => setValue('assist')}>I want to assist</a>
+    </form>
+        :  
+        <form onSubmit=''>
+          <label className='tag tag--resource'>Resource</label>
+         <h1>Resource Type</h1>
+         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+         <h4>Logged  By:</h4>
+          <p>Name Surname</p>
+        <label>Phone number</label>
+        <input  className='text-field filled-in' onChange='' value='' type="text" id="name" placeholder='Phone Number' /><br/>
+        <label>Location / Address</label>
+        <input  className='text-field filled-in' onChange='' value='' type="text" id="name" placeholder='Location Address' /><br/>
+
+      <a>Assist</a>
+    </form>
     }
         </div>
       </div>
