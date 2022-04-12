@@ -20,17 +20,25 @@ textarea {
 
         color: $brand-primary;
     }
+    option {
+        background-color: white !important;
+        color:#31546D !important;
+    }
 
 }
 
 .select {
+    &-empty {
+        background-color: #31546D;
+        color: white !important;
+    }
     &-resource {
         background-color: $green;
-        color: white;
+        color: white !important;
     }
 
     &-need {
         background-color: $red;
-        color: white;
+        color: white !important;
     }
 }
