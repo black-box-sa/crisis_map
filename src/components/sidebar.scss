@@ -1,33 +1,13 @@
 
+@import './variables.scss';
 .sidebar_right {
-
-    // Local Variables
-    $totalWidth: 461px;
-    $panelWidth: 411px;
-    $tabHeight: 50px; 
-    $vertical: 50px;
-    $brand-primary:        		    #646464;
-    $border-radius:  5px;
-    $box-shadow: 	0px 9px 9px 0px rgba(0,0,0,0.1);
-
-    // Device sizes
-    $mobile: 360px;
-    $desktop: 1366px;
-    $tablet: 768px;
-    $large: 1366px;
-
-    // Spacing
-    $s-t:5px;
-    $s-s:20px;
-    $s-m:$s-s * 2;
-    $s-l:$s-m * 2;
     
     // General styling
     display: inline-block;
     position: fixed;
     top: 12px;
-    height: calc(100vh - 0); // minus top height
-    overflow: hidden;
+    height: 100vh; // minus top height
+    // overflow: hidden;
     right: -450px;
     width: 500px;
     transition: .2s all ease-in-out;
@@ -42,7 +22,7 @@
       text-align: center;
       padding: 15px;
       box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
-      background: $brand-primary;
+      background: white;
       border-radius: 5px 0 0 5px;
       cursor: pointer;
       span {
@@ -68,9 +48,9 @@
         justify-content: center;
         align-items: center;
         cursor: pointer;
-        border-color: #B2BEC3;
+        border-color: $brand-primary;
         .fas, svg {
-          color: #B2BEC3;
+          color: $brand-primary;
           height: 2em;
         }
       }
@@ -84,11 +64,32 @@
       position: relative;
       right: -$totalWidth + $panelWidth;
       background-color: white;
-      padding: $s-s;
+      padding: 0 $s-s $s-s;
       box-shadow: $box-shadow;
       border-radius: 0 0 0 $border-radius;
-      height: 100vh;
+      height: calc(100vh - 50px);
       overflow-y: scroll;
+
+      h3 {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 10px;
+      }
+
+      .terms-box {
+        display: flex;
+        input {
+          display: inline-block;
+          top: 0;
+          position: relative;
+        }
+        span {
+          display: inline-block;
+          margin-left: 5px;
+        }
+      }
+
     }
     &.open {
       right: 0;
@@ -99,20 +100,50 @@
     span {
         margin-left: 15px;
     }
+    h1,h2,h3,h4,h5,h6,p,span,label,input,select {
+      color: #31546D;
+      &::placeholder {
+        color: #31546D;
+      }
+    }
+    a {
+      font-size: 18px;
+      color :#6DA86D !important;
+      text-decoration: underline;
+      cursor: pointer;
+   }
+   .filled-in {
+     background-color: #a8b1b93d ;
+   }
+   .empty {
+    background-color: #ea5a2e69;
+   }
+   .tag {
+     height: 50px;
+     border-radius: $border-radius;
+     padding: 10px 28px;
+     color: white;
+     &--need {
+      background-color: #EA5A2E;
+     }
+     &--resource {
+      background-color: #6DA86D;
+     }
+   }
     // Desktop specific styling
     @media (min-width: $tablet) {
     }
     
       // Mobile specific styling
       @media (max-width: $tablet) {
-        width: 338px;
-        right: -288px !important;
+        width: $totalWidthMobile;
+        right: -$panelWidthMobile !important;
         &.open {
             right: 0 !important;
  
           }
           &--panel {
-            width: 248px;
+            width: $panelWidthMobile;
           }
       }
     }

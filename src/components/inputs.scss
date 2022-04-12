@@ -1,0 +1,44 @@
+@import './variables.scss';
+
+select,
+.text-field,
+textarea {
+
+    position: relative;
+    height: 38px;
+    width: 100%;
+    border: $border-default;
+    border-radius: $border-radius;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+    float: unset;
+    padding: 0 15px;
+    // font: $h3;
+    color: $brand-primary;
+
+    &::placeholder {
+
+        color: $brand-primary;
+    }
+    option {
+        background-color: white !important;
+        color:#31546D !important;
+    }
+
+}
+
+.select {
+    &-empty {
+        background-color: #31546D;
+        color: white !important;
+    }
+    &-resource {
+        background-color: $green;
+        color: white !important;
+    }
+
+    &-need {
+        background-color: $red;
+        color: white !important;
+    }
+}
