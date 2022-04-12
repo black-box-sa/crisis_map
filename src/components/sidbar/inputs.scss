@@ -1,0 +1,51 @@
+select,.text-field,textarea {
+    // Local Variables
+    $totalWidth: 461px;
+    $panelWidth: 411px;
+    $tabHeight: 50px; 
+    $vertical: 50px;
+    $brand-primary:        		    #646464;
+    $grey_outline:#DCDFE0;
+    $border-radius:  7px;
+    $box-shadow: 	0px 9px 9px 0px rgba(0,0,0,0.1);
+    $border-default: 1px solid $grey_outline;
+    // Device sizes
+    $mobile: 360px;
+    $desktop: 1366px;
+    $tablet: 768px;
+    $large: 1366px;
+
+    // Spacing
+    $s-t:5px;
+    $s-s:20px;
+    $s-m:$s-s * 2;
+    $s-l:$s-m * 2;
+
+position: relative;
+
+    height: 38px;
+    width: 100%;
+    border: $border-default;
+    border-radius: $border-radius;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+    float: unset;
+    padding: 0 15px;
+    // font: $h3;
+    color: $brand-primary;
+    &::placeholder {
+
+        color: $brand-primary;
+    }
+
+}
+.select {
+    &-resource {
+        background-color: green;
+        color: white;
+    }
+    &-need {
+      background-color: orangered;
+      color: white;
+    }
+}
