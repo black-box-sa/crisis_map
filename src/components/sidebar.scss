@@ -6,7 +6,7 @@
     display: inline-block;
     position: fixed;
     top: 12px;
-    height: calc(100vh - 0); // minus top height
+    height: 100vh; // minus top height
     // overflow: hidden;
     right: -450px;
     width: 500px;
@@ -61,11 +61,18 @@
       position: relative;
       right: -$totalWidth + $panelWidth;
       background-color: white;
-      padding: $s-s;
+      padding: 0 $s-s $s-s;
       box-shadow: $box-shadow;
       border-radius: 0 0 0 $border-radius;
-      height: calc(100vh - 100px);
+      height: calc(100vh - 50px);
       overflow-y: scroll;
+
+      h3 {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 10px;
+      }
 
       .terms-box {
         display: flex;
