@@ -34,11 +34,24 @@ const Sidebar = (props) => {
       </div>
 
       <div className="sidebar_right--panel container">
-        <h3>I have a:</h3>
-        <select value={value} onChange={handleChange}>
-          <option value="need">Need</option>
-          <option value="resource">Resource</option>
-        </select>
+        {value === 'need' ?
+          <div>
+                <h3>I have a:</h3>
+                <select className='select-need' value={value} onChange={handleChange}>
+                  <option value="need">Need</option>
+                  <option value="resource">Resource</option>
+                </select>
+                </div>
+                :value === 'resource' ?
+                <div>
+                  <h3>I have a:</h3>
+                  <select className='select-resource' value={value} onChange={handleChange}>
+                    <option value="need">Need</option>
+                    <option value="resource">Resource</option>
+                  </select>
+                </div>
+                :''
+        }
         {/**Need form */}
         {value === "need" ?
           <form onSubmit=''>
@@ -66,7 +79,7 @@ const Sidebar = (props) => {
             </div>
             <button class="submit green" type='submit'>Submit</button>
           </form>
-          :
+          : value === "resource" ?
           <form onSubmit=''>
             <label>Phone number</label>
             <input className='text-field' onChange='' value='' type="text" id="name" placeholder='Phone Number' /><br />
@@ -92,7 +105,36 @@ const Sidebar = (props) => {
             </div>
             <button class="submit green" type='submit'>Submit</button>
           </form>
+           : value === "want-to-assist" ?
+           <form onSubmit=''>
+              <label className='tag tag--need'>Need</label>
+             <h1>Need Type:</h1>
+             <p>Need description text
+              in a short paragraph that
+              ends in an ellipses...</p>
+           <label>Phone number</label>
+           <input className='text-field filled-in' onChange='' value='' type="text" id="name" placeholder='Phone Number' /><br />
+           <label>location</label>
+           <input className='text-field filled-in' onChange='' value='' type="text" id="name" placeholder='Location / Address *' /><br />
 
+           <label>Assistance logged</label>
+           <textarea className='filled-in empty' name="" rows="4" cols="">  </textarea>
+           <a onClick={() => setValue('assist')}>I want to assist</a>
+         </form>
+         :
+         <form onSubmit=''>
+         <label className='tag tag--resource'>Resource</label>
+        <h1>Resource Type:</h1>
+        <p>Need description text
+         in a short paragraph that
+         ends in an ellipses...</p>
+      <label>Phone number</label>
+      <input className='text-field filled-in' onChange='' value='' type="text" id="name" placeholder='Phone Number' /><br />
+      <label>location</label>
+      <input className='text-field filled-in' onChange='' value='' type="text" id="name" placeholder='Location / Address *' /><br />
+
+      <a>Assist</a>
+    </form>
         }
       </div>
 
