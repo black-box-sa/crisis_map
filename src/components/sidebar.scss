@@ -76,6 +76,7 @@
 
       .terms-box {
         display: flex;
+        margin-bottom: 15px;
         input {
           display: inline-block;
           top: 0;
@@ -108,15 +109,45 @@
       color :#6DA86D !important;
       text-decoration: underline;
       cursor: pointer;
+
    }
+   .log-assist {
+    background-color: #6DA86D;
+    color: white !important;
+    padding: 5px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+  }
+  .gps-container {
+    display: flex;
+    button {
+      width: 100px;
+      margin-left: 10px;
+      margin-top: 0;
+      height: 38px;
+      color: white;
+      background-color: #EA5A2E;
+    }
+  }
    .filled-in {
      background-color: #a8b1b93d ;
+     padding: 10px 0;
+     border-radius: 5px;
+     &--container {
+       label {
+         margin-top: 15px;
+       }
+     }
+   }
+   .contacts {
+     margin-bottom: 15px;
    }
    .empty {
     background-color: #ea5a2e69;
+    padding: 10px 0;
+    border-radius: 5px;
    }
    .tag {
-     height: 50px;
      border-radius: $border-radius;
      padding: 10px 28px;
      color: white;
@@ -125,6 +156,14 @@
      }
      &--resource {
       background-color: #6DA86D;
+     }
+   }
+   ol {
+     margin: 0;
+     li {
+       p {
+         margin: 0;
+       }
      }
    }
     // Desktop specific styling
