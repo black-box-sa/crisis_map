@@ -3,13 +3,18 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import PropTypes from 'prop-types';
+import GoogleInput from './googleInput';
 import './sidebar.scss';
 import './inputs.scss';
 import './button.scss'
 
 const Sidebar = (props) => {
-  const [sidebar, setSidebar] = useState("");
+  const [sidebar, setSidebar] = useState(""); 
+  //check if any assists have been logged in
+  const [logged, setLogged] = useState(false); 
+  /**change template states*/
   const [value, setValue] = useState('need');
+  const [fields, setFields]= useState({});
 
   const [phone_number, setPhoneNumber] = useState();
   const [full_name, setFullName] = useState();
@@ -136,6 +141,11 @@ const Sidebar = (props) => {
   const handleChange = (e) => {
     setValue(e.target.value);
   }
+  const getLocation_ = (location) => {
+    var fields = fields;
+    fields["location"] = location;
+    setFields(fields)
+  }
   return (
     <div className={["sidebar_right "] + sidebar} id="sideBarleft">
 
@@ -148,6 +158,7 @@ const Sidebar = (props) => {
       </div>
 
       <div className="sidebar_right--panel container">
+        
         {value === 'need' ?
           <div>
                 <h3>I have a:</h3>
@@ -174,7 +185,10 @@ const Sidebar = (props) => {
             <label>Full name</label>
             <input className={error['full_name'] ? 'text-field error': 'text-field'}  onChange={e => { setFullName(e.target.value) }} type="text" id="name" placeholder='Full Name' /><br />
             <label>location</label>
-            <input className={error['location'] ? 'text-field error': 'text-field'}  onChange={e => { getLocation() }} value={ location ? location[0] + ","+location[1] : ""} type="text" id="name" placeholder='Location / Address *' /><br />
+            <div class='gps-container'>
+             <GoogleInput getLocation='' />
+             <button>Use GPS</button>
+             </div>
             <label>Need type:</label>
             <select className={error['type'] ? 'select-need error': 'select-need'} value={value} onChange={handleChange}>
               <option value="Shelter">Shelter</option>
@@ -200,7 +214,10 @@ const Sidebar = (props) => {
             <label>Full name</label>
             <input className={error['full_name'] ? 'text-field error': 'text-field'}  onChange={e => { setFullName(e.target.value) }} value='' type="text" id="name" placeholder='Full Name' /><br />
             <label>location</label>
-            <input className={error['location'] ? 'text-field error': 'text-field'}  onChange={e => { getLocation() }} value={ location ? location[0] + ","+location[1] : ""} type="text" id="name" placeholder='Location / Address *' /><br />
+             <div class='gps-container'>
+             <GoogleInput getLocation='' />
+             <button>Use GPS</button>
+             </div>
             <label>Resource type:</label>
             <select className={error['type'] ? 'select-resource error': 'select-resource'} value={value} onChange={handleChange}>
               <option value="Shelter">Shelter</option>
@@ -220,34 +237,58 @@ const Sidebar = (props) => {
             <button onClick={new_resource}  class="submit green" type='submit'>Submit</button>
           </form>
            : value === "want-to-assist" ?
-           <form onSubmit=''>
-              <label className='tag tag--need'>Need</label>
+          <div className='filled-in--container'>
+            <label className='tag tag--need'>Need</label>
              <h1>Need Type:</h1>
              <p>Need description text
               in a short paragraph that
               ends in an ellipses...</p>
-           <label>Phone number</label>
-           <input className={error['phone_number'] ? 'text-field filled-in error': 'text-field filled-in'} onChange={e => { setPhoneNumber(e.target.value) }}   value='' type="text" id="name" placeholder='Phone Number' /><br />
-           <label>location</label>
-           <input className={error['location'] ? 'text-field error': 'text-field'}  onChange={e => { getLocation() }} value={ location ? location[0] + ","+location[1] : ""} type="text" id="name" placeholder='Location / Address *' /><br />
+           <label><strong>Phone number</strong></label>
+           <div className='filled-in'>
+           <span >Phone number</span><br />
+            </div>
+            <label><strong>location</strong></label>
+           <div className='filled-in'>
+           <span>location</span><br />
+           </div>
+           <label><strong>Assistance logged</strong></label>
+           {logged ?
+                <div className='filled-in empty'>
+                <span>No Assistance Logged</span><br />
+                </div>
+                :
+                <div className='filled-in contacts'>
+                <ol>
+                    <li>
+                      <p><strong>test</strong></p>
+                      <p>033 464 3742</p>
+                    </li>
+                    <li>
+                      <p><strong>test</strong></p>
+                      <p>033 464 3742</p>
+                    </li>
+                </ol>
+              </div>
+           }
 
-           <label>Assistance logged</label>
-           <textarea className='filled-in empty' name="" rows="4" cols="">  </textarea>
+
            <a onClick={() => setValue('assist')}>I want to assist</a>
-         </form>
-         :
+           </div>
+       :
          <form onSubmit=''>
-         <label className='tag tag--resource'>Resource</label>
-        <h1>Resource Type:</h1>
-        <p>Need description text
-         in a short paragraph that
-         ends in an ellipses...</p>
+         {/* <label className='tag tag--resource'>Resource</label> */}
+        <h1>Thank you</h1>
+        <p>We would like to log your assistance to create a record of who's assisting this need.</p>
       <label>Phone number</label>
       <input className='text-field filled-in' onChange='' value='' type="text" id="name" placeholder='Phone Number' /><br />
-      <label>location</label>
-      <input className='text-field filled-in' onChange='' value='' type="text" id="name" placeholder='Location / Address *' /><br />
-
-      <a>Assist</a>
+      <label>Full name</label>
+            <input className='text-field' onChange='' value='' type="text" id="name" placeholder='Full Name' /><br />
+      <div className='terms-box'>
+              <input className='' type="checkbox" id="checkbox1" name="checkbox1" onChange='' />
+              <span>I agree to making my
+                mobile number public to those wanting to reach out to me, and theses term's and conditions. </span>
+            </div>
+      <a className='log-assist'>Log assist</a>
     </form>
         }
       </div>
