@@ -1,0 +1,42 @@
+
+@import "./variables";
+@import './mixins.scss';
+
+.ToggleSwitch{
+  //background: linear-gradient(#ccc, #eee);
+  //border: 1px solid purple;
+  background: #58556F;
+  width: 29px;
+  height: 9px;
+  margin-top: 5px;
+  cursor: pointer;
+  &::before{
+    content: attr('Enable');
+  }
+  border-radius: 1em;
+  &--label{
+    text-align: right;
+    font:  13px/18px 'Montserrat';
+    letter-spacing: 0.97px;
+    color: #FFFFFF;
+  }
+  .knob{
+    position: relative;
+    width: 14px;
+    height: 14px;
+    background: #666;
+    border: 1px solid #666;
+    border-radius: 50%;
+    left: 0em;
+    transition: left 0.3s ease-out;
+    top: -2px;
+    &.active{
+      left: 15px;
+      background: lightgrey;
+      border: 1px solid $font-general;
+    }
+
+  }
+
+}
+  

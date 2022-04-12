@@ -3,6 +3,8 @@ import axios from "axios";
 import { MapContainer, TileLayer, Marker, Popup, defaultMarker } from 'react-leaflet'
 import * as L from "leaflet";
 import Sidebar_left from "./sidbar/sidebar";
+//import Sidebar_left from "./sidebar";
+import Footer_thin from "./Footer_thin";
 import image from './map-marker-alt.svg'
 import 'leaflet/dist/leaflet.css'
 
@@ -69,6 +71,7 @@ const Map = () => {
                 })
             }
         </MapContainer>
+        <Footer_thin />
 
         </div>
     )
