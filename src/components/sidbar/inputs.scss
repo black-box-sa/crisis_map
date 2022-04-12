@@ -37,15 +37,19 @@ position: relative;
 
         color: $brand-primary;
     }
+    option {
 
+        background: #fff;
+        color: #31546D !important;
+    }
 }
 .select {
     &-resource {
-        background-color: green;
-        color: white;
+        background-color: #6DA86D;
+        color: white !important;
     }
     &-need {
-      background-color: orangered;
-      color: white;
+      background-color: #EA5A2E;
+      color: white !important;
     }
 }
