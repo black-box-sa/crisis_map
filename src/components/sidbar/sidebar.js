@@ -3,9 +3,9 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import PropTypes from 'prop-types';
-import './sidebar.scss';
-import './inputs.scss';
-import './button.scss'
+import '../sidebar.scss';
+import '../inputs.scss';
+import '../button.scss'
 
 const Sidebar = (props) => {
   const [sidebar, setSidebar] = useState("");
