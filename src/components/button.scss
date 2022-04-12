@@ -1,5 +1,7 @@
 @import './variables.scss';
-
+.btn {
+    color: $font-general !important;
+}
 button {
     width: max-content;
     height: 50px;
@@ -8,6 +10,7 @@ button {
     border-radius: 5px;
     margin-top: 15px;
     cursor: pointer;
+    
     &.log-new {
         position: absolute;
         bottom: 20px;
