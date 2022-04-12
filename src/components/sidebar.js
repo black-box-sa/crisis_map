@@ -56,7 +56,7 @@ const Sidebar = (props) => {
         {value === "need" ?
           <form onSubmit=''>
             <label>Phone number</label>
-            <input className='text-field' onChange='' value='' type="text" id="name" placeholder='Phone Number' /><br />
+            <input className='text-field' onChange='' value='' type="number" id="name" placeholder='Phone Number' /><br />
             <label>Full name</label>
             <input className='text-field' onChange='' value='' type="text" id="name" placeholder='Full Name' /><br />
             <label>location</label>
