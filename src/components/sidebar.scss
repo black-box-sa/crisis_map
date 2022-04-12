@@ -1,0 +1,117 @@
+
+@import './variables.scss';
+.sidebar_right {
+    
+    // General styling
+    display: inline-block;
+    position: fixed;
+    top: 12px;
+    height: 100vh; // minus top height
+    // overflow: hidden;
+    right: -450px;
+    width: 500px;
+    transition: .2s all ease-in-out;
+    z-index: 1000000;
+    &--tab {
+      position: relative;
+      padding: 3px 20px;
+      width: 100%;
+      text-align: center;
+      padding: 15px;
+      box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
+      background: white;
+      border-radius: 5px 0 0 5px;
+      cursor: pointer;
+      span {
+        z-index: 1;
+        position: relative;
+        font-size: 14px;
+        font-weight: bold;
+        display: inline-block;
+        line-height: 24px;
+        font-size: 24px;
+        color: white;
+        font-weight: 600;
+        top: 3px;
+      }
+      i {
+        z-index: 1;
+      }
+      .circle {
+        position: absolute;
+        left: 15px;
+        top: 13px;;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        border-color: $brand-primary;
+        .fas, svg {
+          color: $brand-primary;
+          height: 2em;
+        }
+      }
+      &.short {
+        background: #3388ff;
+      }
+    }
+    &--panel {
+      margin: 0;
+      width: $panelWidth;
+      position: relative;
+      right: -$totalWidth + $panelWidth;
+      background-color: white;
+      padding: 0 $s-s $s-s;
+      box-shadow: $box-shadow;
+      border-radius: 0 0 0 $border-radius;
+      height: calc(100vh - 50px);
+      overflow-y: scroll;
+
+      h3 {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 10px;
+      }
+
+      .terms-box {
+        display: flex;
+        input {
+          display: inline-block;
+          top: 0;
+          position: relative;
+        }
+        span {
+          display: inline-block;
+          margin-left: 5px;
+        }
+      }
+
+    }
+    &.open {
+      right: 0;
+      i.circle {
+        transform: rotate(180deg);
+      }
+    }
+    span {
+        margin-left: 15px;
+    }
+    // Desktop specific styling
+    @media (min-width: $tablet) {
+    }
+    
+      // Mobile specific styling
+      @media (max-width: $tablet) {
+        width: 338px;
+        right: -288px !important;
+        &.open {
+            right: 0 !important;
+ 
+          }
+          &--panel {
+            width: 248px;
+          }
+      }
+    }
+    
