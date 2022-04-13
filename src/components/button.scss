@@ -31,4 +31,13 @@ button {
     &.red {
         background-color: $red;
     }
+
+    // Mobile specific styling
+    @media (max-width: $tablet) {
+    &.log-new {
+        right: calc((100vw / 2) - 70px);
+        bottom: 80px;
+        }
+    }
 }
+
