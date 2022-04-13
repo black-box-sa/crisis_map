@@ -4,13 +4,14 @@ const app = express()
 const port = process.env.PORT || 5000;
 const path = require('path')
 const { Client } = require('pg')
+
 const client = new Client({
-    host: process.env.HOST || "localhost",
-    user: process.env.USER || "floodmapping",
-    port: 5432,
-    password: process.env.PASSWORD || "floodmapping",
-    database: process.env.DATABASE || "floodmapping"
-})
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+      rejectUnauthorized: false
+    }
+  });
+  
 client.connect()
 // Body Parser Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
