@@ -22,6 +22,8 @@ const Sidebar = (props) => {
   const [value, setValue] = useState('want-to-assist');
   const [fields, setFields]= useState({});
   const [loading, setLoading] = useState(false);
+  const [use_gps, setUseGps] = useState(false);
+  const [getting, setGetting] = useState(false);
 
   const [phone_number_assist, setPhoneNumberAssist] = useState();
   const [full_name_assist, setFullNameAssist] = useState();
@@ -106,9 +108,13 @@ const Sidebar = (props) => {
   const savePosition = position =>{
     setLocation([position.coords.latitude.toString(), position.coords.longitude.toString()] )
   }
-  const getLocation = ()=>{
+  const getLocation = (e)=>{
+      e.preventDefault();
+        setGetting(true)
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(savePosition);
+        navigator.geolocation.getCurrentPosition(savePosition);
+        setUseGps(true)
+        setGetting(false)
     }
     else{
       alert("Geolocation is not supported by this browser.")
@@ -130,6 +136,7 @@ const Sidebar = (props) => {
       .then(res => {
         console.log(res)
         props.getNeeds()
+        setUseGps(false)
         setLoading(false)
         props.sidebarTrigger()
         props.setCenter(location)
@@ -163,6 +170,7 @@ const Sidebar = (props) => {
       .then(res => {
         console.log(res)
         props.getResources()
+        setUseGps(false)
         setLoading(false)
         props.sidebarTrigger()
         props.setCenter(location)
@@ -195,6 +203,7 @@ const Sidebar = (props) => {
       .then(res => {
         console.log(res)
         props.getAssist(props.need.id)
+        setUseGps(false)
         setLoading(false)
         props.needInfo(props.need.id)
         emptyAssistForm()
@@ -275,8 +284,12 @@ const Sidebar = (props) => {
             <label>Use address or GPS location</label>
             <div class='gps-container'>
              <GoogleInput address={address} getLocation={getLocation_} />
-             <button onClick={getLocation}>Use GPS</button>
+             <button onClick={getLocation}>{getting ? 'finding...' : 'Use GPS'}</button>
              </div>
+              {
+                use_gps && <div><input className='text-field' value={location} type="text" id="coords" readonly="readonly"/><br/></div>
+              }
+
             <label>Need type:</label>
             <select className={error['type'] ? 'select-need error': 'select-need'} onChange={e=>{setType(e.target.value)}}>
               <option value="Shelter">Shelter</option>
@@ -302,10 +315,14 @@ const Sidebar = (props) => {
             <label>Full name</label>
             <input className={error['full_name'] ? 'text-field error': 'text-field'}  onChange={e => { setFullName(e.target.value) }} type="text" id="name" placeholder='Full Name' /><br />
             <label>Use address or GPS location</label>
-             <div class='gps-container'>
+            <div class='gps-container'>
              <GoogleInput address={address} getLocation={getLocation_} />
-             <button onClick={getLocation}>Use GPS</button>
+             <button onClick={getLocation}>{getting ? 'finding...' : 'Use GPS'}</button>
              </div>
+              {
+                use_gps && <div><input className='text-field' value={location} type="text" id="coords" readonly="readonly"/><br/></div>
+              }
+            <br />
             <label>Resource type:</label>
             <select className={error['type'] ? 'select-resource error': 'select-resource'} onChange={e=>{setType(e.target.value)}}>
               <option value="Shelter">Shelter</option>
