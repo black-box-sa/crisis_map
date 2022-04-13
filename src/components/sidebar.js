@@ -24,13 +24,10 @@ const Sidebar = (props) => {
     }
   }
   const logNewSidebarTrigger = () => {
-    if (sidebar) {
       setValue('need')
-
-    } else {
       setSidebar("open")
-    }
   }
+
   const handleChange = (e) => {
     setValue(e.target.value);
   }
@@ -77,12 +74,12 @@ const Sidebar = (props) => {
             <input className='text-field' onChange='' value='' type="number" id="name" placeholder='Phone Number' /><br />
             <label>Full name</label>
             <input className='text-field' onChange='' value='' type="text" id="name" placeholder='Full Name' /><br />
-            <label>location</label>
+            <label>Location</label>
             <div class='gps-container'>
              <GoogleInput getLocation='' />
              <button>Use GPS</button>
              </div>
-            <label>Need type:</label>
+            <label className='mt-3'>Need type:</label>
             <select className='select-need' value={value} onChange={handleChange}>
               <option value="Shelter">Shelter</option>
               <option value="Food">Food</option>
@@ -106,12 +103,12 @@ const Sidebar = (props) => {
             <input className='text-field' onChange='' value='' type="text" id="name" placeholder='Phone Number' /><br />
             <label>Full name</label>
             <input className='text-field' onChange='' value='' type="text" id="name" placeholder='Full Name' /><br />
-            <label>location</label>
+            <label>Location</label>
              <div class='gps-container'>
              <GoogleInput getLocation='' />
              <button>Use GPS</button>
              </div>
-            <label>Resource type:</label>
+            <label className='mt-3'>Resource type:</label>
             <select className='select-resource' value={value} onChange={handleChange}>
               <option value="Shelter">Shelter</option>
               <option value="Food">Food</option>
@@ -140,9 +137,9 @@ const Sidebar = (props) => {
            <div className='filled-in'>
            <span >Phone number</span><br />
             </div>
-            <label><strong>location</strong></label>
+            <label><strong>Location</strong></label>
            <div className='filled-in'>
-           <span>location</span><br />
+           <span>Location</span><br />
            </div>
            <label><strong>Assistance logged</strong></label>
            {logged ?
