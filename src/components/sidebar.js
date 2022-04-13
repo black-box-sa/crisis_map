@@ -19,6 +19,13 @@ const Sidebar = (props) => {
   const sidebarTrigger = () => {
     if (sidebar) {
       setSidebar("")
+    } else {
+      setSidebar("open")
+    }
+  }
+  const logNewSidebarTrigger = () => {
+    if (sidebar) {
+      setValue('need')
 
     } else {
       setSidebar("open")
@@ -179,7 +186,7 @@ const Sidebar = (props) => {
         }
       </div>
 
-      <button class="log-new red" type='button' onClick={sidebarTrigger}>Log New</button>
+      <button class="log-new red" type='button' onClick={logNewSidebarTrigger}>Log New</button>
     </div>
 
   );
