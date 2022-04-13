@@ -146,6 +146,7 @@ const Sidebar = (props) => {
       .catch(err=>{
         console.log(err)
         setLoading(false)
+        alert("Something went wrong, please try again later")
       })
     }
     else{
@@ -181,6 +182,7 @@ const Sidebar = (props) => {
       .catch(err=>{
         console.log(err)
         setLoading(false)
+        alert("Something went wrong, please try again later")
       })
     }
     else{
@@ -212,6 +214,7 @@ const Sidebar = (props) => {
       .catch(err=>{
         console.log(err)
         setLoading(false)
+        alert("Something went wrong, please try again later")
       })
     }
     else{
