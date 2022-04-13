@@ -24,7 +24,7 @@ const GoogleInput = (props) => {
           onChange: props.getLocation,
           placeholder:"Search address"
         }}
-        apiKey="AIzaSyAsICHbBOfdz4fNJzAYWigBM7oI0hR9Iu8"
+        apiKey={process.env.REACT_APP_GOOGLE_APIKEY}
       />
     )
 }
