@@ -3,17 +3,19 @@
 select,
 .text-field,
 textarea {
-
+    font-family: 'Montserrat';
+    font-size: 12px ;
+    margin-bottom: 0.2rem;
     position: relative;
     width: 100%;
     border: $border-default;
-    border-radius: $border-radius;
-    box-sizing: border-box;
-    margin-bottom: 15px;
+    border-radius: 10px;
     float: unset;
     padding: 10px;
     // font: $h3;
     color: $brand-primary;
+    -webkit-appearance: none;
+    -moz-appearance: none;
 
     &::placeholder {
 
@@ -25,19 +27,28 @@ textarea {
     }
 
 }
-
+select {
+    background: url(http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png) no-repeat right #ddd;
+    background-position-y: 11px;
+    background-position-x: 96%;
+}
 .select {
+    
     &-empty {
         background-color: #31546D;
         color: white !important;
+        font-weight: bold;
+
     }
     &-resource {
         background-color: $green;
         color: white !important;
+        font-weight: bold;
     }
 
     &-need {
         background-color: $red;
         color: white !important;
+        font-weight: bold;
     }
 }
