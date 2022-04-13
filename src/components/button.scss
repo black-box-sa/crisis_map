@@ -13,9 +13,14 @@ button {
     
     &.log-new {
         position: fixed;
-        bottom: 20px;
-        right: 20px;
-        padding: 0 15px;
+        bottom: 30px;
+        right: 30px;
+        font-family: 'Montserrat';
+        font-size: 16px;
+        font-weight: bold;
+        padding-left: 25pt;
+        padding-right: 25pt;
+        border-radius: 10px;
     }
     &.submit {
         width: 200px;

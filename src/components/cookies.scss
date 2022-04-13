@@ -2,17 +2,19 @@
 @import './mixins.scss';
 
 .cookies {
-    width: 100vw;
-    padding: 20px;
-    background: #FFFFFF;
-    border-radius: 16px 16px 0px 0px;
-    position: fixed;
-    bottom: 0;
-    z-index: 9999999;
+  background: #fff;
+  border-radius: 16px;
+  bottom: 70px;
+  padding: 6px;
+  position: relative;
+  width: 60vw;
+  z-index: 9999999;
+  margin: 0 auto;
+  display: block;
 
     p {
         text-align: left;
-        font: 13px/16px 'Montserrat';
+        font: 11px/14px 'Montserrat';
         letter-spacing: 0.97px;
         color: #000000;
         margin: 0;
@@ -25,13 +27,14 @@
         letter-spacing: 0.9px;
         &--settings{
             text-decoration: underline !important;
-            margin-right: 20px;
+            margin-right: 0;
             color: $font-general !important;
+            padding: 3px 10px;
         }
         &--accept{
             background-color: #e6e6e6;
             border-radius: 28px;
-            padding: 11px 25px;
+            padding: 3px 25px;
             &:hover {
                  box-shadow: $box-shadow-hover;
             }
@@ -41,6 +44,8 @@
 // Mobile specific styling
   @media (max-width: $tablet) {
     padding: 20px;
+    bottom: 320px;
+    width: 90vw;
 
     .btn {
         margin-top: 20px;

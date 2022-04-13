@@ -46,10 +46,10 @@ const Cookies = (props) => {
         <div className="cookies show-cookie-container" >
           <div className="container">
             <div className="row">
-              <div className="col-md-7">
-                <p>This site uses cookies to create a better experience for you. Hopefully you’re okay with this, but if not, feel free to opt out.</p>
+              <div className="col-md-8">
+                <p>This site uses cookies to create a better experience for you. Click settings to disable them.</p>
               </div>
-              <div className="col-md-5 text-center">
+              <div className="col-md-4 text-right pr-0">
                 <Button className="btn--settings btn_link" onClick={event => {props.showModal(true)}}>Cookie Settings</Button>
                 <Button className="btn--accept" onClick={event => {props.showBanner(false)}}>Accept</Button>
               </div>
