@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Geocode from "react-geocode";
 import { MapContainer, TileLayer, Marker, Popup, defaultMarker } from 'react-leaflet'
 import * as L from "leaflet";
 //import Sidebar_left from "./sidbar/sidebar";
@@ -8,7 +9,12 @@ import Footer_thin from "./Footer_thin";
 import image from './map-marker-alt.svg'
 import 'leaflet/dist/leaflet.css'
 
+Geocode.setApiKey("AIzaSyAsICHbBOfdz4fNJzAYWigBM7oI0hR9Iu8");
+Geocode.setLanguage("en");
+Geocode.enableDebug();
+
 const Map = () => {
+    const [center, setCenter] = useState([-28.5305539, 30.8958242])
     const [needs, setNeeds] = useState([])
     const [assists, setAssists] = useState([])
     const [need, setNeed] = useState()
@@ -16,6 +22,7 @@ const Map = () => {
     const [type, setType] = useState('need')
     const [resources, setResources] = useState([])
     const [sidebar, setSidebar] = useState(""); 
+    const [address, setAddress] = useState("")
 
 
     const icon = new L.Icon({
@@ -24,6 +31,37 @@ const Map = () => {
         iconAnchor: [10, 41],
         popupAnchor: [2, -40]
     });
+
+    const convertCoordinatesToAddress = (lat,lng) =>{
+        Geocode.fromLatLng(lat, lng).then(
+          (response) => {
+            const addres = response.results[0].formatted_address;
+            let city, state, country;
+            for (let i = 0; i < response.results[0].address_components.length; i++) {
+              for (let j = 0; j < response.results[0].address_components[i].types.length; j++) {
+                switch (response.results[0].address_components[i].types[j]) {
+                  case "locality":
+                    city = response.results[0].address_components[i].long_name;
+                    break;
+                  case "administrative_area_level_1":
+                    state = response.results[0].address_components[i].long_name;
+                    break;
+                  case "country":
+                    country = response.results[0].address_components[i].long_name;
+                    break;
+                }
+              }
+            }
+            console.log(city, state, country);
+            console.log(addres);
+            setAddress(addres)
+          },
+          (error) => {
+            console.error(error);
+          }
+        );
+      }
+
 
     const sidebarTrigger = () => {
         if (sidebar) {
@@ -34,6 +72,10 @@ const Map = () => {
         }
         setUserType('need')
       }
+
+    const openLastNeeds = ()=>{
+        needInfo(needs[needs.length])
+    }
 
     const needInfo = id =>{
         let data = needs.filter(value=>{
@@ -46,6 +88,7 @@ const Map = () => {
         setUserType('want-to-assist')
         setType('need')
         setSidebar("open")
+        convertCoordinatesToAddress(data[0].lat, data[0].long)
         console.log('needInfo', data)
     }
 
@@ -60,6 +103,7 @@ const Map = () => {
         setUserType('want-to-assist')
         setType('resource')
         setSidebar("open")
+        convertCoordinatesToAddress(data[0].lat, data[0].long)
         console.log('resourceInfo', data)
     }
 
@@ -93,8 +137,8 @@ const Map = () => {
     },[])
     return (
         <div className="leaflet-container">
-            <Sidebar_left sidebar={sidebar} sidebarTrigger={sidebarTrigger} getResources={getResources} getNeeds={getNeeds} need={need} type={type} user_type={user_type} setUserType={setUserType} assists={assists} getAssist={getAssist} />
-        <MapContainer center={[-28.5305539, 30.8958242]} zoom={8}>
+            <Sidebar_left setCenter={setCenter} needInfo={needInfo} sidebar={sidebar} assist_address={address} sidebarTrigger={sidebarTrigger} getResources={getResources} openLastNeeds={openLastNeeds} getNeeds={getNeeds} need={need} type={type} user_type={user_type} setUserType={setUserType} assists={assists} getAssist={getAssist} />
+        <MapContainer center={center} zoom={8}>
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
             {
                 needs.map((need, index)=>{
