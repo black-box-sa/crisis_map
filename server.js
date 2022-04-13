@@ -33,6 +33,31 @@ app.post('/new_need', (req, res) => {
     client.end;
 })
 
+app.post('/new_assist', (req, res) => {
+    const need = req.body;
+    console.log(need)
+    let insertQuery = `insert into public."assists"(need_id, phone_number, full_name ) 
+    values('${need.need_id}', '${need.phone_number}', '${need.full_name}')`
+    client.query(insertQuery, (err, result) => {
+        if (!err) {
+            res.send('Insertion was successful')
+        }
+        else {
+            console.log(err.message)
+        }
+    })
+    client.end;
+})
+
+app.get('/assists/:id', (req, res)=>{
+    client.query(`Select * from public."assists" where need_id=${req.params.id}`, (err, result)=>{
+        if(!err){
+            res.send(result.rows);
+        }
+    });
+    client.end;
+})
+
 app.post('/new_resource', (req, res) => {
     const need = req.body;
     console.log(need)
