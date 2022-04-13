@@ -96,7 +96,7 @@ const Sidebar = (props) => {
             <div className='terms-box'>
               <input className='' type="checkbox" id="checkbox1" name="checkbox1" onChange='' />
               <span>I agree to making my
-                mobile number public to those wanting to reach out to me, and theses term's and conditions. </span>
+                mobile number public to those wanting to reach out to me, as mentioned in this <a class="privacy-link" target="blank" href="/Black-Box_Privacy_Policy_April22v1.pdf">privacy policy</a>. </span>
             </div>
             <button class="submit green" type='submit'>Submit</button>
           </form>
@@ -125,7 +125,7 @@ const Sidebar = (props) => {
             <div className='terms-box'>
               <input className='' type="checkbox" id="checkbox1" name="checkbox1" onChange='' />
               <span>I agree to making my
-                mobile number public to those wanting to reach out to me, and theses term's and conditions. </span>
+                mobile number public to those wanting to reach out to me, as mentioned in this <a class="privacy-link" target="blank" href="/Black-Box_Privacy_Policy_April22v1.pdf">privacy policy</a>. </span>
             </div>
             <button class="submit green" type='submit'>Submit</button>
           </form>
@@ -179,7 +179,7 @@ const Sidebar = (props) => {
       <div className='terms-box'>
               <input className='' type="checkbox" id="checkbox1" name="checkbox1" onChange='' />
               <span>I agree to making my
-                mobile number public to those wanting to reach out to me, and theses term's and conditions. </span>
+                mobile number public to those wanting to reach out to me, as mentioned in this <a class="privacy-link" target="blank" href="/Black-Box_Privacy_Policy_April22v1.pdf">privacy policy</a>. </span>
             </div>
       <a className='log-assist'>Log assist</a>
     </form>
