@@ -83,11 +83,15 @@
     
     // Mobile specific styling
     @media (max-width: $tablet) {
+
+      padding-top: 20px;
+      padding-bottom: 20px;
         .social-menu {
           justify-content: center;
         }
         .info-menu {
           margin-top: $s-s;
+          justify-content: center;
         }
       }
     } 
