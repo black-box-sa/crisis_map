@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import Geocode from "react-geocode";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import PropTypes from 'prop-types';
@@ -8,18 +9,28 @@ import './sidebar.scss';
 import './inputs.scss';
 import './button.scss'
 
+Geocode.setApiKey("AIzaSyAsICHbBOfdz4fNJzAYWigBM7oI0hR9Iu8");
+Geocode.setLanguage("en");
+Geocode.enableDebug();
+
 const Sidebar = (props) => {
-  const [sidebar, setSidebar] = useState(""); 
+  
   //check if any assists have been logged in
   const [logged, setLogged] = useState(false); 
+
   /**change template states*/
-  const [value, setValue] = useState('need');
+  const [value, setValue] = useState('want-to-assist');
   const [fields, setFields]= useState({});
+  const [loading, setLoading] = useState(false);
+
+  const [phone_number_assist, setPhoneNumberAssist] = useState();
+  const [full_name_assist, setFullNameAssist] = useState();
 
   const [phone_number, setPhoneNumber] = useState();
   const [full_name, setFullName] = useState();
   const [location, setLocation] = useState();
-  const [type, setType] = useState();
+  const [address, setAddress] = useState();
+  const [type, setType] = useState('Shelter');
   const [description, setDescription] = useState();
   const [terms_and_c, setTandC] = useState(false);
   const [error, setError] = useState({
@@ -85,7 +96,8 @@ const Sidebar = (props) => {
   const new_need = e=>{
     e.preventDefault()
     const any_errors = checkErrors()
-    if(!any_errors){
+    if(phone_number && full_name && location && type && terms_and_c){
+      setLoading(true)
       let data = {
         phone_number:phone_number,
         full_name: full_name,
@@ -97,18 +109,24 @@ const Sidebar = (props) => {
       .then(res => {
         console.log(res)
         props.getNeeds()
+        setLoading(false)
       })
       .catch(err=>{
         console.log(err)
+        setLoading(false)
       })
+    }
+    else{
+      alert('fill all the fields')
     }
 
 
   }
   const new_resource = e=>{
     e.preventDefault()
+    setLoading(true)
     const any_errors = checkErrors()
-    if(!any_errors){
+    if(phone_number && full_name && location && type && terms_and_c){
       let data = {
         phone_number:phone_number,
         full_name: full_name,
@@ -120,37 +138,76 @@ const Sidebar = (props) => {
       .then(res => {
         console.log(res)
         props.getResources()
+        setLoading(false)
       })
       .catch(err=>{
         console.log(err)
+        setLoading(false)
       })
+    }
+    else{
+      alert('fill all the fields')
+      setLoading(false)
+    }
+
+
+  }
+  const new_assists = e=>{
+    e.preventDefault()
+    //const any_errors = checkErrors()
+    if(phone_number_assist && full_name_assist && terms_and_c ){
+      setLoading(true)
+      let data = {
+        phone_number:phone_number_assist,
+        full_name: full_name_assist,
+        need_id: props.need.id,
+      }
+      axios.post('/new_assist', data)
+      .then(res => {
+        console.log(res)
+        props.getAssist(props.need.id)
+        setLoading(false)
+      })
+      .catch(err=>{
+        console.log(err)
+        setLoading(false)
+      })
+    }
+    else{
+      alert("missing field")
     }
 
 
   }
 
   // Function that adjusts state to open or close sidebar by adding or removing the "open" class
-  const sidebarTrigger = () => {
-    if (sidebar) {
-      setSidebar("")
 
-    } else {
-      setSidebar("open")
-    }
-  }
   const handleChange = (e) => {
     setValue(e.target.value);
   }
   const getLocation_ = (location) => {
-    var fields = fields;
-    fields["location"] = location;
-    setFields(fields)
+    // var fields = fields;
+    // fields["location"] = location;
+    // setFields(fields)
+    console.log('location', location)
+    setAddress(location.label)
+    Geocode.fromAddress(location.label).then(
+      (response) => {
+        const { lat, lng } = response.results[0].geometry.location;
+        console.log(lat, lng);
+        setLocation([lat, lng])
+      },
+      (error) => {
+        console.error(error);
+      }
+    )
+
   }
   return (
-    <div className={["sidebar_right "] + sidebar} id="sideBarleft">
+    <div className={["sidebar_right "] + props.sidebar} id="sideBarleft">
 
       <div className="sidebar_right--tab">
-        <div className="sidebar_right--tab--trigger" onClick={sidebarTrigger}>
+        <div className="sidebar_right--tab--trigger" onClick={props.sidebarTrigger}>
           <span>{props.title}</span>
           <i className="circle"><FontAwesomeIcon icon={faChevronLeft} /></i>
 
@@ -159,18 +216,18 @@ const Sidebar = (props) => {
 
       <div className="sidebar_right--panel container">
         
-        {value === 'need' ?
+        {props.user_type === 'need' ?
           <div>
                 <h3>I have a:</h3>
-                <select className='select-need' value={value} onChange={handleChange}>
+                <select className='select-need'  onChange={e=>{props.setUserType(e.target.value)}}>
                   <option value="need">Need</option>
                   <option value="resource">Resource</option>
                 </select>
                 </div>
-                :value === 'resource' ?
+                :props.user_type === 'resource' ?
                 <div>
                   <h3>I have a:</h3>
-                  <select className='select-resource' value={value} onChange={handleChange}>
+                  <select className='select-resource' onChange={e=>{props.setUserType(e.target.value)}}>
                     <option value="need">Need</option>
                     <option value="resource">Resource</option>
                   </select>
@@ -178,7 +235,7 @@ const Sidebar = (props) => {
                 :''
         }
         {/**Need form */}
-        {value === "need" ?
+        {props.user_type === "need" ?
           <form onSubmit={new_need}>
             <label>Phone number</label>
             <input className={error['phone_number'] ? 'text-field error': 'text-field'} onChange={e => { setPhoneNumber(e.target.value) }} type="number" id="name" placeholder='Phone Number' /><br />
@@ -186,11 +243,11 @@ const Sidebar = (props) => {
             <input className={error['full_name'] ? 'text-field error': 'text-field'}  onChange={e => { setFullName(e.target.value) }} type="text" id="name" placeholder='Full Name' /><br />
             <label>location</label>
             <div class='gps-container'>
-             <GoogleInput getLocation='' />
-             <button>Use GPS</button>
+             <GoogleInput address={address} getLocation={getLocation_} />
+             <button onClick={getLocation}>Use GPS</button>
              </div>
             <label>Need type:</label>
-            <select className={error['type'] ? 'select-need error': 'select-need'} value={value} onChange={handleChange}>
+            <select className={error['type'] ? 'select-need error': 'select-need'} onChange={e=>{setType(e.target.value)}}>
               <option value="Shelter">Shelter</option>
               <option value="Food">Food</option>
               <option value="Clothing">Clothing</option>
@@ -205,21 +262,21 @@ const Sidebar = (props) => {
               <span>I agree to making my
                 mobile number public to those wanting to reach out to me, and theses term's and conditions. </span>
             </div>
-            <button onClick={new_need} class="submit green" type='submit'>Submit</button>
+            <button onClick={new_need} class="submit green" type='submit' disabled={loading}>{loading ? "Submitting..." : 'Submit'}</button>
           </form>
-          : value === "resource" ?
+          : props.user_type === "resource" ?
           <form onSubmit={new_resource}>
             <label>Phone number</label>
-            <input className={error['phone_number'] ? 'text-field error': 'text-field'} onChange={e => { setPhoneNumber(e.target.value) }}  value='' type="text" id="name" placeholder='Phone Number' /><br />
+            <input className={error['phone_number'] ? 'text-field error': 'text-field'} onChange={e => { setPhoneNumber(e.target.value) }}   type="text" id="name" placeholder='Phone Number' /><br />
             <label>Full name</label>
-            <input className={error['full_name'] ? 'text-field error': 'text-field'}  onChange={e => { setFullName(e.target.value) }} value='' type="text" id="name" placeholder='Full Name' /><br />
+            <input className={error['full_name'] ? 'text-field error': 'text-field'}  onChange={e => { setFullName(e.target.value) }} type="text" id="name" placeholder='Full Name' /><br />
             <label>location</label>
              <div class='gps-container'>
-             <GoogleInput getLocation='' />
-             <button>Use GPS</button>
+             <GoogleInput address={address} getLocation={getLocation_} />
+             <button onClick={getLocation}>Use GPS</button>
              </div>
             <label>Resource type:</label>
-            <select className={error['type'] ? 'select-resource error': 'select-resource'} value={value} onChange={handleChange}>
+            <select className={error['type'] ? 'select-resource error': 'select-resource'} onChange={e=>{setType(e.target.value)}}>
               <option value="Shelter">Shelter</option>
               <option value="Food">Food</option>
               <option value="Clothing">Clothing</option>
@@ -234,66 +291,72 @@ const Sidebar = (props) => {
               <span>I agree to making my
                 mobile number public to those wanting to reach out to me, and theses term's and conditions. </span>
             </div>
-            <button onClick={new_resource}  class="submit green" type='submit'>Submit</button>
+            <button onClick={new_resource}  class="submit green" type='submit' disabled={loading}> {loading ? "Submitting..." : 'Submit'} </button>
           </form>
-           : value === "want-to-assist" ?
+           : props.user_type === "want-to-assist" ?
           <div className='filled-in--container'>
-            <label className='tag tag--need'>Need</label>
-             <h1>Need Type:</h1>
-             <p>Need description text
-              in a short paragraph that
-              ends in an ellipses...</p>
+            <label className={props.type === 'need' ? 'tag tag--need' : 'tag tag--resource'}  >{props.type === 'need' ? 'Need' : "Resource" } </label>
+             <h1>{props.type === 'need' ? 'Need' : "Resource" }  Type:</h1>
+             <p>{props.need ? props.need.description : ""}</p>
+             {props.type === 'need' ? '' : 
+             <>
+             <label><strong>Logged by:</strong></label><br/>
+             <label>{props.need ? props.need.full_name : ""}</label><br/><br/>
+             </> } 
            <label><strong>Phone number</strong></label>
            <div className='filled-in'>
-           <span >Phone number</span><br />
+           <span >{props.need ? props.need.phone_number : ""}</span><br />
             </div>
             <label><strong>location</strong></label>
            <div className='filled-in'>
-           <span>location</span><br />
+           <span>{props.need ? props.need.lat + ", "+props.need.long : ""}</span><br />
            </div>
-           <label><strong>Assistance logged</strong></label>
-           {logged ?
+           {props.type === 'need' ? <label><strong>Assistance logged</strong></label> :""}
+           
+           {props.type === 'need' && !props.assists.length > 0 ?
                 <div className='filled-in empty'>
                 <span>No Assistance Logged</span><br />
                 </div>
                 :
                 <div className='filled-in contacts'>
                 <ol>
-                    <li>
-                      <p><strong>test</strong></p>
-                      <p>033 464 3742</p>
-                    </li>
-                    <li>
-                      <p><strong>test</strong></p>
-                      <p>033 464 3742</p>
-                    </li>
+                  {
+                    props.type === 'need' && props.assists.map(assist=>{
+                      return(
+                        <li>
+                        <p><strong>{assist.full_name}</strong></p>
+                        <p>{assist.phone_number}</p>
+                      </li>
+                      )
+                    })
+                  }
                 </ol>
               </div>
            }
 
-
-           <a onClick={() => setValue('assist')}>I want to assist</a>
+          {props.type === 'need' ? <a onClick={() => props.setUserType('assist')}>I want to assist</a> : "" }
+           
            </div>
        :
-         <form onSubmit=''>
+         <form onSubmit={new_assists}>
          {/* <label className='tag tag--resource'>Resource</label> */}
         <h1>Thank you</h1>
         <p>We would like to log your assistance to create a record of who's assisting this need.</p>
       <label>Phone number</label>
-      <input className='text-field filled-in' onChange='' value='' type="text" id="name" placeholder='Phone Number' /><br />
+      <input className='text-field filled-in' onChange={e=>{setPhoneNumberAssist(e.target.value)}} type="text" id="name" placeholder='Phone Number' /><br />
       <label>Full name</label>
-            <input className='text-field' onChange='' value='' type="text" id="name" placeholder='Full Name' /><br />
+            <input className='text-field' onChange={e=>{setFullNameAssist(e.target.value)}} type="text" id="name" placeholder='Full Name' /><br />
       <div className='terms-box'>
-              <input className='' type="checkbox" id="checkbox1" name="checkbox1" onChange='' />
+              <input className='' type="checkbox" id="checkbox1" name="checkbox1" onChange={e=>{setTandC(e.target.checked)}} />
               <span>I agree to making my
                 mobile number public to those wanting to reach out to me, and theses term's and conditions. </span>
             </div>
-      <a className='log-assist'>Log assist</a>
+      <button type='submit' className='log-assist' onClick={new_assists} disabled={loading}>{loading ? "Submitting..." : 'Log assist'} </button>
     </form>
         }
       </div>
 
-      <button class="log-new red" type='button' onClick={sidebarTrigger}>Log New</button>
+      <button class="log-new red" type='button' onClick={props.sidebarTrigger}>Log New</button>
     </div>
 
   );
