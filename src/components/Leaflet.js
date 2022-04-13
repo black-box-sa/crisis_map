@@ -5,7 +5,8 @@ import * as L from "leaflet";
 //import Sidebar_left from "./sidbar/sidebar";
 import Sidebar_left from "./sidebar";
 import Footer_thin from "./Footer_thin";
-import image from './map-marker-alt.svg'
+import needMarker from'./map-marker-alt-red.svg';
+import resourceMarker from'./map-marker-alt-green.svg';
 import 'leaflet/dist/leaflet.css'
 
 const Map = () => {
@@ -18,8 +19,14 @@ const Map = () => {
     const [sidebar, setSidebar] = useState(""); 
 
 
-    const icon = new L.Icon({
-        iconUrl: image,
+    const need_icon = new L.Icon({
+        iconUrl: needMarker,
+        iconSize: [25, 41],
+        iconAnchor: [10, 41],
+        popupAnchor: [2, -40]
+    });
+    const resource_icon = new L.Icon({
+        iconUrl: resourceMarker,
         iconSize: [25, 41],
         iconAnchor: [10, 41],
         popupAnchor: [2, -40]
@@ -32,7 +39,6 @@ const Map = () => {
         } else {
           setSidebar("open")
         }
-        setUserType('need')
       }
 
     const needInfo = id =>{
@@ -99,7 +105,7 @@ const Map = () => {
             {
                 needs.map((need, index)=>{
                     return(
-                        <Marker position={[ need.lat, need.long]} icon={icon}  key={index}
+                        <Marker position={[ need.lat, need.long]} icon={need_icon}  key={index}
                         eventHandlers={{
                             click: (e) => {
                               console.log('marker clicked', e)
@@ -114,7 +120,7 @@ const Map = () => {
             {
                 resources.map((need, index)=>{
                     return(
-                        <Marker position={[ need.lat, need.long]} key={index} icon={icon} 
+                        <Marker position={[ need.lat, need.long]} key={index} icon={resource_icon} 
                         eventHandlers={{
                             click: (e) => {
                               resourceInfo(need.id)
