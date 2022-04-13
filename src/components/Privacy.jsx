@@ -16,7 +16,7 @@ const Privacy = (props) => {
         <div className='privacy--curtain'></div>
         <div className="container privacy">
           <a className="closes" onClick={event => { props.display(false, 'modal') }}>
-            <i className="icon fas fa-times font-stroke"></i>
+            <FontAwesomeIcon icon={faTimes}/>
           </a>
           <div className="row">
             <div className="col-12 privacy--overview">
