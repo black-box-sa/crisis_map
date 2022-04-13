@@ -361,7 +361,7 @@ const Sidebar = (props) => {
            </div>
            {props.type === 'need' ? <label><strong>Assistance logged</strong></label> :""}
            
-           {props.type === 'need' && !props.assists.length > 0 ?
+           {props.type === 'need' && props.type !=='resource' && !props.assists.length > 0 ?
                 <div className='filled-in empty'>
                 <span>No Assistance Logged</span><br />
                 </div>
