@@ -15,7 +15,7 @@ Geocode.setLanguage("en");
 Geocode.enableDebug();
 
 const Map = () => {
-    const [center, setCenter] = useState([-28.5305539, 30.8958242])
+    const [center, setCenter] = useState([-29.883333, 31.049999])
     const [needs, setNeeds] = useState([])
     const [assists, setAssists] = useState([])
     const [need, setNeed] = useState()
@@ -144,7 +144,7 @@ const Map = () => {
     return (
         <div className="leaflet-container">
             <Sidebar_left setCenter={setCenter} needInfo={needInfo} sidebar={sidebar} assist_address={address} sidebarTrigger={sidebarTrigger} getResources={getResources} openLastNeeds={openLastNeeds} getNeeds={getNeeds} need={need} type={type} user_type={user_type} setUserType={setUserType} assists={assists} getAssist={getAssist} />
-        <MapContainer center={center} zoom={8}>
+        <MapContainer center={center} zoom={12}>
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
             {
                 needs.map((need, index)=>{
