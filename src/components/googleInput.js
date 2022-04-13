@@ -13,7 +13,7 @@ const GoogleInput = (props) => {
         <GooglePlacesAutocomplete
         autocompletionRequest={{
           bounds: [
-            { lat: -29.883333, lng: 31.049999}
+            { lat: -28.5305539 , lng: 30.8958242}
           ],
           fields: ["address_components", "geometry", "icon", "name"],
           componentRestrictions: {

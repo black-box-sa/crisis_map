@@ -260,7 +260,7 @@ const Sidebar = (props) => {
             <div className='terms-box'>
               <input onChange={e => { setTandC(e.target.checked) }}  className='' type="checkbox" id="checkbox1" name="checkbox1"  />
               <span>I agree to making my
-                mobile number public to those wanting to reach out to me, and theses term's and conditions. </span>
+                mobile number public to those wanting to reach out to me, as mentioned in this <a class="privacy-link" target="blank" href="/Black-Box_Privacy_Policy_April22v1.pdf">privacy policy</a>. </span>
             </div>
             <button onClick={new_need} class="submit green" type='submit' disabled={loading}>{loading ? "Submitting..." : 'Submit'}</button>
           </form>
@@ -289,7 +289,7 @@ const Sidebar = (props) => {
             <div className='terms-box'>
               <input type="checkbox" id="checkbox1" name="checkbox1" onChange={e => { setTandC(e.target.checked) }} />
               <span>I agree to making my
-                mobile number public to those wanting to reach out to me, and theses term's and conditions. </span>
+                mobile number public to those wanting to reach out to me, as mentioned in this <a class="privacy-link" target="blank" href="/Black-Box_Privacy_Policy_April22v1.pdf">privacy policy</a>. </span>
             </div>
             <button onClick={new_resource}  class="submit green" type='submit' disabled={loading}> {loading ? "Submitting..." : 'Submit'} </button>
           </form>
@@ -307,7 +307,7 @@ const Sidebar = (props) => {
            <div className='filled-in'>
            <span >{props.need ? props.need.phone_number : ""}</span><br />
             </div>
-            <label><strong>location</strong></label>
+            <label><strong>Location</strong></label>
            <div className='filled-in'>
            <span>{props.need ? props.need.lat + ", "+props.need.long : ""}</span><br />
            </div>
@@ -349,7 +349,7 @@ const Sidebar = (props) => {
       <div className='terms-box'>
               <input className='' type="checkbox" id="checkbox1" name="checkbox1" onChange={e=>{setTandC(e.target.checked)}} />
               <span>I agree to making my
-                mobile number public to those wanting to reach out to me, and theses term's and conditions. </span>
+                mobile number public to those wanting to reach out to me, as mentioned in this <a class="privacy-link" target="blank" href="/Black-Box_Privacy_Policy_April22v1.pdf">privacy policy</a>. </span>
             </div>
       <button type='submit' className='log-assist' onClick={new_assists} disabled={loading}>{loading ? "Submitting..." : 'Log assist'} </button>
     </form>

@@ -94,7 +94,7 @@ const Map = () => {
     return (
         <div className="leaflet-container">
             <Sidebar_left sidebar={sidebar} sidebarTrigger={sidebarTrigger} getResources={getResources} getNeeds={getNeeds} need={need} type={type} user_type={user_type} setUserType={setUserType} assists={assists} getAssist={getAssist} />
-        <MapContainer center={[ -29.883333, 31.049999]} zoom={13}>
+        <MapContainer center={[-28.5305539, 30.8958242]} zoom={8}>
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
