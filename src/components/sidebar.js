@@ -241,7 +241,7 @@ const Sidebar = (props) => {
             <input className={error['phone_number'] ? 'text-field error': 'text-field'} onChange={e => { setPhoneNumber(e.target.value) }} type="number" id="name" placeholder='Phone Number' /><br />
             <label>Full name</label>
             <input className={error['full_name'] ? 'text-field error': 'text-field'}  onChange={e => { setFullName(e.target.value) }} type="text" id="name" placeholder='Full Name' /><br />
-            <label>location</label>
+            <label>Use address or GPS location</label>
             <div class='gps-container'>
              <GoogleInput address={address} getLocation={getLocation_} />
              <button onClick={getLocation}>Use GPS</button>
@@ -270,7 +270,7 @@ const Sidebar = (props) => {
             <input className={error['phone_number'] ? 'text-field error': 'text-field'} onChange={e => { setPhoneNumber(e.target.value) }}   type="text" id="name" placeholder='Phone Number' /><br />
             <label>Full name</label>
             <input className={error['full_name'] ? 'text-field error': 'text-field'}  onChange={e => { setFullName(e.target.value) }} type="text" id="name" placeholder='Full Name' /><br />
-            <label>location</label>
+            <label>Use address or GPS location</label>
              <div class='gps-container'>
              <GoogleInput address={address} getLocation={getLocation_} />
              <button onClick={getLocation}>Use GPS</button>
