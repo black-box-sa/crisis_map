@@ -22,7 +22,7 @@ const GoogleInput = (props) => {
         }}
         selectProps={{
           onChange: props.getLocation,
-          placeholder:"Enter Location"
+          placeholder:"Search address"
         }}
         apiKey="AIzaSyAsICHbBOfdz4fNJzAYWigBM7oI0hR9Iu8"
       />
