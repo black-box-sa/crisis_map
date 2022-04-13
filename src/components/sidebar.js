@@ -334,7 +334,7 @@ const Sidebar = (props) => {
               </div>
            }
 
-          {props.type === 'need' ? <a onClick={() => props.setUserType('assist')}>I want to assist</a> : "" }
+          {props.type === 'need' ? <a onClick={() => props.setUserType('assist')}>I am assisting / have assisted</a> : "" }
            
            </div>
        :
