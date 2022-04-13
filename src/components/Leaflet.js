@@ -10,7 +10,13 @@ import 'leaflet/dist/leaflet.css'
 
 const Map = () => {
     const [needs, setNeeds] = useState([])
+    const [assists, setAssists] = useState([])
+    const [need, setNeed] = useState()
+    const [user_type, setUserType] = useState('need')
+    const [type, setType] = useState('need')
     const [resources, setResources] = useState([])
+    const [sidebar, setSidebar] = useState(""); 
+
 
     const icon = new L.Icon({
         iconUrl: image,
@@ -18,6 +24,45 @@ const Map = () => {
         iconAnchor: [10, 41],
         popupAnchor: [2, -40]
     });
+
+    const sidebarTrigger = () => {
+        if (sidebar) {
+          setSidebar("")
+    
+        } else {
+          setSidebar("open")
+        }
+        setUserType('need')
+      }
+
+    const needInfo = id =>{
+        let data = needs.filter(value=>{
+            return(
+                value.id === id
+            )
+        })
+        getAssist(id)
+        setNeed(data[0])
+        setUserType('want-to-assist')
+        setType('need')
+        setSidebar("open")
+        console.log('needInfo', data)
+    }
+
+    const resourceInfo = id =>{
+        let data = resources.filter(value=>{
+            return(
+                value.id === id
+            )
+        })
+        //getAssist([])
+        setNeed(data[0])
+        setUserType('want-to-assist')
+        setType('resource')
+        setSidebar("open")
+        console.log('resourceInfo', data)
+    }
+
 
     const getNeeds = ()=>{
         axios.get('/needs')
@@ -34,13 +79,21 @@ const Map = () => {
         })
     }
 
+    const getAssist = (id)=>{
+        axios.get(`/assists/${id}`)
+        .then(res=>{
+            console.log('resources',res.data)
+            setAssists(res.data)
+        })
+    }
+
     useEffect(()=>{
         getNeeds()
         getResources()
     },[])
     return (
         <div className="leaflet-container">
-            <Sidebar_left getResources={getResources} getNeeds={getNeeds} />
+            <Sidebar_left sidebar={sidebar} sidebarTrigger={sidebarTrigger} getResources={getResources} getNeeds={getNeeds} need={need} type={type} user_type={user_type} setUserType={setUserType} assists={assists} getAssist={getAssist} />
         <MapContainer center={[ -29.883333, 31.049999]} zoom={13}>
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -49,11 +102,14 @@ const Map = () => {
             {
                 needs.map((need, index)=>{
                     return(
-                        <Marker position={[ need.lat, need.long]} icon={icon}  key={index}>
-                            <Popup>
-                                {need.description}
-                            </Popup>
-                        </Marker>
+                        <Marker position={[ need.lat, need.long]} icon={icon}  key={index}
+                        eventHandlers={{
+                            click: (e) => {
+                              console.log('marker clicked', e)
+                              needInfo(need.id)
+                            },
+                          }}
+                        />
 
                     )
                 })
@@ -61,11 +117,13 @@ const Map = () => {
             {
                 resources.map((need, index)=>{
                     return(
-                        <Marker position={[ need.lat, need.long]} key={index} icon={icon} >
-                            <Popup>
-                                {need.description}
-                            </Popup>
-                        </Marker>
+                        <Marker position={[ need.lat, need.long]} key={index} icon={icon} 
+                        eventHandlers={{
+                            click: (e) => {
+                              resourceInfo(need.id)
+                            },
+                          }}
+                        />
 
                     )
                 })

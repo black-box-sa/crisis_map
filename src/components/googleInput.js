@@ -2,29 +2,29 @@ import { useState, useEffect } from 'react';
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import './google-input.scss'
 const GoogleInput = (props) => {
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState(props.address);
   useEffect(() => {
-    if(value){
-    //   props.getLocation(value.label)
+    if(props.address){
+    //  props.getLocation(value.label)
+    setValue(props.address)
     }
-  }, [value])
+  }, [props.address])
     return(
         <GooglePlacesAutocomplete
-        
         autocompletionRequest={{
           bounds: [
-            { lat: -33.918861, lng: 18.423300 }
+            { lat: -29.883333, lng: 31.049999}
           ],
+          fields: ["address_components", "geometry", "icon", "name"],
           componentRestrictions: {
           country: ['za'],
           }
         }}
         selectProps={{
-          value,
-          onChange: setValue,
+          onChange: props.getLocation,
           placeholder:"Enter Location"
         }}
-        apiKey="AIzaSyCivMgKEzuRKyLBEooOHHGK7i7cmkWkFq8"
+        apiKey="AIzaSyAsICHbBOfdz4fNJzAYWigBM7oI0hR9Iu8"
       />
     )
 }
