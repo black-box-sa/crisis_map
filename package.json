@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-free-solid": "^5.0.13",
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/react-fontawesome": "^0.1.18",
@@ -23,6 +24,7 @@
     "react-google-places-autocomplete": "^3.3.4",
     "react-leaflet": "^3.2.5",
     "react-scripts": "5.0.0",
+    "reactstrap": "^9.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
