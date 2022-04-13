@@ -141,7 +141,7 @@ const Sidebar = (props) => {
         props.sidebarTrigger()
         props.setCenter(location)
         emptyFormFields()
-        alert('Need logged')
+        alert('Thank you, your need was submitted successfully. To view it, find it on the map and click on the marker for details.')
       })
       .catch(err=>{
         console.log(err)
@@ -176,7 +176,7 @@ const Sidebar = (props) => {
         props.lognewTrigger()
         props.setCenter(location)
         emptyFormFields()
-        alert('Resource logged')
+        alert('Thank you, resource submitted successfully. To view it, find it on the map and click on the marker for details.')
       })
       .catch(err=>{
         console.log(err)
@@ -382,7 +382,7 @@ const Sidebar = (props) => {
               </div>
            }
 
-          {props.type === 'need' ? <a onClick={() => props.setUserType('assist')}>I want to assist</a> : "" }
+          {props.type === 'need' ? <a onClick={() => props.setUserType('assist')}>I am assisting / have assisted</a> : "" }
            
            </div>
        :
