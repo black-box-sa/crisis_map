@@ -9,7 +9,7 @@ import './sidebar.scss';
 import './inputs.scss';
 import './button.scss'
 
-Geocode.setApiKey("AIzaSyAsICHbBOfdz4fNJzAYWigBM7oI0hR9Iu8");
+Geocode.setApiKey(process.env.REACT_APP_GOOGLE_APIKEY);
 Geocode.setLanguage("en");
 Geocode.enableDebug();
 
@@ -22,6 +22,8 @@ const Sidebar = (props) => {
   const [value, setValue] = useState('want-to-assist');
   const [fields, setFields]= useState({});
   const [loading, setLoading] = useState(false);
+  const [use_gps, setUseGps] = useState(false);
+  const [getting, setGetting] = useState(false);
 
   const [phone_number_assist, setPhoneNumberAssist] = useState();
   const [full_name_assist, setFullNameAssist] = useState();
@@ -40,6 +42,27 @@ const Sidebar = (props) => {
     type: false,
     description: false
   })
+
+  const emptyFormFields = ()=>{
+    setPhoneNumber()
+    setFullName()
+    setLocation()
+    setAddress()
+    setType()
+    setDescription()
+    setTandC(false)
+    setError({
+      phone_number : false,
+      full_name: false,
+      location:false,
+      type: false,
+      description: false
+    })
+  }
+  const emptyAssistForm = ()=>{
+    setPhoneNumberAssist()
+    setFullNameAssist()
+  }
 
   const checkErrors = ()=>{
     let err = error;
@@ -85,9 +108,13 @@ const Sidebar = (props) => {
   const savePosition = position =>{
     setLocation([position.coords.latitude.toString(), position.coords.longitude.toString()] )
   }
-  const getLocation = ()=>{
+  const getLocation = (e)=>{
+      e.preventDefault();
+        setGetting(true)
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(savePosition);
+        navigator.geolocation.getCurrentPosition(savePosition);
+        setUseGps(true)
+        setGetting(false)
     }
     else{
       alert("Geolocation is not supported by this browser.")
@@ -109,7 +136,12 @@ const Sidebar = (props) => {
       .then(res => {
         console.log(res)
         props.getNeeds()
+        setUseGps(false)
         setLoading(false)
+        props.sidebarTrigger()
+        props.setCenter(location)
+        emptyFormFields()
+        alert('Need logged')
       })
       .catch(err=>{
         console.log(err)
@@ -138,7 +170,13 @@ const Sidebar = (props) => {
       .then(res => {
         console.log(res)
         props.getResources()
+        setUseGps(false)
         setLoading(false)
+        props.sidebarTrigger()
+        props.lognewTrigger()
+        props.setCenter(location)
+        emptyFormFields()
+        alert('Resource logged')
       })
       .catch(err=>{
         console.log(err)
@@ -166,7 +204,10 @@ const Sidebar = (props) => {
       .then(res => {
         console.log(res)
         props.getAssist(props.need.id)
+        setUseGps(false)
         setLoading(false)
+        props.needInfo(props.need.id)
+        emptyAssistForm()
       })
       .catch(err=>{
         console.log(err)
@@ -238,14 +279,18 @@ const Sidebar = (props) => {
         {props.user_type === "need" ?
           <form onSubmit={new_need}>
             <label>Phone number</label>
-            <input className={error['phone_number'] ? 'text-field error': 'text-field'} onChange={e => { setPhoneNumber(e.target.value) }} type="number" id="name" placeholder='Phone Number' /><br />
+            <input className={error['phone_number'] ? 'text-field error': 'text-field'} value={phone_number} onChange={e => { setPhoneNumber(e.target.value) }} type="number" id="name" placeholder='Phone Number' /><br />
             <label>Full name</label>
             <input className={error['full_name'] ? 'text-field error': 'text-field'}  onChange={e => { setFullName(e.target.value) }} type="text" id="name" placeholder='Full Name' /><br />
             <label>Use address or GPS location</label>
             <div class='gps-container'>
              <GoogleInput address={address} getLocation={getLocation_} />
-             <button onClick={getLocation}>Use GPS</button>
+             <button onClick={getLocation}>{getting ? 'finding...' : 'Use GPS'}</button>
              </div>
+              {
+                use_gps && <div><input className='text-field' value={location} type="text" id="coords" readonly="readonly"/><br/></div>
+              }
+
             <label>Need type:</label>
             <select className={error['type'] ? 'select-need error': 'select-need'} onChange={e=>{setType(e.target.value)}}>
               <option value="Shelter">Shelter</option>
@@ -256,9 +301,9 @@ const Sidebar = (props) => {
               <option value="Electricity">Electricity (charging)</option>
             </select><br />
             <label>Need description</label>
-            <textarea className={error['description'] ? 'error': ''} onChange={e => { setDescription(e.target.value) }} name="" rows="4" cols="">  </textarea>
+            <textarea className={error['description'] ? 'error': ''} onChange={e => { setDescription(e.target.value) }} value={description} name="" rows="4" cols="">  </textarea>
             <div className='terms-box'>
-              <input onChange={e => { setTandC(e.target.checked) }}  className='' type="checkbox" id="checkbox1" name="checkbox1"  />
+              <input onChange={e => { setTandC(e.target.checked) }}  className='' type="checkbox" id="checkbox1" name="checkbox1" checked={terms_and_c} />
               <span>I agree to making my
                 mobile number public to those wanting to reach out to me, as mentioned in this <a class="privacy-link" target="blank" href="/Black-Box_Privacy_Policy_April22v1.pdf">privacy policy</a>. </span>
             </div>
@@ -267,14 +312,18 @@ const Sidebar = (props) => {
           : props.user_type === "resource" ?
           <form onSubmit={new_resource}>
             <label>Phone number</label>
-            <input className={error['phone_number'] ? 'text-field error': 'text-field'} onChange={e => { setPhoneNumber(e.target.value) }}   type="text" id="name" placeholder='Phone Number' /><br />
+            <input className={error['phone_number'] ? 'text-field error': 'text-field'} value={phone_number} onChange={e => { setPhoneNumber(e.target.value) }}   type="text" id="name" placeholder='Phone Number' /><br />
             <label>Full name</label>
             <input className={error['full_name'] ? 'text-field error': 'text-field'}  onChange={e => { setFullName(e.target.value) }} type="text" id="name" placeholder='Full Name' /><br />
             <label>Use address or GPS location</label>
-             <div class='gps-container'>
+            <div class='gps-container'>
              <GoogleInput address={address} getLocation={getLocation_} />
-             <button onClick={getLocation}>Use GPS</button>
+             <button onClick={getLocation}>{getting ? 'finding...' : 'Use GPS'}</button>
              </div>
+              {
+                use_gps && <div><input className='text-field' value={location} type="text" id="coords" readonly="readonly"/><br/></div>
+              }
+            <br />
             <label>Resource type:</label>
             <select className={error['type'] ? 'select-resource error': 'select-resource'} onChange={e=>{setType(e.target.value)}}>
               <option value="Shelter">Shelter</option>
@@ -285,9 +334,9 @@ const Sidebar = (props) => {
               <option value="Electricity">Electricity (charging)</option>
             </select><br />
             <label>Resource description</label>
-            <textarea className={error['description'] ? 'error': ''} onChange={e => { setDescription(e.target.value) }}  name="" rows="4" cols="">  </textarea>
+            <textarea className={error['description'] ? 'error': ''} onChange={e => { setDescription(e.target.value) }} value={description}  name="" rows="4" cols="">  </textarea>
             <div className='terms-box'>
-              <input type="checkbox" id="checkbox1" name="checkbox1" onChange={e => { setTandC(e.target.checked) }} />
+              <input type="checkbox" id="checkbox1" name="checkbox1" checked={terms_and_c} onChange={e => { setTandC(e.target.checked) }} />
               <span>I agree to making my
                 mobile number public to those wanting to reach out to me, as mentioned in this <a class="privacy-link" target="blank" href="/Black-Box_Privacy_Policy_April22v1.pdf">privacy policy</a>. </span>
             </div>
@@ -296,20 +345,19 @@ const Sidebar = (props) => {
            : props.user_type === "want-to-assist" ?
           <div className='filled-in--container'>
             <label className={props.type === 'need' ? 'tag tag--need' : 'tag tag--resource'}  >{props.type === 'need' ? 'Need' : "Resource" } </label>
-             <h1>{props.type === 'need' ? 'Need' : "Resource" }  Type:</h1>
+             <h1>{props.need ? props.need.type : ""}</h1>
              <p>{props.need ? props.need.description : ""}</p>
-             {props.type === 'need' ? '' : 
-             <>
+
              <label><strong>Logged by:</strong></label><br/>
              <label>{props.need ? props.need.full_name : ""}</label><br/><br/>
-             </> } 
+
            <label><strong>Phone number</strong></label>
            <div className='filled-in'>
            <span >{props.need ? props.need.phone_number : ""}</span><br />
             </div>
             <label><strong>Location</strong></label>
            <div className='filled-in'>
-           <span>{props.need ? props.need.lat + ", "+props.need.long : ""}</span><br />
+           <span> {props.assist_address ? props.assist_address : ""} </span><br />
            </div>
            {props.type === 'need' ? <label><strong>Assistance logged</strong></label> :""}
            
@@ -343,11 +391,11 @@ const Sidebar = (props) => {
         <h1>Thank you</h1>
         <p>We would like to log your assistance to create a record of who's assisting this need.</p>
       <label>Phone number</label>
-      <input className='text-field filled-in' onChange={e=>{setPhoneNumberAssist(e.target.value)}} type="text" id="name" placeholder='Phone Number' /><br />
+      <input className='text-field ' onChange={e=>{setPhoneNumberAssist(parseInt(e.target.value))}} value={phone_number_assist} type="number" id="name" placeholder='Phone Number' /><br />
       <label>Full name</label>
-            <input className='text-field' onChange={e=>{setFullNameAssist(e.target.value)}} type="text" id="name" placeholder='Full Name' /><br />
+            <input className='text-field' onChange={e=>{setFullNameAssist(e.target.value)}} value={full_name_assist} type="text" id="name" placeholder='Full Name' /><br />
       <div className='terms-box'>
-              <input className='' type="checkbox" id="checkbox1" name="checkbox1" onChange={e=>{setTandC(e.target.checked)}} />
+              <input className='' type="checkbox" id="checkbox1" name="checkbox1" checked={terms_and_c} onChange={e=>{setTandC(e.target.checked)}} />
               <span>I agree to making my
                 mobile number public to those wanting to reach out to me, as mentioned in this <a class="privacy-link" target="blank" href="/Black-Box_Privacy_Policy_April22v1.pdf">privacy policy</a>. </span>
             </div>
@@ -356,7 +404,7 @@ const Sidebar = (props) => {
         }
       </div>
 
-      <button class="log-new red" type='button' onClick={props.sidebarTrigger}>Log New</button>
+      <button class="log-new red" type='button' onClick={props.lognewTrigger}>Log New</button>
     </div>
 
   );
