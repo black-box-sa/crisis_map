@@ -19,17 +19,16 @@ const Cookies = (props) => {
 
   const handleToggle = () => {
     //Set off cookies 
-    var gtm_header = document.getElementById('header-gtm');
-    var gtm_body = document.getElementById('body-gtm');
-    var userback = document.getElementById('userback-script');
+    var ga = document.getElementById('google-analytics');
+    var hotjar = document.getElementById('hotjar');
 
     if (toggleState == true){
-      gtm_header.type = "text/plain";
-      userback.type = "text/plain";
+      ga.type = "text/plain";
+      hotjar.type = "text/plain";
     }
     else {
-      gtm_header.type = "text/javascript";
-      userback.type = "text/javascript";
+      ga.type = "text/javascript";
+      hotjar.type = "text/javascript";
     }
     
     setToggleState(prevState => !prevState);
