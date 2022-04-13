@@ -1,5 +1,6 @@
 
 @import './variables.scss';
+@import './mixins.scss';
 .sidebar_right {
     
     // General styling
@@ -67,6 +68,7 @@
       height: calc(100vh - 50px);
       overflow-y: scroll;
       z-index: 2;
+      @include custom-scrollbar ($red);
 
       h3 {
         margin: 0;
