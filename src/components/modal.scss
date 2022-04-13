@@ -21,8 +21,13 @@
     &-footer {
       border-top: 0;
     }
-    &-open .modal {
-      @include custom-scrollbar ($font-general);
+    &-open {
+      .modal {
+        @include custom-scrollbar ($font-general);
+      }
+      div[style*="z-index: 1050"]{
+        z-index: 9999999 !important;
+      }
     }
     .btn {
       margin-top: 0;
