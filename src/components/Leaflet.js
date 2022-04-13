@@ -6,10 +6,11 @@ import * as L from "leaflet";
 //import Sidebar_left from "./sidbar/sidebar";
 import Sidebar_left from "./sidebar";
 import Footer_thin from "./Footer_thin";
-import image from './map-marker-alt.svg'
+import needMarker from'./map-marker-alt-red.svg';
+import resourceMarker from'./map-marker-alt-green.svg';
 import 'leaflet/dist/leaflet.css'
 
-Geocode.setApiKey("AIzaSyAsICHbBOfdz4fNJzAYWigBM7oI0hR9Iu8");
+Geocode.setApiKey(process.env.REACT_APP_GOOGLE_APIKEY);
 Geocode.setLanguage("en");
 Geocode.enableDebug();
 
@@ -25,8 +26,14 @@ const Map = () => {
     const [address, setAddress] = useState("")
 
 
-    const icon = new L.Icon({
-        iconUrl: image,
+    const need_icon = new L.Icon({
+        iconUrl: needMarker,
+        iconSize: [25, 41],
+        iconAnchor: [10, 41],
+        popupAnchor: [2, -40]
+    });
+    const resource_icon = new L.Icon({
+        iconUrl: resourceMarker,
         iconSize: [25, 41],
         iconAnchor: [10, 41],
         popupAnchor: [2, -40]
@@ -70,7 +77,6 @@ const Map = () => {
         } else {
           setSidebar("open")
         }
-        setUserType('need')
       }
 
     const openLastNeeds = ()=>{
@@ -143,7 +149,7 @@ const Map = () => {
             {
                 needs.map((need, index)=>{
                     return(
-                        <Marker position={[ need.lat, need.long]} icon={icon}  key={index}
+                        <Marker position={[ need.lat, need.long]} icon={need_icon}  key={index}
                         eventHandlers={{
                             click: (e) => {
                               console.log('marker clicked', e)
@@ -158,7 +164,7 @@ const Map = () => {
             {
                 resources.map((need, index)=>{
                     return(
-                        <Marker position={[ need.lat, need.long]} key={index} icon={icon} 
+                        <Marker position={[ need.lat, need.long]} key={index} icon={resource_icon} 
                         eventHandlers={{
                             click: (e) => {
                               resourceInfo(need.id)
