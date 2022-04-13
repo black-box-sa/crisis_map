@@ -35,7 +35,7 @@ button {
     // Mobile specific styling
     @media (max-width: $tablet) {
     &.log-new {
-        right: calc((100vw / 2) - 70px);
+        right: calc((100vw / 2) - 130px);
         bottom: 80px;
         }
     }

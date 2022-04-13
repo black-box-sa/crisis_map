@@ -404,7 +404,7 @@ const Sidebar = (props) => {
         }
       </div>
 
-      <button class="log-new red" type='button' onClick={props.lognewTrigger}>Log New</button>
+      <button class="log-new red" type='button' onClick={props.lognewTrigger}>I need help / I can help</button>
     </div>
 
   );
