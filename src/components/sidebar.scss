@@ -66,6 +66,7 @@
       border-radius: 0 0 0 $border-radius;
       height: calc(100vh - 50px);
       overflow-y: scroll;
+      z-index: 2;
 
       h3 {
         margin: 0;
