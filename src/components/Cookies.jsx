@@ -46,7 +46,7 @@ const Cookies = (props) => {
         <div className="cookies show-cookie-container" >
           <div className="container">
             <div className="row">
-              <div className="col-md-8">
+              <div className="col-md-8 d-flex align-items-center">
                 <p>This site uses cookies to create a better experience for you. Click settings to disable them.</p>
               </div>
               <div className="col-md-4 text-right pr-0">
