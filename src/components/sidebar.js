@@ -141,7 +141,7 @@ const Sidebar = (props) => {
         props.sidebarTrigger()
         props.setCenter(location)
         emptyFormFields()
-        alert('Need logged')
+        alert('Thank you, your need was submitted successfully. To view it, find it on the map and click on the marker for details.')
       })
       .catch(err=>{
         console.log(err)
@@ -174,9 +174,10 @@ const Sidebar = (props) => {
         setUseGps(false)
         setLoading(false)
         props.sidebarTrigger()
+        props.lognewTrigger()
         props.setCenter(location)
         emptyFormFields()
-        alert('Resource logged')
+        alert('Thank you, resource submitted successfully. To view it, find it on the map and click on the marker for details.')
       })
       .catch(err=>{
         console.log(err)
@@ -349,11 +350,10 @@ const Sidebar = (props) => {
             <label className={props.type === 'need' ? 'tag tag--need' : 'tag tag--resource'}  >{props.type === 'need' ? 'Need' : "Resource" } </label>
              <h1>{props.need ? props.need.type : ""}</h1>
              <p>{props.need ? props.need.description : ""}</p>
-             {props.type === 'need' ? '' : 
-             <>
+
              <label><strong>Logged by:</strong></label><br/>
              <label>{props.need ? props.need.full_name : ""}</label><br/><br/>
-             </> } 
+
            <label><strong>Phone number</strong></label>
            <div className='filled-in'>
            <span >{props.need ? props.need.phone_number : ""}</span><br />
@@ -364,7 +364,7 @@ const Sidebar = (props) => {
            </div>
            {props.type === 'need' ? <label><strong>Assistance logged</strong></label> :""}
            
-           {props.type === 'need' && !props.assists.length > 0 ?
+           {props.type === 'need' && props.type !=='resource' && !props.assists.length > 0 ?
                 <div className='filled-in empty'>
                 <span>No Assistance Logged</span><br />
                 </div>
@@ -385,7 +385,7 @@ const Sidebar = (props) => {
               </div>
            }
 
-          {props.type === 'need' ? <a onClick={() => props.setUserType('assist')}>I want to assist</a> : "" }
+          {props.type === 'need' ? <a onClick={() => props.setUserType('assist')}>I am assisting / have assisted</a> : "" }
            
            </div>
        :
@@ -394,7 +394,7 @@ const Sidebar = (props) => {
         <h1>Thank you</h1>
         <p>We would like to log your assistance to create a record of who's assisting this need.</p>
       <label>Phone number</label>
-      <input className='text-field filled-in' onChange={e=>{setPhoneNumberAssist(e.target.value)}} value={phone_number_assist} type="text" id="name" placeholder='Phone Number' /><br />
+      <input className='text-field ' onChange={e=>{setPhoneNumberAssist(parseInt(e.target.value))}} value={phone_number_assist} type="number" id="name" placeholder='Phone Number' /><br />
       <label>Full name</label>
             <input className='text-field' onChange={e=>{setFullNameAssist(e.target.value)}} value={full_name_assist} type="text" id="name" placeholder='Full Name' /><br />
       <div className='terms-box'>
@@ -407,7 +407,7 @@ const Sidebar = (props) => {
         }
       </div>
 
-      <button class="log-new red" type='button' onClick={props.sidebarTrigger}>Log New</button>
+      <button class="log-new red" type='button' onClick={props.lognewTrigger}>Log New</button>
     </div>
 
   );
