@@ -79,12 +79,16 @@
         margin-bottom: 15px;
         input {
           display: inline-block;
-          top: 0;
+          top: 3px;
           position: relative;
         }
         span {
           display: inline-block;
           margin-left: 5px;
+        }
+        .privacy-link {
+          font-size: 12px;
+          color: $font-general !important;
         }
       }
 
