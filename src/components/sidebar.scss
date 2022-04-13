@@ -18,14 +18,15 @@
     }
     &--tab {
       position: relative;
-      padding: 3px 20px;
       width: 100%;
       text-align: center;
-      padding: 15px;
       box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
       background: white;
       border-radius: 5px 0 0 5px;
       cursor: pointer;
+      &--trigger {
+        padding: 18px;
+      }
       span {
         z-index: 1;
         position: relative;
@@ -109,6 +110,7 @@
         margin-left: 15px;
     }
     h1,h2,h3,h4,h5,h6,p,span,label,input,select {
+      font-family: 'Montserrat';
       color: #31546D;
       &::placeholder {
         color: #31546D;
@@ -131,13 +133,14 @@
   .gps-container {
     display: flex;
     button {
-      width: 100px;
+      width: 150px;
       margin-left: 10px;
       margin-top: 0;
       height: 38px;
       color: white;
-      background-color: #EA5A2E;
-    }
+      background-color: #31546D;
+      border-radius: 10px
+    };
   }
    .filled-in {
      background-color: #a8b1b93d ;

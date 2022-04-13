@@ -9,7 +9,7 @@ import './sidebar.scss';
 import './inputs.scss';
 import './button.scss'
 
-Geocode.setApiKey("AIzaSyAsICHbBOfdz4fNJzAYWigBM7oI0hR9Iu8");
+Geocode.setApiKey(process.env.REACT_APP_GOOGLE_APIKEY);
 Geocode.setLanguage("en");
 Geocode.enableDebug();
 
@@ -271,8 +271,8 @@ const Sidebar = (props) => {
             <label>Phone number</label>
             <input className={error['phone_number'] ? 'text-field error': 'text-field'} value={phone_number} onChange={e => { setPhoneNumber(e.target.value) }} type="number" id="name" placeholder='Phone Number' /><br />
             <label>Full name</label>
-            <input className={error['full_name'] ? 'text-field error': 'text-field'} value={full_name}  onChange={e => { setFullName(e.target.value) }} type="text" id="name" placeholder='Full Name' /><br />
-            <label>location</label>
+            <input className={error['full_name'] ? 'text-field error': 'text-field'}  onChange={e => { setFullName(e.target.value) }} type="text" id="name" placeholder='Full Name' /><br />
+            <label>Use address or GPS location</label>
             <div class='gps-container'>
              <GoogleInput address={address} getLocation={getLocation_} />
              <button onClick={getLocation}>Use GPS</button>
@@ -300,8 +300,8 @@ const Sidebar = (props) => {
             <label>Phone number</label>
             <input className={error['phone_number'] ? 'text-field error': 'text-field'} value={phone_number} onChange={e => { setPhoneNumber(e.target.value) }}   type="text" id="name" placeholder='Phone Number' /><br />
             <label>Full name</label>
-            <input className={error['full_name'] ? 'text-field error': 'text-field'} value={full_name} onChange={e => { setFullName(e.target.value) }} type="text" id="name" placeholder='Full Name' /><br />
-            <label>location</label>
+            <input className={error['full_name'] ? 'text-field error': 'text-field'}  onChange={e => { setFullName(e.target.value) }} type="text" id="name" placeholder='Full Name' /><br />
+            <label>Use address or GPS location</label>
              <div class='gps-container'>
              <GoogleInput address={address} getLocation={getLocation_} />
              <button onClick={getLocation}>Use GPS</button>
