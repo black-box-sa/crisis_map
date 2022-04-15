@@ -300,6 +300,7 @@ const Sidebar = (props) => {
               <option value="Water">Water</option>
               <option value="Communications">Communications (Airtime / data)</option>
               <option value="Electricity">Electricity (charging)</option>
+              <option value="Missing Person/'s">Missing person/'s</option>
               <option value="Other">Other</option>
             </select><br />
             <label>Need description</label>
@@ -335,6 +336,7 @@ const Sidebar = (props) => {
               <option value="Water">Water</option>
               <option value="Communications">Communications (Airtime / data)</option>
               <option value="Electricity">Electricity (charging)</option>
+              <option value="Missing Person/'s">Missing person/'s</option>
               <option value="Other">Other</option>
             </select><br />
             <label>Resource description</label>
