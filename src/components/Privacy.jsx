@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import Switch from './Switch'
 import Button from './Button'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTimes } from '@fortawesome/fontawesome-free-solid'
 import './privacy.scss'
 
 const Privacy = (props) => {
@@ -14,7 +16,7 @@ const Privacy = (props) => {
         <div className='privacy--curtain'></div>
         <div className="container privacy">
           <a className="closes" onClick={event => { props.display(false, 'modal') }}>
-            <i className="icon fas fa-times font-stroke"></i>
+            <FontAwesomeIcon icon={faTimes}/>
           </a>
           <div className="row">
             <div className="col-12 privacy--overview">
@@ -24,7 +26,7 @@ const Privacy = (props) => {
                   This website uses cookies to improve your experience while you navigate through the site. Cookies are categorised as mandatory (necessary) and optional. Mandatory cookies are stored on your browser as they are essential for the working of basic functionalities of the website. We also use third-party cookies, that help us analyze and understand how you use this website. These are the optional cookies that will be stored in your browser only with your consent. You also have the option to opt-out of these cookies. But opting out of some of these cookies may have an effect on your browsing experience.
                 </p>
               </div>
-              <a href="/Black-Box_Privacy_Policy_April22v1.pdf" target="blank" className="policy">Privacy policy<i className="fas fa-external-link-alt"></i></a>
+              <a href="/static/dist/pdf/Black-Box_Privacy_Policy_Sept21v1.pdf" target="blank" className="policy">Privacy policy<i className="fas fa-external-link-alt"></i></a>
               <div className="collaps-btn">
                 <a className="trigger" onClick={event => { setCollapseOne(!collape_one) }}></a>
                 <span>
