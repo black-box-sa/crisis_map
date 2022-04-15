@@ -293,12 +293,14 @@ const Sidebar = (props) => {
 
             <label>Need type:</label>
             <select className={error['type'] ? 'select-need error': 'select-need'} onChange={e=>{setType(e.target.value)}}>
-              <option value="Shelter">Shelter</option>
+            <option value="Shelter">Shelter</option>
               <option value="Food">Food</option>
               <option value="Clothing">Clothing</option>
               <option value="Sanitation">Sanitation</option>
+              <option value="Water">Water</option>
               <option value="Communications">Communications (Airtime / data)</option>
               <option value="Electricity">Electricity (charging)</option>
+              <option value="Other">Other</option>
             </select><br />
             <label>Need description</label>
             <textarea className={error['description'] ? 'error': ''} onChange={e => { setDescription(e.target.value) }} value={description} name="" rows="4" cols="">  </textarea>
@@ -330,8 +332,10 @@ const Sidebar = (props) => {
               <option value="Food">Food</option>
               <option value="Clothing">Clothing</option>
               <option value="Sanitation">Sanitation</option>
+              <option value="Water">Water</option>
               <option value="Communications">Communications (Airtime / data)</option>
               <option value="Electricity">Electricity (charging)</option>
+              <option value="Other">Other</option>
             </select><br />
             <label>Resource description</label>
             <textarea className={error['description'] ? 'error': ''} onChange={e => { setDescription(e.target.value) }} value={description}  name="" rows="4" cols="">  </textarea>
