@@ -6,15 +6,15 @@
     color: white;
     max-width: 100%;
     // height: 100px;
-    padding-top: $s-s;
-    padding-bottom: $s-s;
+    padding-top: 30px;
+    padding-bottom: 30px;
     display: flex;
     align-items: center;
     z-index: 999;
     bottom: 0;
     position: absolute;
     .copyright {
-      background-color: rgba(255, 255, 255, 0.6);
+      background-color: rgba(255, 255, 255, 0.7);
       border-radius: 15px;
       padding: 15px;
       a {
@@ -83,11 +83,15 @@
     
     // Mobile specific styling
     @media (max-width: $tablet) {
+
+      padding-top: 20px;
+      padding-bottom: 20px;
         .social-menu {
           justify-content: center;
         }
         .info-menu {
           margin-top: $s-s;
+          justify-content: center;
         }
       }
     } 

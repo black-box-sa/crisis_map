@@ -1,0 +1,49 @@
+@import './variables.scss';
+@import './mixins.scss';
+
+.modal {
+    // Built on the bootstrap modal
+    
+    &-title {
+      font: Bold 24px/30px $font;
+      display: block;
+      margin: auto;
+    }
+    &-header {
+      border-bottom: 0;
+    }
+    &-content {
+      padding: 15px;
+    }
+    &-btn {
+      height: 32px;
+    }
+    &-footer {
+      border-top: 0;
+    }
+    &-open {
+      .modal {
+        @include custom-scrollbar ($font-general);
+      }
+      div[style*="z-index: 1050"]{
+        z-index: 9999999 !important;
+      }
+    }
+    .btn {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+    .close {
+      margin-left: 0;
+      position: absolute;
+      right: calc(#{$s-s} / 2);
+      top: calc(#{$s-s} / 2);
+    }
+      // General styling
+    
+      // Desktop specific styling
+      @media (min-width: $tablet) {}
+    
+      // Mobile specific styling
+      @media (max-width: $tablet) {}
+    }
