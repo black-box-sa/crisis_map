@@ -12,10 +12,15 @@ button {
     cursor: pointer;
     
     &.log-new {
-        position: absolute;
-        bottom: 20px;
-        left: -40px;
-        padding: 0 15px;
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        font-family: 'Montserrat';
+        font-size: 16px;
+        font-weight: bold;
+        padding-left: 25pt;
+        padding-right: 25pt;
+        border-radius: 10px;
     }
     &.submit {
         width: 200px;
@@ -26,4 +31,13 @@ button {
     &.red {
         background-color: $red;
     }
+
+    // Mobile specific styling
+    @media (max-width: $tablet) {
+    &.log-new {
+        right: calc((100vw / 2) - 130px);
+        bottom: 80px;
+        }
+    }
 }
+
