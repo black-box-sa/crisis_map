@@ -19,17 +19,16 @@ const Cookies = (props) => {
 
   const handleToggle = () => {
     //Set off cookies 
-    var gtm_header = document.getElementById('header-gtm');
-    var gtm_body = document.getElementById('body-gtm');
-    var userback = document.getElementById('userback-script');
+    var ga = document.getElementById('google-analytics');
+    var hotjar = document.getElementById('hotjar');
 
     if (toggleState == true){
-      gtm_header.type = "text/plain";
-      userback.type = "text/plain";
+      ga.type = "text/plain";
+      hotjar.type = "text/plain";
     }
     else {
-      gtm_header.type = "text/javascript";
-      userback.type = "text/javascript";
+      ga.type = "text/javascript";
+      hotjar.type = "text/javascript";
     }
     
     setToggleState(prevState => !prevState);
@@ -47,10 +46,10 @@ const Cookies = (props) => {
         <div className="cookies show-cookie-container" >
           <div className="container">
             <div className="row">
-              <div className="col-md-7">
-                <p>This site uses cookies to create a better experience for you. Hopefully you’re okay with this, but if not, feel free to opt out.</p>
+              <div className="col-md-7 d-flex align-items-center">
+                <p>This site uses cookies to create a better experience for you. Click settings to disable them.</p>
               </div>
-              <div className="col-md-5 text-center">
+              <div className="col-md-5 text-right pr-0">
                 <Button className="btn--settings btn_link" onClick={event => {props.showModal(true)}}>Cookie Settings</Button>
                 <Button className="btn--accept" onClick={event => {props.showBanner(false)}}>Accept</Button>
               </div>
