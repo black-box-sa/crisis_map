@@ -142,7 +142,9 @@ const Map = () => {
         let ass = res.data
         for (let i = 0; i < ass.length; i++) {
           let current = ass[i]
-          arr_assisted.push(current.need_id.toString())
+          if(current){
+            arr_assisted.push(current.need_id.toString())
+          }
         }
 
         axios.get('/needs')
