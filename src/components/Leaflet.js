@@ -137,13 +137,13 @@ const Map = () => {
 
 
     axios.get(`/assists`)
-      .then(res => {
+      .then(response => {
         let arr_assisted = []
-        let ass = res.data
+        let ass = response.data
         for (let i = 0; i < ass.length; i++) {
           let current = ass[i]
           if(current){
-            arr_assisted.push(current.need_id.toString())
+            arr_assisted.push(current.need_id+ "")
           }
         }
 
