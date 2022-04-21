@@ -83,6 +83,15 @@ app.get('/resources', (req, res) => {
     client.end;
 })
 
+app.get('/assists', (req, res) => {
+    client.query(`SELECT DISTINCT need_id FROM public."assists"`, (err, result) => {
+        if (!err) {
+            res.send(result.rows);
+        }
+    });
+    client.end;
+})
+
 app.get('/needs', (req, res) => {
     client.query(`Select * from public."needs"`, (err, result) => {
         if (!err) {
