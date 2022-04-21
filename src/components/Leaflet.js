@@ -142,8 +142,8 @@ const Map = () => {
         let ass = response.data
         for (let i = 0; i < ass.length; i++) {
           let current = ass[i]
-          if(current){
-            arr_assisted.push(current.need_id+ "")
+          if(current['need_id']){
+            arr_assisted.push(current['need_id'].toString())
           }
         }
 
