@@ -140,6 +140,7 @@ const Map = () => {
       .then(response => {
         let arr_assisted = []
         let ass = response.data
+        console.log('assisted',response)
         for (let i = 0; i < ass.length; i++) {
           let current = ass[i]
           if(current['need_id']){
