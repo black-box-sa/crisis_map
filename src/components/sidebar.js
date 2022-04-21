@@ -353,7 +353,7 @@ const Sidebar = (props) => {
           </form>
            : props.user_type === "want-to-assist" ?
           <div className='filled-in--container'>
-            <label className={props.type === 'need' ? 'tag tag--need' : 'tag tag--resource'}  >{props.type === 'need' ? 'Need' : "Resource" } </label>
+            <label className={props.type === 'need' ? 'tag tag--need' : 'tag tag--resource'} style={props.need.assisted && props.type === 'need' ? {backgroundColor: '#2d9bf0'}: {}}  >{props.type === 'need' ? 'Need' : "Resource" } </label>
              <h1>{props.need ? props.need.type : ""}</h1>
              <p>{props.need ? props.need.description : ""}</p>
 
