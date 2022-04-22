@@ -1,0 +1,128 @@
+@import './variables.scss';
+@import './mixins.scss';
+
+.toggle {
+    * :hover {
+      cursor: pointer;
+    }
+  
+    margin: 10px 0 0 5px;
+  
+    .custom-switch {
+      padding-left: 25px;
+    }
+  
+    label {
+      margin-left: 10px;
+      display: block;
+      text-transform: Capitalize;
+      line-height: 25px;
+      font-size: 14px;
+      color: $font-general;
+    }
+  
+  
+    // Default state overides of bootstraps switch
+    .custom-switch .custom-control-label {
+      &::before {
+        left: -40px;
+        width: 34px;
+        height: 14px;
+        background-color: rgba(34, 31, 31, 0.26);
+        box-shadow: none;
+        border: none;
+      }
+  
+      &::after {
+        top: 1px;
+        left: -40px;
+        width: 20px;
+        height: 20px;
+        border-radius: 10px;
+        background-color: #F1F1F1;
+        box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
+      }
+    }
+  
+    // Checked overrides of bootstraps switch
+    .custom-control-input:checked~.custom-control-label {
+      font-weight: 500;
+  
+      &::before {
+        border-color: transparent;
+        background-color: rgba(34, 31, 31, 0.26);;
+      }
+  
+      &::after {
+        background-color: rgba(0, 150, 135, 1);
+        left: -37px;
+  
+      }
+    }
+    .custom-control-input:checked~.crisis-need {
+      &::after {
+        background-color: $red;
+  
+      }
+    }
+    .custom-control-input:checked~.resources {
+      &::after {
+        background-color: $green;
+  
+      }
+    }
+    .custom-control-input:checked~.need-assisted {
+      &::after {
+        background-color: $blue;
+  
+      }
+    }
+    .custom-control-input:checked~.hazard {
+      &::after {
+        background-color: $yellow;
+  
+      }
+    }
+    .custom-control-input:checked~.catergory {
+      &::after {
+        background-color: #31546D;
+  
+      }
+    }
+  
+  
+    &--indicator {
+      &.clinics-bg.true{
+        // background-image: url('/static/dist/img/marker_clinic_blue_white-outline.png');
+        background-size: cover;
+      }
+      $diameter: 15px;
+  
+      position: absolute;
+      right: 0;
+      top: 4px;
+  
+      height: $diameter;
+      width: $diameter;
+      border-radius: calc($diameter / 2);
+  
+      background-color: #F1F1F1;
+  
+      transition: .2s background-color ease-in-out;
+  
+      // Default fallback
+      &.true {
+        background-color: darkgray;
+      }
+  
+  
+    }
+  
+    // General styling
+  
+    // Desktop specific styling
+    @media (min-width: $tablet) {}
+  
+    // Mobile specific styling
+    @media (max-width: $tablet) {}
+  }
