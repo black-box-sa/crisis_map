@@ -138,7 +138,7 @@ const Sidebar = (props) => {
 
   }
   return (
-    <div className={["sidebar_right "] + sidebar} id="sideBarleft">
+    <div className={["sidebar_right "] + sidebar} id="sideBarRight">
 
       <div className="sidebar_right--tab">
         <div className="sidebar_right--tab--trigger" onClick={sidebarTrigger}>
