@@ -16,8 +16,8 @@ export default class Toggle extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      toggle: false,
-      label: 'Toggle Off',
+      toggle: true,
+     // label: 'Toggle Off',
       customStyles: {
         backgroundColor: this.props.indicatorColour 
       }
@@ -27,18 +27,7 @@ export default class Toggle extends Component {
 
 // Function that adjusts state to open or close sidebar by adding or removing the "open" class
 toggleTrigger() {
-  if (this.state.toggle === false) {
-    this.setState({
-      toggle : true,
-      label : 'Toggle On'
-    })
-  } else {
-    this.setState({
-      toggle : false,
-      label : 'Toggle Off'
-    })
-  }
-  console.log(this.state.toggle)
+  this.props.onChange(!this.props.toggle)
 }
 
   render(){
@@ -46,7 +35,7 @@ toggleTrigger() {
       <div className={["toggle "] + this.props.className}>
   
         <div className="custom-control custom-switch">
-          <input type="checkbox" className="custom-control-input" onChange={this.toggleTrigger} id={this.props.id} />
+          <input type="checkbox" className="custom-control-input" onChange={this.toggleTrigger} id={this.props.id} checked={this.props.toggle} />
           <label className={['custom-control-label '] + this.props.class} htmlFor={this.props.id}></label>
         </div>
   
