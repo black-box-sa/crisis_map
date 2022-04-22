@@ -28,6 +28,19 @@ const Map = () => {
   const [sidebar, setSidebar] = useState("");
   const [address, setAddress] = useState("")
 
+  const [toggleNeed, setToggleNeed] = useState(true)
+  const [toggleResources, setToggleResources] = useState(true)
+  const [toggleAssisted, setToggleAssisted] = useState(true)
+  const [toggleHazard, setToggleHazard] = useState(true)
+  const [toggleShelter, setToggleShelter] = useState(true)
+  const [toggleFood, setToggleFood] = useState(true)
+  const [toggleClothing, setToggleClothing] = useState(true)
+  const [toggleSanitation, setToggleSanitation] = useState(true)
+  const [toggleCommunications, setToggleCommunications] = useState(true)
+  const [toggleElecricity, setToggleElecricity] = useState(true)
+  const [toggleOther, setToggleOther] = useState(true)
+  const [toggleMissing, setToggleMissing] = useState(true)
+
 
   const need_icon = new L.Icon({
     iconUrl: needMarker,
@@ -192,48 +205,338 @@ const Map = () => {
         setAssists(res.data)
       })
   }
+  
+  const toggleTriggerNeed =()=>{
 
-  const getAssists = () => {
-    axios.get(`/assists`)
-      .then(res => {
-        let arr = []
-        let data = res.data
-        for (let i = 0; i < data.length; i++) {
-          let current = data[i]
-          arr.push(current.need_id.toString())
-        }
-        console.log('assisted', arr)
-        setAssisted(arr)
-      })
   }
 
   useEffect(() => {
     getNeeds()
     getResources()
   }, [])
+
   return (
     <div className="leaflet-container">
       <Sidebar_left setCenter={setCenter} needInfo={needInfo} sidebar={sidebar} assist_address={address} sidebarTrigger={sidebarTrigger} lognewTrigger={lognewTrigger} getResources={getResources} openLastNeeds={openLastNeeds} getNeeds={getNeeds} need={need} type={type} user_type={user_type} setUserType={setUserType} assists={assists} getAssist={getAssist} />
-      <FilterBar/>
+      <FilterBar
+      toggleNeed={toggleNeed}
+      setToggleNeed={setToggleNeed}
+      toggleResources = {toggleResources}
+      setToggleResources = {setToggleResources}
+      toggleAssisted = {toggleAssisted}
+      setToggleAssisted = {setToggleAssisted}
+      toggleHazard = {toggleHazard}
+      setToggleHazard = {setToggleHazard}
+      toggleShelter = {toggleShelter}
+      setToggleShelter = {setToggleShelter}
+      toggleFood = {toggleFood}
+      setToggleFood = {setToggleFood}
+      toggleClothing = {toggleClothing}
+      setToggleClothing = {setToggleClothing}
+      toggleSanitation = {toggleSanitation}
+      setToggleSanitation = {setToggleSanitation}
+      toggleCommunications = {toggleCommunications}
+      setToggleCommunications = {setToggleCommunications}
+      toggleElecricity = {toggleElecricity}
+      setToggleElecricity = {setToggleElecricity}
+      toggleMissing = {toggleMissing}
+      setToggleMissing = {setToggleMissing}
+      toggleOther = {toggleOther}
+      setToggleOther = {setToggleOther}
+      
+      />
       <MapContainer center={center} zoom={12}>
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         {
-          needs.map((need, index) => {
-            return (
-              <Marker position={[need.lat, need.long]} icon={need.assisted ? assisted_icon : need_icon} key={index}
-                eventHandlers={{
-                  click: (e) => {
-                    console.log('marker clicked', e)
-                    needInfo(need.id)
-                  },
-                }}
-              />
-
-            )
+          toggleNeed&&toggleShelter&&needs.map((need, index) => {
+            if(need.type === 'Shelter'  && !need.assisted)
+            {
+              return (
+                <Marker position={[need.lat, need.long]} icon={need_icon} key={index}
+                  eventHandlers={{
+                    click: (e) => {
+                      console.log('marker clicked', e)
+                      needInfo(need.id)
+                    },
+                  }}
+                />
+  
+              )
+            }
           })
         }
         {
-          resources.map((need, index) => {
+          toggleAssisted&&toggleShelter&&needs.map((need, index) => {
+            if(need.type === 'Shelter' && need.assisted)
+            {
+              return (
+                <Marker position={[need.lat, need.long]} icon={assisted_icon} key={index}
+                  eventHandlers={{
+                    click: (e) => {
+                      console.log('marker clicked', e)
+                      needInfo(need.id)
+                    },
+                  }}
+                />
+  
+              )
+            }
+          })
+        }
+        {
+         toggleNeed&&toggleFood&&needs.map((need, index) => {
+           if(need.type === 'Food' && !need.assisted){
+              return (
+                <Marker position={[need.lat, need.long]} icon={need_icon} key={index}
+                  eventHandlers={{
+                    click: (e) => {
+                      console.log('marker clicked', e)
+                      needInfo(need.id)
+                    },
+                  }}
+                />
+              )
+           }
+          })
+        }
+        {
+         toggleAssisted&&toggleFood&&needs.map((need, index) => {
+           if(need.type === 'Food' && need.assisted){
+              return (
+                <Marker position={[need.lat, need.long]} icon={assisted_icon} key={index}
+                  eventHandlers={{
+                    click: (e) => {
+                      console.log('marker clicked', e)
+                      needInfo(need.id)
+                    },
+                  }}
+                />
+              )
+           }
+          })
+        }
+
+
+        {
+          toggleNeed&&toggleClothing&&needs.map((need, index) => {
+            if(need.type === 'Clothing' && !need.assisted){
+              return (
+                <Marker position={[need.lat, need.long]} icon={need_icon} key={index}
+                  eventHandlers={{
+                    click: (e) => {
+                      console.log('marker clicked', e)
+                      needInfo(need.id)
+                    },
+                  }}
+                />
+  
+              )
+
+            }
+          })
+        }
+        {
+          toggleAssisted&&toggleClothing&&needs.map((need, index) => {
+            if(need.type === 'Clothing' && need.assisted){
+              return (
+                <Marker position={[need.lat, need.long]} icon={assisted_icon} key={index}
+                  eventHandlers={{
+                    click: (e) => {
+                      console.log('marker clicked', e)
+                      needInfo(need.id)
+                    },
+                  }}
+                />
+  
+              )
+
+            }
+          })
+        }
+
+
+        {
+           toggleNeed&&toggleSanitation&&needs.map((need, index) => {
+             if(need.type === 'Sanitation ' && !need.assisted){
+                return (
+                  <Marker position={[need.lat, need.long]} icon={need_icon} key={index}
+                    eventHandlers={{
+                      click: (e) => {
+                        console.log('marker clicked', e)
+                        needInfo(need.id)
+                      },
+                    }}
+                  />
+                )
+
+             }
+          })
+        }
+        {
+          toggleAssisted&&toggleSanitation&&needs.map((need, index) => {
+             if(need.type === 'Sanitation' && need.assisted){
+                return (
+                  <Marker position={[need.lat, need.long]} icon={assisted_icon} key={index}
+                    eventHandlers={{
+                      click: (e) => {
+                        console.log('marker clicked', e)
+                        needInfo(need.id)
+                      },
+                    }}
+                  />
+                )
+
+             }
+          })
+        }
+
+
+        {
+         toggleNeed&&toggleCommunications&&needs.map((need, index) => {
+            if(need.type==='Communications'  && !need.assisted){
+              return (
+                <Marker position={[need.lat, need.long]} icon={need_icon} key={index}
+                  eventHandlers={{
+                    click: (e) => {
+                      console.log('marker clicked', e)
+                      needInfo(need.id)
+                    },
+                  }}
+                />
+              )
+
+            }
+          })
+        }
+        {
+          toggleAssisted&&toggleCommunications&&needs.map((need, index) => {
+            if(need.type==='Communications' && need.assisted){
+              return (
+                <Marker position={[need.lat, need.long]} icon={assisted_icon} key={index}
+                  eventHandlers={{
+                    click: (e) => {
+                      console.log('marker clicked', e)
+                      needInfo(need.id)
+                    },
+                  }}
+                />
+              )
+
+            }
+          })
+        }
+
+
+        {
+          toggleNeed&&toggleElecricity&&needs.map((need, index) => {
+            if(need.type === 'Electricity' && !need.assisted){
+              return (
+                <Marker position={[need.lat, need.long]} icon={need_icon} key={index}
+                  eventHandlers={{
+                    click: (e) => {
+                      console.log('marker clicked', e)
+                      needInfo(need.id)
+                    },
+                  }}
+                />
+              )
+            }
+          })
+        }
+        {
+          toggleAssisted&&toggleElecricity&&needs.map((need, index) => {
+            if(need.type === 'Electricity' && need.assisted){
+              return (
+                <Marker position={[need.lat, need.long]} icon={assisted_icon} key={index}
+                  eventHandlers={{
+                    click: (e) => {
+                      console.log('marker clicked', e)
+                      needInfo(need.id)
+                    },
+                  }}
+                />
+              )
+            }
+          })
+        }
+
+
+
+        {
+          toggleNeed&&toggleMissing&&needs.map((need, index) => {
+            if(need.type === 'Missing person/s' && !need.assisted ){
+              return (
+                <Marker position={[need.lat, need.long]} icon={need_icon} key={index}
+                  eventHandlers={{
+                    click: (e) => {
+                      console.log('marker clicked', e)
+                      needInfo(need.id)
+                    },
+                  }}
+                />
+  
+              )
+
+            }
+          })
+        }
+        {
+          toggleAssisted&&toggleMissing&&needs.map((need, index) => {
+            if(need.type === 'Missing person/s' && need.assisted ){
+              return (
+                <Marker position={[need.lat, need.long]} icon={assisted_icon} key={index}
+                  eventHandlers={{
+                    click: (e) => {
+                      console.log('marker clicked', e)
+                      needInfo(need.id)
+                    },
+                  }}
+                />
+  
+              )
+
+            }
+          })
+        }
+
+
+
+        {
+           toggleNeed&&toggleOther&&needs.map((need, index) => {
+            if(need.type === 'Other' && !need.assisted){
+              return (
+                <Marker position={[need.lat, need.long]} icon={need.assisted ? assisted_icon : need_icon} key={index}
+                  eventHandlers={{
+                    click: (e) => {
+                      console.log('marker clicked', e)
+                      needInfo(need.id)
+                    },
+                  }}
+                />
+              )
+            }
+          })
+        }
+        {
+          toggleAssisted&&toggleOther&&needs.map((need, index) => {
+            if(need.type === 'Other' && need.assisted){
+              return (
+                <Marker position={[need.lat, need.long]} icon={assisted_icon} key={index}
+                  eventHandlers={{
+                    click: (e) => {
+                      console.log('marker clicked', e)
+                      needInfo(need.id)
+                    },
+                  }}
+                />
+              )
+            }
+          })
+        }
+
+
+        {
+          toggleResources&&resources.map((need, index) => {
             return (
               <Marker position={[need.lat, need.long]} key={index} icon={resource_icon}
                 eventHandlers={{
