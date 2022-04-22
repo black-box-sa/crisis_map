@@ -8,7 +8,33 @@ import Toggle from './toggle';
 import Filter from './filter.svg'
 
 
-const FilterBar = (props) => {
+const FilterBar = ({
+  title,
+  setToggleNeed,
+  toggleNeed,
+  setToggleResources,
+  toggleResources,
+  setToggleAssisted,
+  toggleAssisted,
+  setToggleHazard,
+  toggleHazard,
+  setToggleShelter,
+  toggleShelter,
+  setToggleFood,
+  toggleFood,
+  setToggleClothing,
+  toggleClothing,
+  setToggleSanitation,
+  toggleSanitation,
+  setToggleCommunications,
+  toggleCommunications,
+  setToggleElecricity,
+  toggleElecricity,
+  setToggleMissing,
+  toggleMissing,
+  setToggleOther,
+  toggleOther
+}) => {
   const [sidebar, setSidebar] = useState("");
 
 
@@ -29,7 +55,7 @@ const FilterBar = (props) => {
 
       <div className="sidebar_left--tab">
         <div className="sidebar_left--tab--trigger" onClick={sidebarTrigger}>
-          <span>{props.title}</span>
+          <span>{title}</span>
           <i className="filter"><img src={Filter}/></i>
 
         </div>
@@ -39,45 +65,53 @@ const FilterBar = (props) => {
         <h3>Filter by:</h3>
           <div className='sidebar_left--toggle--container'>
             <p>Crisis/need</p>
-          <Toggle class='crisis-need' id='1'/>
+          <Toggle class='crisis-need' id='1' onChange={setToggleNeed} toggle={toggleNeed} />
           </div>
           <div className='sidebar_left--toggle--container'>
             <p>Resources</p>
-          <Toggle class='resources' id='2'/>
+          <Toggle class='resources' id='2' onChange={setToggleResources} toggle={toggleResources} />
           </div>
           <div className='sidebar_left--toggle--container'>
             <p>Need assisted</p>
-          <Toggle class='need-assisted' id='3'/>
+          <Toggle class='need-assisted' id='3' onChange={setToggleAssisted} toggle={toggleAssisted}  />
           </div>
           <div className='sidebar_left--toggle--container'>
             <p>Hazard</p>
-          <Toggle class='hazard' id='4'/>
+          <Toggle class='hazard' id='4'  onChange={setToggleHazard} toggle={toggleHazard}  />
           </div>
           <hr/>
         <h3>Category</h3>
         <div className='sidebar_left--toggle--container'>
             <p>Shelter</p>
-          <Toggle class='catergory' id='5'/>
+          <Toggle class='catergory' id='5'  onChange={setToggleShelter} toggle={toggleShelter}  />
           </div>
           <div className='sidebar_left--toggle--container'>
             <p>Food</p>
-          <Toggle class='catergory' id='6'/>
+          <Toggle class='catergory' id='6'  onChange={setToggleFood} toggle={toggleFood}  />
           </div>
           <div className='sidebar_left--toggle--container'>
             <p>Clothing</p>
-          <Toggle class='catergory' id='7'/>
+          <Toggle class='catergory' id='7' onChange={setToggleClothing} toggle={toggleClothing} />
           </div>
           <div className='sidebar_left--toggle--container'>
             <p>Sanitation</p>
-          <Toggle class='catergory' id='8'/>
+          <Toggle class='catergory' id='8' onChange={setToggleSanitation} toggle={toggleSanitation} />
           </div>
           <div className='sidebar_left--toggle--container'>
             <p>Communications</p>
-          <Toggle class='catergory' id='9'/>
+          <Toggle class='catergory' id='9' onChange={setToggleCommunications} toggle={toggleCommunications} />
           </div>
           <div className='sidebar_left--toggle--container'>
             <p>Elecricity (charging)</p>
-          <Toggle class='catergory' id='10'/>
+          <Toggle class='catergory' id='10' onChange={setToggleElecricity} toggle={toggleElecricity} />
+          </div>
+          <div className='sidebar_left--toggle--container'>
+            <p>Missing person/s</p>
+          <Toggle class='catergory' id='11' onChange={setToggleMissing} toggle={toggleMissing} />
+          </div>
+          <div className='sidebar_left--toggle--container'>
+            <p>Elecricity (charging)</p>
+          <Toggle class='catergory' id='10' onChange={setToggleOther} toggle={toggleOther} />
           </div>
         {/**Need form */}
 
@@ -87,18 +121,3 @@ const FilterBar = (props) => {
   );
 }
 export default FilterBar;
-
-FilterBar.propTypes = {
-  /**
-   * Title text for the modal
-   */
-  title: PropTypes.string,
-  /**
-   * Accepts children components
-   */
-  children: PropTypes.element,
-  /**
-   * Accepts content as well, if preffered over children
-   */
-  content: PropTypes.string
-};
