@@ -134,7 +134,6 @@ const Sidebar = (props) => {
       }
       axios.post('/new_need', data)
       .then(res => {
-        console.log(res)
         props.getNeeds()
         setUseGps(false)
         setLoading(false)
@@ -169,7 +168,6 @@ const Sidebar = (props) => {
       }
       axios.post('/new_resource', data)
       .then(res => {
-        console.log(res)
         props.getResources()
         setUseGps(false)
         setLoading(false)
@@ -204,7 +202,6 @@ const Sidebar = (props) => {
       }
       axios.post('/new_assist', data)
       .then(res => {
-        console.log(res)
         props.getAssist(props.need.id)
         setUseGps(false)
         setLoading(false)
@@ -230,15 +227,11 @@ const Sidebar = (props) => {
     setValue(e.target.value);
   }
   const getLocation_ = (location) => {
-    // var fields = fields;
-    // fields["location"] = location;
-    // setFields(fields)
-    console.log('location', location)
     setAddress(location.label)
     Geocode.fromAddress(location.label).then(
       (response) => {
         const { lat, lng } = response.results[0].geometry.location;
-        console.log(lat, lng);
+        //console.log(lat, lng);
         setLocation([lat, lng])
       },
       (error) => {
