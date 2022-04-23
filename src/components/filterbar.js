@@ -110,8 +110,8 @@ const FilterBar = ({
           <Toggle class='catergory' id='11' onChange={setToggleMissing} toggle={toggleMissing} />
           </div>
           <div className='sidebar_left--toggle--container'>
-            <p>Elecricity (charging)</p>
-          <Toggle class='catergory' id='10' onChange={setToggleOther} toggle={toggleOther} />
+            <p>Other</p>
+          <Toggle class='catergory' id='12' onChange={setToggleOther} toggle={toggleOther} />
           </div>
         {/**Need form */}
 
