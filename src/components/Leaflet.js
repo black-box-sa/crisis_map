@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Geocode from "react-geocode";
 import { MapContainer, TileLayer, Marker, Popup, defaultMarker } from 'react-leaflet'
+import Papa from 'papaparse';
 import * as L from "leaflet";
 //import Sidebar_left from "./sidbar/sidebar";
 import Sidebar_left from "./sidebar";
@@ -15,6 +16,7 @@ import 'leaflet/dist/leaflet.css'
 Geocode.setApiKey(process.env.REACT_APP_GOOGLE_APIKEY);
 Geocode.setLanguage("en");
 Geocode.enableDebug();
+const google_link = 'https://drive.google.com/file/d/1EDUPswJQWhveDVfOwnU25lJ-xoDiFpvP/view?usp=sharing'
 
 const Map = () => {
   const [center, setCenter] = useState([-29.883333, 31.049999])
@@ -62,6 +64,30 @@ const Map = () => {
     popupAnchor: [2, -40]
   });
 
+  const updateData = (result)=>{
+    let new_harzard = []
+    const data = result.data;
+    data.map(item=>{
+      new_harzard.push({
+        coordinates : [item['latitude'], item['longitude']],
+        date: new Date(item['date']),
+        type: item['type'],
+        description: item['description'],
+        status: item['status']
+      })
+    })
+    //console.log('harzard', data)
+  }
+  const hazard = ()=>{
+            Papa.parse(google_link, {
+            header: true,
+            download: true,
+            skipEmptyLines: true,
+            // Here this is also available. So we can call our custom class method
+            complete: updateData
+        });
+  }
+
   const convertCoordinatesToAddress = (lat, lng) => {
     Geocode.fromLatLng(lat, lng).then(
       (response) => {
@@ -82,8 +108,6 @@ const Map = () => {
             }
           }
         }
-        console.log(city, state, country);
-        console.log(addres);
         setAddress(addres)
       },
       (error) => {
@@ -128,7 +152,6 @@ const Map = () => {
     setType('need')
     setSidebar("open")
     convertCoordinatesToAddress(data[0].lat, data[0].long)
-    console.log('needInfo', data)
   }
 
   const resourceInfo = id => {
@@ -143,7 +166,6 @@ const Map = () => {
     setType('resource')
     setSidebar("open")
     convertCoordinatesToAddress(data[0].lat, data[0].long)
-    console.log('resourceInfo', data)
   }
 
 
@@ -154,7 +176,6 @@ const Map = () => {
       .then(response => {
         let arr_assisted = []
         let ass = response.data
-        console.log('assisted',response)
         for (let i = 0; i < ass.length; i++) {
           let current = ass[i]
           if(current['need_id']){
@@ -176,7 +197,6 @@ const Map = () => {
               }
               arr.push(current)
             }
-            console.log('needs', arr)
             setNeeds(arr)
           })
           .catch(err => {
@@ -193,7 +213,6 @@ const Map = () => {
   const getResources = () => {
     axios.get('/resources')
       .then(res => {
-        console.log('resources', res.data)
         setResources(res.data)
       })
   }
@@ -201,24 +220,22 @@ const Map = () => {
   const getAssist = (id) => {
     axios.get(`/assists/${id}`)
       .then(res => {
-        console.log('resources', res.data)
+        //console.log('resources', res.data)
         setAssists(res.data)
       })
   }
   
-  const toggleTriggerNeed =()=>{
-
-  }
 
   useEffect(() => {
     getNeeds()
     getResources()
+    //hazard()
   }, [])
 
   return (
     <div className="leaflet-container">
       <Sidebar_left setCenter={setCenter} needInfo={needInfo} sidebar={sidebar} assist_address={address} sidebarTrigger={sidebarTrigger} lognewTrigger={lognewTrigger} getResources={getResources} openLastNeeds={openLastNeeds} getNeeds={getNeeds} need={need} type={type} user_type={user_type} setUserType={setUserType} assists={assists} getAssist={getAssist} />
-      <FilterBar
+      {/* <FilterBar
       toggleNeed={toggleNeed}
       setToggleNeed={setToggleNeed}
       toggleResources = {toggleResources}
@@ -243,8 +260,7 @@ const Map = () => {
       setToggleMissing = {setToggleMissing}
       toggleOther = {toggleOther}
       setToggleOther = {setToggleOther}
-      
-      />
+      /> */}
       <MapContainer center={center} zoom={12}>
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         {
@@ -255,7 +271,6 @@ const Map = () => {
                 <Marker position={[need.lat, need.long]} icon={need_icon} key={index}
                   eventHandlers={{
                     click: (e) => {
-                      console.log('marker clicked', e)
                       needInfo(need.id)
                     },
                   }}
@@ -273,7 +288,6 @@ const Map = () => {
                 <Marker position={[need.lat, need.long]} icon={assisted_icon} key={index}
                   eventHandlers={{
                     click: (e) => {
-                      console.log('marker clicked', e)
                       needInfo(need.id)
                     },
                   }}
@@ -290,7 +304,6 @@ const Map = () => {
                 <Marker position={[need.lat, need.long]} icon={need_icon} key={index}
                   eventHandlers={{
                     click: (e) => {
-                      console.log('marker clicked', e)
                       needInfo(need.id)
                     },
                   }}
@@ -306,7 +319,6 @@ const Map = () => {
                 <Marker position={[need.lat, need.long]} icon={assisted_icon} key={index}
                   eventHandlers={{
                     click: (e) => {
-                      console.log('marker clicked', e)
                       needInfo(need.id)
                     },
                   }}
@@ -324,7 +336,6 @@ const Map = () => {
                 <Marker position={[need.lat, need.long]} icon={need_icon} key={index}
                   eventHandlers={{
                     click: (e) => {
-                      console.log('marker clicked', e)
                       needInfo(need.id)
                     },
                   }}
@@ -342,7 +353,6 @@ const Map = () => {
                 <Marker position={[need.lat, need.long]} icon={assisted_icon} key={index}
                   eventHandlers={{
                     click: (e) => {
-                      console.log('marker clicked', e)
                       needInfo(need.id)
                     },
                   }}
@@ -362,7 +372,6 @@ const Map = () => {
                   <Marker position={[need.lat, need.long]} icon={need_icon} key={index}
                     eventHandlers={{
                       click: (e) => {
-                        console.log('marker clicked', e)
                         needInfo(need.id)
                       },
                     }}
@@ -379,7 +388,6 @@ const Map = () => {
                   <Marker position={[need.lat, need.long]} icon={assisted_icon} key={index}
                     eventHandlers={{
                       click: (e) => {
-                        console.log('marker clicked', e)
                         needInfo(need.id)
                       },
                     }}
@@ -398,7 +406,6 @@ const Map = () => {
                 <Marker position={[need.lat, need.long]} icon={need_icon} key={index}
                   eventHandlers={{
                     click: (e) => {
-                      console.log('marker clicked', e)
                       needInfo(need.id)
                     },
                   }}
@@ -415,7 +422,6 @@ const Map = () => {
                 <Marker position={[need.lat, need.long]} icon={assisted_icon} key={index}
                   eventHandlers={{
                     click: (e) => {
-                      console.log('marker clicked', e)
                       needInfo(need.id)
                     },
                   }}
@@ -434,7 +440,6 @@ const Map = () => {
                 <Marker position={[need.lat, need.long]} icon={need_icon} key={index}
                   eventHandlers={{
                     click: (e) => {
-                      console.log('marker clicked', e)
                       needInfo(need.id)
                     },
                   }}
@@ -450,7 +455,6 @@ const Map = () => {
                 <Marker position={[need.lat, need.long]} icon={assisted_icon} key={index}
                   eventHandlers={{
                     click: (e) => {
-                      console.log('marker clicked', e)
                       needInfo(need.id)
                     },
                   }}
@@ -469,7 +473,6 @@ const Map = () => {
                 <Marker position={[need.lat, need.long]} icon={need_icon} key={index}
                   eventHandlers={{
                     click: (e) => {
-                      console.log('marker clicked', e)
                       needInfo(need.id)
                     },
                   }}
@@ -487,7 +490,6 @@ const Map = () => {
                 <Marker position={[need.lat, need.long]} icon={assisted_icon} key={index}
                   eventHandlers={{
                     click: (e) => {
-                      console.log('marker clicked', e)
                       needInfo(need.id)
                     },
                   }}
@@ -508,7 +510,6 @@ const Map = () => {
                 <Marker position={[need.lat, need.long]} icon={need.assisted ? assisted_icon : need_icon} key={index}
                   eventHandlers={{
                     click: (e) => {
-                      console.log('marker clicked', e)
                       needInfo(need.id)
                     },
                   }}
@@ -524,7 +525,6 @@ const Map = () => {
                 <Marker position={[need.lat, need.long]} icon={assisted_icon} key={index}
                   eventHandlers={{
                     click: (e) => {
-                      console.log('marker clicked', e)
                       needInfo(need.id)
                     },
                   }}

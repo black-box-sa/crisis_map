@@ -104,7 +104,6 @@ const Sidebar = (props) => {
       }
       axios.post('/new_need', data)
       .then(res => {
-        console.log(res)
         props.getNeeds()
       })
       .catch(err=>{
@@ -127,7 +126,6 @@ const Sidebar = (props) => {
       }
       axios.post('/new_resource', data)
       .then(res => {
-        console.log(res)
         props.getResources()
       })
       .catch(err=>{
