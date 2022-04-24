@@ -33,7 +33,9 @@ const FilterBar = ({
   setToggleMissing,
   toggleMissing,
   setToggleOther,
-  toggleOther
+  toggleOther,
+  setToggleWater,
+  toggleWater
 }) => {
   const [sidebar, setSidebar] = useState("");
 
@@ -88,6 +90,10 @@ const FilterBar = ({
           <div className='sidebar_left--toggle--container'>
             <p>Food</p>
           <Toggle class='catergory' id='6'  onChange={setToggleFood} toggle={toggleFood}  />
+          </div>
+          <div className='sidebar_left--toggle--container'>
+            <p>Water</p>
+          <Toggle class='catergory' id='620'  onChange={setToggleWater} toggle={toggleWater}  />
           </div>
           <div className='sidebar_left--toggle--container'>
             <p>Clothing</p>
