@@ -42,6 +42,7 @@ const Map = () => {
   const [toggleElecricity, setToggleElecricity] = useState(true)
   const [toggleOther, setToggleOther] = useState(true)
   const [toggleMissing, setToggleMissing] = useState(true)
+  const [toggleWater, setToggleWater] = useState(true)
 
 
   const need_icon = new L.Icon({
@@ -64,12 +65,12 @@ const Map = () => {
     popupAnchor: [2, -40]
   });
 
-  const updateData = (result)=>{
+  const updateData = (result) => {
     let new_harzard = []
     const data = result.data;
-    data.map(item=>{
+    data.map(item => {
       new_harzard.push({
-        coordinates : [item['latitude'], item['longitude']],
+        coordinates: [item['latitude'], item['longitude']],
         date: new Date(item['date']),
         type: item['type'],
         description: item['description'],
@@ -78,14 +79,14 @@ const Map = () => {
     })
     //console.log('harzard', data)
   }
-  const hazard = ()=>{
-            Papa.parse(google_link, {
-            header: true,
-            download: true,
-            skipEmptyLines: true,
-            // Here this is also available. So we can call our custom class method
-            complete: updateData
-        });
+  const hazard = () => {
+    Papa.parse(google_link, {
+      header: true,
+      download: true,
+      skipEmptyLines: true,
+      // Here this is also available. So we can call our custom class method
+      complete: updateData
+    });
   }
 
   const convertCoordinatesToAddress = (lat, lng) => {
@@ -178,7 +179,7 @@ const Map = () => {
         let ass = response.data
         for (let i = 0; i < ass.length; i++) {
           let current = ass[i]
-          if(current['need_id']){
+          if (current['need_id']) {
             arr_assisted.push(current['need_id'].toString())
           }
         }
@@ -224,7 +225,7 @@ const Map = () => {
         setAssists(res.data)
       })
   }
-  
+
 
   useEffect(() => {
     getNeeds()
@@ -258,15 +259,16 @@ const Map = () => {
       setToggleElecricity = {setToggleElecricity}
       toggleMissing = {toggleMissing}
       setToggleMissing = {setToggleMissing}
+      toggleWater = {toggleWater}
+      setToggleWater = {setToggleWater}
       toggleOther = {toggleOther}
       setToggleOther = {setToggleOther}
       /> */}
       <MapContainer center={center} zoom={12}>
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         {
-          toggleNeed&&toggleShelter&&needs.map((need, index) => {
-            if(need.type === 'Shelter'  && !need.assisted)
-            {
+          toggleNeed && toggleShelter && needs.map((need, index) => {
+            if (need.type === 'Shelter' && !need.assisted) {
               return (
                 <Marker position={[need.lat, need.long]} icon={need_icon} key={index}
                   eventHandlers={{
@@ -275,15 +277,14 @@ const Map = () => {
                     },
                   }}
                 />
-  
+
               )
             }
           })
         }
         {
-          toggleAssisted&&toggleShelter&&needs.map((need, index) => {
-            if(need.type === 'Shelter' && need.assisted)
-            {
+          toggleAssisted && toggleShelter && needs.map((need, index) => {
+            if (need.type === 'Shelter' && need.assisted) {
               return (
                 <Marker position={[need.lat, need.long]} icon={assisted_icon} key={index}
                   eventHandlers={{
@@ -292,14 +293,14 @@ const Map = () => {
                     },
                   }}
                 />
-  
+
               )
             }
           })
         }
         {
-         toggleNeed&&toggleFood&&needs.map((need, index) => {
-           if(need.type === 'Food' && !need.assisted){
+          toggleNeed && toggleFood && needs.map((need, index) => {
+            if (need.type === 'Food' && !need.assisted) {
               return (
                 <Marker position={[need.lat, need.long]} icon={need_icon} key={index}
                   eventHandlers={{
@@ -309,12 +310,12 @@ const Map = () => {
                   }}
                 />
               )
-           }
+            }
           })
         }
         {
-         toggleAssisted&&toggleFood&&needs.map((need, index) => {
-           if(need.type === 'Food' && need.assisted){
+          toggleAssisted && toggleFood && needs.map((need, index) => {
+            if (need.type === 'Food' && need.assisted) {
               return (
                 <Marker position={[need.lat, need.long]} icon={assisted_icon} key={index}
                   eventHandlers={{
@@ -324,14 +325,14 @@ const Map = () => {
                   }}
                 />
               )
-           }
+            }
           })
         }
 
 
         {
-          toggleNeed&&toggleClothing&&needs.map((need, index) => {
-            if(need.type === 'Clothing' && !need.assisted){
+          toggleNeed && toggleClothing && needs.map((need, index) => {
+            if (need.type === 'Clothing' && !need.assisted) {
               return (
                 <Marker position={[need.lat, need.long]} icon={need_icon} key={index}
                   eventHandlers={{
@@ -340,15 +341,15 @@ const Map = () => {
                     },
                   }}
                 />
-  
+
               )
 
             }
           })
         }
         {
-          toggleAssisted&&toggleClothing&&needs.map((need, index) => {
-            if(need.type === 'Clothing' && need.assisted){
+          toggleAssisted && toggleClothing && needs.map((need, index) => {
+            if (need.type === 'Clothing' && need.assisted) {
               return (
                 <Marker position={[need.lat, need.long]} icon={assisted_icon} key={index}
                   eventHandlers={{
@@ -357,7 +358,7 @@ const Map = () => {
                     },
                   }}
                 />
-  
+
               )
 
             }
@@ -366,42 +367,8 @@ const Map = () => {
 
 
         {
-           toggleNeed&&toggleSanitation&&needs.map((need, index) => {
-             if(need.type === 'Sanitation ' && !need.assisted){
-                return (
-                  <Marker position={[need.lat, need.long]} icon={need_icon} key={index}
-                    eventHandlers={{
-                      click: (e) => {
-                        needInfo(need.id)
-                      },
-                    }}
-                  />
-                )
-
-             }
-          })
-        }
-        {
-          toggleAssisted&&toggleSanitation&&needs.map((need, index) => {
-             if(need.type === 'Sanitation' && need.assisted){
-                return (
-                  <Marker position={[need.lat, need.long]} icon={assisted_icon} key={index}
-                    eventHandlers={{
-                      click: (e) => {
-                        needInfo(need.id)
-                      },
-                    }}
-                  />
-                )
-
-             }
-          })
-        }
-
-
-        {
-         toggleNeed&&toggleCommunications&&needs.map((need, index) => {
-            if(need.type==='Communications'  && !need.assisted){
+          toggleNeed && toggleSanitation && needs.map((need, index) => {
+            if (need.type === 'Sanitation' && !need.assisted) {
               return (
                 <Marker position={[need.lat, need.long]} icon={need_icon} key={index}
                   eventHandlers={{
@@ -416,8 +383,8 @@ const Map = () => {
           })
         }
         {
-          toggleAssisted&&toggleCommunications&&needs.map((need, index) => {
-            if(need.type==='Communications' && need.assisted){
+          toggleAssisted && toggleSanitation && needs.map((need, index) => {
+            if (need.type === 'Sanitation' && need.assisted) {
               return (
                 <Marker position={[need.lat, need.long]} icon={assisted_icon} key={index}
                   eventHandlers={{
@@ -434,8 +401,42 @@ const Map = () => {
 
 
         {
-          toggleNeed&&toggleElecricity&&needs.map((need, index) => {
-            if(need.type === 'Electricity' && !need.assisted){
+          toggleNeed && toggleCommunications && needs.map((need, index) => {
+            if (need.type === 'Communications' && !need.assisted) {
+              return (
+                <Marker position={[need.lat, need.long]} icon={need_icon} key={index}
+                  eventHandlers={{
+                    click: (e) => {
+                      needInfo(need.id)
+                    },
+                  }}
+                />
+              )
+
+            }
+          })
+        }
+        {
+          toggleAssisted && toggleCommunications && needs.map((need, index) => {
+            if (need.type === 'Communications' && need.assisted) {
+              return (
+                <Marker position={[need.lat, need.long]} icon={assisted_icon} key={index}
+                  eventHandlers={{
+                    click: (e) => {
+                      needInfo(need.id)
+                    },
+                  }}
+                />
+              )
+
+            }
+          })
+        }
+
+
+        {
+          toggleNeed && toggleElecricity && needs.map((need, index) => {
+            if (need.type === 'Electricity' && !need.assisted) {
               return (
                 <Marker position={[need.lat, need.long]} icon={need_icon} key={index}
                   eventHandlers={{
@@ -449,8 +450,8 @@ const Map = () => {
           })
         }
         {
-          toggleAssisted&&toggleElecricity&&needs.map((need, index) => {
-            if(need.type === 'Electricity' && need.assisted){
+          toggleAssisted && toggleElecricity && needs.map((need, index) => {
+            if (need.type === 'Electricity' && need.assisted) {
               return (
                 <Marker position={[need.lat, need.long]} icon={assisted_icon} key={index}
                   eventHandlers={{
@@ -467,8 +468,8 @@ const Map = () => {
 
 
         {
-          toggleNeed&&toggleMissing&&needs.map((need, index) => {
-            if(need.type === 'Missing person/s' && !need.assisted ){
+          toggleNeed && toggleMissing && needs.map((need, index) => {
+            if (need.type === 'Missing Person/s' && !need.assisted) {
               return (
                 <Marker position={[need.lat, need.long]} icon={need_icon} key={index}
                   eventHandlers={{
@@ -477,15 +478,15 @@ const Map = () => {
                     },
                   }}
                 />
-  
+
               )
 
             }
           })
         }
         {
-          toggleAssisted&&toggleMissing&&needs.map((need, index) => {
-            if(need.type === 'Missing person/s' && need.assisted ){
+          toggleAssisted && toggleMissing && needs.map((need, index) => {
+            if (need.type === 'Missing Person/s' && need.assisted) {
               return (
                 <Marker position={[need.lat, need.long]} icon={assisted_icon} key={index}
                   eventHandlers={{
@@ -494,20 +495,18 @@ const Map = () => {
                     },
                   }}
                 />
-  
+
               )
 
             }
           })
         }
 
-
-
         {
-           toggleNeed&&toggleOther&&needs.map((need, index) => {
-            if(need.type === 'Other' && !need.assisted){
+          toggleNeed && toggleWater && needs.map((need, index) => {
+            if (need.type === 'Water' && !need.assisted) {
               return (
-                <Marker position={[need.lat, need.long]} icon={need.assisted ? assisted_icon : need_icon} key={index}
+                <Marker position={[need.lat, need.long]} icon={need_icon} key={index}
                   eventHandlers={{
                     click: (e) => {
                       needInfo(need.id)
@@ -519,8 +518,42 @@ const Map = () => {
           })
         }
         {
-          toggleAssisted&&toggleOther&&needs.map((need, index) => {
-            if(need.type === 'Other' && need.assisted){
+          toggleAssisted && toggleWater && needs.map((need, index) => {
+            if (need.type === 'Water' && need.assisted) {
+              return (
+                <Marker position={[need.lat, need.long]} icon={assisted_icon} key={index}
+                  eventHandlers={{
+                    click: (e) => {
+                      needInfo(need.id)
+                    },
+                  }}
+                />
+              )
+            }
+          })
+        }
+
+
+
+
+        {
+          toggleNeed && toggleOther && needs.map((need, index) => {
+            if (need.type === 'Other' && !need.assisted) {
+              return (
+                <Marker position={[need.lat, need.long]} icon={need_icon} key={index}
+                  eventHandlers={{
+                    click: (e) => {
+                      needInfo(need.id)
+                    },
+                  }}
+                />
+              )
+            }
+          })
+        }
+        {
+          toggleAssisted && toggleOther && needs.map((need, index) => {
+            if (need.type === 'Other' && need.assisted) {
               return (
                 <Marker position={[need.lat, need.long]} icon={assisted_icon} key={index}
                   eventHandlers={{
@@ -536,7 +569,7 @@ const Map = () => {
 
 
         {
-          toggleResources&&resources.map((need, index) => {
+          toggleResources && resources.map((need, index) => {
             return (
               <Marker position={[need.lat, need.long]} key={index} icon={resource_icon}
                 eventHandlers={{
