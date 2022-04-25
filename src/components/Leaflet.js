@@ -127,7 +127,7 @@ const Map = () => {
     }
   }
 
-  const lognewTrigger = () => {
+  const needHelpTrigger = () => {
     if (sidebar) {
       setSidebar("")
 
@@ -135,6 +135,15 @@ const Map = () => {
       setSidebar("open")
     }
     setUserType('need')
+  }
+  const canHelpTrigger = () => {
+    if (sidebar) {
+      setSidebar("")
+
+    } else {
+      setSidebar("open")
+    }
+    setUserType('resource')
   }
 
   const openLastNeeds = () => {
@@ -235,7 +244,7 @@ const Map = () => {
 
   return (
     <div className="leaflet-container">
-      <Sidebar_left setCenter={setCenter} needInfo={needInfo} sidebar={sidebar} assist_address={address} sidebarTrigger={sidebarTrigger} lognewTrigger={lognewTrigger} getResources={getResources} openLastNeeds={openLastNeeds} getNeeds={getNeeds} need={need} type={type} user_type={user_type} setUserType={setUserType} assists={assists} getAssist={getAssist} />
+      <Sidebar_left setCenter={setCenter} needInfo={needInfo} sidebar={sidebar} assist_address={address} sidebarTrigger={sidebarTrigger} needHelpTrigger={needHelpTrigger} canHelpTrigger={canHelpTrigger} getResources={getResources} openLastNeeds={openLastNeeds} getNeeds={getNeeds} need={need} type={type} user_type={user_type} setUserType={setUserType} assists={assists} getAssist={getAssist} />
       <FilterBar
       toggleNeed={toggleNeed}
       setToggleNeed={setToggleNeed}
