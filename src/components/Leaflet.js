@@ -236,7 +236,7 @@ const Map = () => {
   return (
     <div className="leaflet-container">
       <Sidebar_left setCenter={setCenter} needInfo={needInfo} sidebar={sidebar} assist_address={address} sidebarTrigger={sidebarTrigger} lognewTrigger={lognewTrigger} getResources={getResources} openLastNeeds={openLastNeeds} getNeeds={getNeeds} need={need} type={type} user_type={user_type} setUserType={setUserType} assists={assists} getAssist={getAssist} />
-      {/* <FilterBar
+      <FilterBar
       toggleNeed={toggleNeed}
       setToggleNeed={setToggleNeed}
       toggleResources = {toggleResources}
@@ -263,7 +263,7 @@ const Map = () => {
       setToggleWater = {setToggleWater}
       toggleOther = {toggleOther}
       setToggleOther = {setToggleOther}
-      /> */}
+      />
       <MapContainer center={center} zoom={12}>
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         {
