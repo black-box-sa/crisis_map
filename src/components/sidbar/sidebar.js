@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
+import faChevronLeft from '../../img/img/chevron-left.svg'
 import PropTypes from 'prop-types';
 import '../sidebar.scss';
 import '../inputs.scss';
@@ -141,7 +141,7 @@ const Sidebar = (props) => {
       <div className="sidebar_right--tab">
         <div className="sidebar_right--tab--trigger" onClick={sidebarTrigger}>
           <span>{props.title}</span>
-          <i className="circle"><FontAwesomeIcon icon={faChevronLeft} /></i>
+          <i className="circle"><img src={faChevronLeft} /></i>
 
         </div>
       </div>
@@ -195,7 +195,7 @@ const Sidebar = (props) => {
               <option value="Sanitation">Sanitation</option>
               <option value="Communications">Communications (Airtime / data)</option>
               <option value="Electricity">Electricity (charging)</option>
-            </select><br />
+            </select>
             <label>Resource description</label>
             <textarea className={error['description'] ? 'error': ''} onChange={e => { setDescription(e.target.value) }} name="" rows="4" cols="">  </textarea>
             <div className='d-flex'>

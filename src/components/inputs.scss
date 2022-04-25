@@ -16,6 +16,8 @@ textarea {
     color: $brand-primary;
     -webkit-appearance: none;
     -moz-appearance: none;
+    margin-bottom: 15px;
+
 
     &::placeholder {
 
@@ -28,9 +30,11 @@ textarea {
 
 }
 select {
-    background: url(http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png) no-repeat right #ddd;
-    background-position-y: 11px;
+    background: url('../img/down-arrow.svg') no-repeat right #ddd ;
+    background-position-y: 12px;
     background-position-x: 96%;
+    background-size: 22px;
+    border: none;
 }
 .select {
     
@@ -51,4 +55,5 @@ select {
         color: white !important;
         font-weight: bold;
     }
+
 }
