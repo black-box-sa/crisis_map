@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Geocode from "react-geocode";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
+import faChevronLeft from '../img/chevron-left.svg'
 import PropTypes from 'prop-types';
 import GoogleInput from './googleInput';
 import './sidebar.scss';
@@ -246,7 +246,7 @@ const Sidebar = (props) => {
       <div className="sidebar_right--tab">
         <div className="sidebar_right--tab--trigger" onClick={props.sidebarTrigger}>
           <span>{props.title}</span>
-          <i className="circle"><FontAwesomeIcon icon={faChevronLeft} /></i>
+          <i className="circle"><img src={faChevronLeft} /></i>
 
         </div>
       </div>
@@ -298,7 +298,7 @@ const Sidebar = (props) => {
               <option value="Electricity">Electricity (charging)</option>
               <option value="Missing Person/s">Missing person/s</option>
               <option value="Other">Other</option>
-            </select><br />
+            </select>
             <label>Need description</label>
             <textarea className={error['description'] ? 'error': ''} onChange={e => { setDescription(e.target.value) }} value={description} name="" rows="4" cols="">  </textarea>
             <div className='terms-box'>
@@ -322,7 +322,6 @@ const Sidebar = (props) => {
               {
                 use_gps && <div><input className='text-field' value={location} type="text" id="coords" readonly="readonly"/><br/></div>
               }
-            <br />
             <label>Resource type:</label>
             <select className={error['type'] ? 'select-resource error': 'select-resource'} onChange={e=>{setType(e.target.value)}}>
               <option value="Shelter">Shelter</option>
@@ -334,7 +333,7 @@ const Sidebar = (props) => {
               <option value="Electricity">Electricity (charging)</option>
               <option value="Missing Person/s">Missing person/s</option>
               <option value="Other">Other</option>
-            </select><br />
+            </select>
             <label>Resource description</label>
             <textarea className={error['description'] ? 'error': ''} onChange={e => { setDescription(e.target.value) }} value={description}  name="" rows="4" cols="">  </textarea>
             <div className='terms-box'>
@@ -388,7 +387,7 @@ const Sidebar = (props) => {
                 </div>
            }
 
-          {props.type === 'need' ? <a onClick={() => props.setUserType('assist')}>I am assisting / have assisted</a> : "" }
+          {props.type === 'need' ? <a class='i-can-assist' onClick={() => props.setUserType('assist')}>I can assist</a> : "" }
            
            </div>
        :
@@ -410,7 +409,8 @@ const Sidebar = (props) => {
         }
       </div>
 
-      <button class="log-new red" type='button' onClick={props.lognewTrigger}>I need help / I can help</button>
+      <button class="log-new log-new--need-help red" type='button' onClick={props.needHelpTrigger}>I need help</button>
+      <button class="log-new log-new--can-help green" type='button' onClick={props.canHelpTrigger}>I can help</button>
     </div>
 
   );
