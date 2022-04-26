@@ -5,7 +5,7 @@ const port = process.env.PORT || 5000;
 const path = require('path')
 const { Client } = require('pg')
 const client = new Client({
-    connectionString: process.env.DATABASE_URL,
+    connectionString: process.env.DATABASE_URL || 'postgres://rhkhybqsxmlkay:7c551f586b106c1cb0128c909492f08e7e1af07a6d5d2d6983d08a2eed71fe8f@ec2-54-228-32-29.eu-west-1.compute.amazonaws.com:5432/d269sptdl6k2uj',
     ssl: {
       rejectUnauthorized: false
     }
@@ -19,9 +19,8 @@ app.use(bodyParser.json());
 
 app.post('/new_need', (req, res) => {
     const need = req.body;
-    console.log(need)
-    let insertQuery = `insert into public."needs"(phone_number, full_name, lat, long, type, description ) 
-    values('${need.phone_number}', '${need.full_name}', '${need.location[0]}', '${need.location[1]}', '${need.type}', '${need.description}')`
+    let insertQuery = `insert into public."needs"(phone_number, full_name, lat, long, type, description, created_date ) 
+    values('${need.phone_number}', '${need.full_name}', '${need.location[0]}', '${need.location[1]}', '${need.type}', '${need.description}', '${new Date}')`
     client.query(insertQuery, (err, result) => {
         if (!err) {
             res.send('Insertion was successful')
@@ -36,8 +35,8 @@ app.post('/new_need', (req, res) => {
 app.post('/new_assist', (req, res) => {
     const need = req.body;
     console.log(need)
-    let insertQuery = `insert into public."assists"(need_id, phone_number, full_name ) 
-    values('${need.need_id}', '${need.phone_number}', '${need.full_name}')`
+    let insertQuery = `insert into public."assists"(need_id, phone_number, full_name, created_date ) 
+    values('${need.need_id}', '${need.phone_number}', '${need.full_name}', '${new Date}')`
     client.query(insertQuery, (err, result) => {
         if (!err) {
             res.send('Insertion was successful')
@@ -61,8 +60,8 @@ app.get('/assists/:id', (req, res)=>{
 app.post('/new_resource', (req, res) => {
     const need = req.body;
     console.log(need)
-    let insertQuery = `insert into public."resources"(phone_number, full_name, lat, long, type, description ) 
-                       values('${need.phone_number}', '${need.full_name}', '${need.location[0]}', '${need.location[1]}', '${need.type}', '${need.description}')`
+    let insertQuery = `insert into public."resources"(phone_number, full_name, lat, long, type, description, created_date ) 
+                       values('${need.phone_number}', '${need.full_name}', '${need.location[0]}', '${need.location[1]}', '${need.type}', '${need.description}', '${new Date}')`
     client.query(insertQuery, (err, result) => {
         if (!err) {
             res.send('Insertion was successful')
@@ -101,7 +100,7 @@ app.get('/needs', (req, res) => {
     client.end;
 })
 
-if (process.env.NODE_ENV === "production") {
+if (process.env.NODE_ENV !== "production") {
     app.use(express.static('build'));
     app.get('*', (req, res) => {
         res.sendFile(path.resolve(__dirname, 'build', 'index.html'))
