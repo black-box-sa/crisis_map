@@ -259,7 +259,7 @@ const Map = () => {
   useEffect(() => {
     getNeeds()
     getResources()
-    hazardData()
+   // hazardData()
   }, [])
 
   return (
