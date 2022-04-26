@@ -77,10 +77,10 @@ const FilterBar = ({
             <p>Need assisted</p>
           <Toggle class='need-assisted' id='3' onChange={setToggleAssisted} toggle={toggleAssisted}  />
           </div>
-          <div className='sidebar_left--toggle--container'>
+          {/* <div className='sidebar_left--toggle--container'>
             <p>Hazard</p>
           <Toggle class='hazard' id='4'  onChange={setToggleHazard} toggle={toggleHazard}  />
-          </div>
+          </div> */}
           <hr/>
         <h3>Category</h3>
         <div className='sidebar_left--toggle--container'>
