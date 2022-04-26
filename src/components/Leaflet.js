@@ -246,32 +246,32 @@ const Map = () => {
     <div className="leaflet-container">
       <Sidebar_left setCenter={setCenter} needInfo={needInfo} sidebar={sidebar} assist_address={address} sidebarTrigger={sidebarTrigger} needHelpTrigger={needHelpTrigger} canHelpTrigger={canHelpTrigger} getResources={getResources} openLastNeeds={openLastNeeds} getNeeds={getNeeds} need={need} type={type} user_type={user_type} setUserType={setUserType} assists={assists} getAssist={getAssist} />
       <FilterBar
-      toggleNeed={toggleNeed}
-      setToggleNeed={setToggleNeed}
-      toggleResources = {toggleResources}
-      setToggleResources = {setToggleResources}
-      toggleAssisted = {toggleAssisted}
-      setToggleAssisted = {setToggleAssisted}
-      toggleHazard = {toggleHazard}
-      setToggleHazard = {setToggleHazard}
-      toggleShelter = {toggleShelter}
-      setToggleShelter = {setToggleShelter}
-      toggleFood = {toggleFood}
-      setToggleFood = {setToggleFood}
-      toggleClothing = {toggleClothing}
-      setToggleClothing = {setToggleClothing}
-      toggleSanitation = {toggleSanitation}
-      setToggleSanitation = {setToggleSanitation}
-      toggleCommunications = {toggleCommunications}
-      setToggleCommunications = {setToggleCommunications}
-      toggleElecricity = {toggleElecricity}
-      setToggleElecricity = {setToggleElecricity}
-      toggleMissing = {toggleMissing}
-      setToggleMissing = {setToggleMissing}
-      toggleWater = {toggleWater}
-      setToggleWater = {setToggleWater}
-      toggleOther = {toggleOther}
-      setToggleOther = {setToggleOther}
+        toggleNeed={toggleNeed}
+        setToggleNeed={setToggleNeed}
+        toggleResources={toggleResources}
+        setToggleResources={setToggleResources}
+        toggleAssisted={toggleAssisted}
+        setToggleAssisted={setToggleAssisted}
+        toggleHazard={toggleHazard}
+        setToggleHazard={setToggleHazard}
+        toggleShelter={toggleShelter}
+        setToggleShelter={setToggleShelter}
+        toggleFood={toggleFood}
+        setToggleFood={setToggleFood}
+        toggleClothing={toggleClothing}
+        setToggleClothing={setToggleClothing}
+        toggleSanitation={toggleSanitation}
+        setToggleSanitation={setToggleSanitation}
+        toggleCommunications={toggleCommunications}
+        setToggleCommunications={setToggleCommunications}
+        toggleElecricity={toggleElecricity}
+        setToggleElecricity={setToggleElecricity}
+        toggleMissing={toggleMissing}
+        setToggleMissing={setToggleMissing}
+        toggleWater={toggleWater}
+        setToggleWater={setToggleWater}
+        toggleOther={toggleOther}
+        setToggleOther={setToggleOther}
       />
       <MapContainer center={center} zoom={12}>
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
@@ -578,17 +578,145 @@ const Map = () => {
 
 
         {
-          toggleResources && resources.map((need, index) => {
-            return (
-              <Marker position={[need.lat, need.long]} key={index} icon={resource_icon}
-                eventHandlers={{
-                  click: (e) => {
-                    resourceInfo(need.id)
-                  },
-                }}
-              />
+          toggleResources && toggleFood && resources.map((need, index) => {
+            if (need.type === 'Food') {
+              return (
+                <Marker position={[need.lat, need.long]} icon={resource_icon} key={index}
+                  eventHandlers={{
+                    click: (e) => {
+                      resourceInfo(need.id)
+                    },
+                  }}
+                />
+              )
+            }
+          })
+        }
 
-            )
+        {
+          toggleResources && toggleClothing && resources.map((need, index) => {
+            if (need.type === 'Clothing') {
+              return (
+                <Marker position={[need.lat, need.long]} icon={resource_icon} key={index}
+                  eventHandlers={{
+                    click: (e) => {
+                      resourceInfo(need.id)
+                    },
+                  }}
+                />
+              )
+            }
+          })
+        }
+
+        {
+          toggleResources && toggleSanitation && resources.map((need, index) => {
+            if (need.type === 'Sanitation') {
+              return (
+                <Marker position={[need.lat, need.long]} icon={resource_icon} key={index}
+                  eventHandlers={{
+                    click: (e) => {
+                      resourceInfo(need.id)
+                    },
+                  }}
+                />
+              )
+            }
+          })
+        }
+
+        {
+          toggleResources && toggleCommunications && resources.map((need, index) => {
+            if (need.type === 'Communications') {
+              return (
+                <Marker position={[need.lat, need.long]} icon={resource_icon} key={index}
+                  eventHandlers={{
+                    click: (e) => {
+                      resourceInfo(need.id)
+                    },
+                  }}
+                />
+              )
+            }
+          })
+        }
+
+        {
+          toggleResources && toggleElecricity && resources.map((need, index) => {
+            if (need.type === 'Electricity') {
+              return (
+                <Marker position={[need.lat, need.long]} icon={resource_icon} key={index}
+                  eventHandlers={{
+                    click: (e) => {
+                      resourceInfo(need.id)
+                    },
+                  }}
+                />
+              )
+            }
+          })
+        }
+
+        {
+          toggleResources && toggleMissing && resources.map((need, index) => {
+            if (need.type === 'Missing Person/s') {
+              return (
+                <Marker position={[need.lat, need.long]} icon={resource_icon} key={index}
+                  eventHandlers={{
+                    click: (e) => {
+                      resourceInfo(need.id)
+                    },
+                  }}
+                />
+              )
+            }
+          })
+        }
+
+        {
+          toggleResources && toggleWater && resources.map((need, index) => {
+            if (need.type === 'Water') {
+              return (
+                <Marker position={[need.lat, need.long]} icon={resource_icon} key={index}
+                  eventHandlers={{
+                    click: (e) => {
+                      resourceInfo(need.id)
+                    },
+                  }}
+                />
+              )
+            }
+          })
+        }
+        {
+          toggleResources && toggleOther && resources.map((need, index) => {
+            if (need.type === 'Other') {
+              return (
+                <Marker position={[need.lat, need.long]} icon={resource_icon} key={index}
+                  eventHandlers={{
+                    click: (e) => {
+                      resourceInfo(need.id)
+                    },
+                  }}
+                />
+              )
+            }
+          })
+        }
+
+        {
+          toggleResources && toggleShelter && resources.map((need, index) => {
+            if (need.type === 'Shelter') {
+              return (
+                <Marker position={[need.lat, need.long]} icon={resource_icon} key={index}
+                  eventHandlers={{
+                    click: (e) => {
+                      resourceInfo(need.id)
+                    },
+                  }}
+                />
+              )
+            }
           })
         }
       </MapContainer>
