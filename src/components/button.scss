@@ -40,6 +40,7 @@ button {
         font-size: 14px;
         font-weight: bold;
         border-radius: 12px;
+        margin-bottom: 40px;
     }
     &.green {
         background-color: $green;
@@ -52,7 +53,8 @@ button {
     @media (max-width: $tablet) {
     &.log-new {
         right: calc((100vw / 2) - 130px);
-        bottom: 80px;
+        margin-bottom: 40px;
+       // bottom: 80px;
         }
     }
 }
