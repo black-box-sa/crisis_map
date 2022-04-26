@@ -227,7 +227,6 @@ const Map = () => {
               arr.push(current)
             }
             setNeeds(arr)
-            console.log('needs', arr)
           })
           .catch(err => {
             console.log(err)
