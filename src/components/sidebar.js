@@ -43,6 +43,8 @@ const Sidebar = (props) => {
     description: false
   })
 
+  const DaysOfTheWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+  const months = ["January", "Febraury", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
   const emptyFormFields = ()=>{
     setPhoneNumber()
     setFullName()
@@ -346,7 +348,7 @@ const Sidebar = (props) => {
            : props.user_type === "want-to-assist" ?
           <div className='filled-in--container'>
             <label className={props.type === 'need' ? 'tag tag--need' : 'tag tag--resource'} style={props.need.assisted && props.type === 'need' ? {backgroundColor: '#2d9bf0'}: {}}  >{props.type === 'need' && !props.need.assisted ? 'Need' : "" } {props.type === 'resource' ? 'Resource' : "" } {props.need.assisted && props.type === 'need' ? 'Need assisted' : "" } </label>
-             <p className='posted-date'>Wednesday, 13 April, 2022</p>
+             <p className='posted-date'> {props.need.created_date ? DaysOfTheWeek[new Date(props.need.created_date).getDay()] +", "+ (new Date(props.need.created_date).getDate())+" "+ months[new Date(props.need.created_date).getMonth()] + ", "+new Date(props.need.created_date).getFullYear() : ""} </p>
              <h1>{props.need ? props.need.type : ""}</h1>
              <p>{props.need ? props.need.description : ""}</p>
 
