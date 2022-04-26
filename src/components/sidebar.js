@@ -173,10 +173,10 @@ const Sidebar = (props) => {
         props.getResources()
         setUseGps(false)
         setLoading(false)
-        props.sidebarTrigger()
-        props.lognewTrigger()
-        props.setCenter(location)
         emptyFormFields()
+        props.sidebarTrigger()
+        //props.lognewTrigger()
+        props.setCenter(location)
         alert('Thank you, resource submitted successfully. To view it, find it on the map and click on the marker for details.')
       })
       .catch(err=>{
@@ -267,8 +267,8 @@ const Sidebar = (props) => {
                 <div>
                   <h3>I have a:</h3>
                   <select className='select-resource' onChange={e=>{props.setUserType(e.target.value)}}>
-                    <option value="need">Need</option>
                     <option value="resource">Resource</option>
+                    <option value="need">Need</option>
                   </select>
                 </div>
                 :''
