@@ -8,19 +8,22 @@ import * as L from "leaflet";
 import Sidebar_left from "./sidebar";
 import Footer_thin from "./Footer_thin";
 import needMarker from './map-marker-alt-red.svg';
+import exclamation from './exclamation-triangle.svg';
 import resourceMarker from './map-marker-alt-green.svg';
 import assistedMarker from './assisted.svg';
 import FilterBar from './filterbar'
+import google_link from './data/harzard.csv'
 import 'leaflet/dist/leaflet.css'
 
 Geocode.setApiKey(process.env.REACT_APP_GOOGLE_APIKEY);
 Geocode.setLanguage("en");
 Geocode.enableDebug();
-const google_link = 'https://drive.google.com/file/d/1EDUPswJQWhveDVfOwnU25lJ-xoDiFpvP/view?usp=sharing'
+//const google_link = 'https://drive.google.com/file/d/1EDUPswJQWhveDVfOwnU25lJ-xoDiFpvP/view?usp=sharing'
 
 const Map = () => {
   const [center, setCenter] = useState([-29.883333, 31.049999])
   const [needs, setNeeds] = useState([])
+  const [harzard, setHarzard] = useState([])
   const [assists, setAssists] = useState([])
   const [assisted, setAssisted] = useState([])
   const [need, setNeed] = useState()
@@ -65,6 +68,13 @@ const Map = () => {
     popupAnchor: [2, -40]
   });
 
+  const harzard_icon = new L.Icon({
+    iconUrl: exclamation,
+    iconSize: [25, 41],
+    iconAnchor: [10, 41],
+    popupAnchor: [2, -40]
+  });
+
   const updateData = (result) => {
     let new_harzard = []
     const data = result.data;
@@ -77,9 +87,10 @@ const Map = () => {
         status: item['status']
       })
     })
-    //console.log('harzard', data)
+    setHarzard(data)
+    console.log('harzard', data)
   }
-  const hazard = () => {
+  const hazardData = () => {
     Papa.parse(google_link, {
       header: true,
       download: true,
@@ -164,6 +175,14 @@ const Map = () => {
     convertCoordinatesToAddress(data[0].lat, data[0].long)
   }
 
+  const harzardInfo = id =>{
+        //getAssist([])
+        setNeed(harzard[id])
+        setUserType('want-to-assist')
+        setType('harzard')
+        setSidebar("open")
+        convertCoordinatesToAddress(harzard[id].latitude, harzard[id].longitude)
+  }
   const resourceInfo = id => {
     let data = resources.filter(value => {
       return (
@@ -208,6 +227,7 @@ const Map = () => {
               arr.push(current)
             }
             setNeeds(arr)
+            console.log('needs', arr)
           })
           .catch(err => {
             console.log(err)
@@ -239,7 +259,7 @@ const Map = () => {
   useEffect(() => {
     getNeeds()
     getResources()
-    //hazard()
+    hazardData()
   }, [])
 
   return (
@@ -275,6 +295,19 @@ const Map = () => {
       />
       <MapContainer center={center} zoom={12}>
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        {
+           toggleHazard && harzard && harzard.map((need, index) => {
+             return (
+               <Marker position={[need.latitude, need.longitude]} icon={harzard_icon} key={index}
+                 eventHandlers={{
+                   click: (e) => {
+                     harzardInfo(index)
+                   },
+                 }}
+               />
+             )
+          })
+        }
         {
           toggleNeed && toggleShelter && needs.map((need, index) => {
             if (need.type === 'Shelter' && !need.assisted) {
