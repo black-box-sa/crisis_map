@@ -117,6 +117,7 @@
     h1,h2,h3,h4,h5,h6,p,span,label,input,select {
       font-family: 'Montserrat';
       color: #31546D;
+      margin-top: 15px;
       &::placeholder {
         color: #31546D;
       }
@@ -133,13 +134,14 @@
       border-radius: 5px;
       margin-top: 22px;
       display: block;
-      width: 125px;
       text-decoration: none;
+      width: 129px;
+      font-family: 'Montserrat';
    }
    .log-assist {
     background-color: #6DA86D;
     color: white !important;
-    padding: 5px 15px;
+    padding: 5px 30px;
     border-radius: 5px;
     text-decoration: none;
   }
@@ -149,7 +151,7 @@
       width: 150px;
       margin-left: 10px;
       margin-top: 0;
-      height: 38px;
+      height: 46px;
       color: white;
       background-color: #31546D;
       border-radius: 10px
@@ -160,6 +162,12 @@
      padding: 10px 0;
      border-radius: 5px;
      &--container {
+       .posted-date {
+        color: #31546d;
+        font-family: 'Montserrat';
+        font-style: italic;
+        font-weight: bold;
+       }
        label {
          margin-top: 15px;
        }
