@@ -5,7 +5,7 @@ const port = process.env.PORT || 5000;
 const path = require('path')
 const { Client } = require('pg')
 const client = new Client({
-    connectionString: process.env.DATABASE_URL || 'postgres://rhkhybqsxmlkay:7c551f586b106c1cb0128c909492f08e7e1af07a6d5d2d6983d08a2eed71fe8f@ec2-54-228-32-29.eu-west-1.compute.amazonaws.com:5432/d269sptdl6k2uj',
+    connectionString: process.env.DATABASE_URL,
     ssl: {
       rejectUnauthorized: false
     }
@@ -100,7 +100,7 @@ app.get('/needs', (req, res) => {
     client.end;
 })
 
-if (process.env.NODE_ENV !== "production") {
+if (process.env.NODE_ENV === "production") {
     app.use(express.static('build'));
     app.get('*', (req, res) => {
         res.sendFile(path.resolve(__dirname, 'build', 'index.html'))
