@@ -346,6 +346,7 @@ const Sidebar = (props) => {
            : props.user_type === "want-to-assist" ?
           <div className='filled-in--container'>
             <label className={props.type === 'need' ? 'tag tag--need' : 'tag tag--resource'} style={props.need.assisted && props.type === 'need' ? {backgroundColor: '#2d9bf0'}: {}}  >{props.type === 'need' && !props.need.assisted ? 'Need' : "" } {props.type === 'resource' ? 'Resource' : "" } {props.need.assisted && props.type === 'need' ? 'Need assisted' : "" } </label>
+             <p className='posted-date'>Wednesday, 13 April, 2022</p>
              <h1>{props.need ? props.need.type : ""}</h1>
              <p>{props.need ? props.need.description : ""}</p>
 
