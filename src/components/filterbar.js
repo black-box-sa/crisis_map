@@ -35,7 +35,7 @@ const FilterBar = ({
   setToggleOther,
   toggleOther,
   setToggleWater,
-  toggleWater
+  toggleWater,
 }) => {
   const [sidebar, setSidebar] = useState("");
 
