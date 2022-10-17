@@ -157,7 +157,7 @@ const Sidebar = (props) => {
         {/**Need form */}
         {value === "need" ?
           <form onSubmit={new_need}>
-            <label>Phone number5</label>
+            <label>Phone number</label>
             <input className={error['phone_number'] ? 'text-field error': 'text-field'} onChange={e => { setPhoneNumber(e.target.value) }} type="text" id="phone_number" placeholder='Phone Number' /><br />
             <label>Full name</label>
             <input className={error['full_name'] ? 'text-field error': 'text-field'}  onChange={e => { setFullName(e.target.value) }} type="text" id="full_name" placeholder='Full Name' /><br />
