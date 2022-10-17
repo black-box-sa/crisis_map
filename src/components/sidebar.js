@@ -362,7 +362,7 @@ const Sidebar = (props) => {
 
            <label><strong>Phone number</strong></label>
            <div className='filled-in'>
-           <span >{props.need ? props.need.phone_number : ""}</span><br />
+           <span >{props.need ? props.need.phone_number.slice(0, 3) + props.need.phone_number.slice(2).replace(/.(?=...)/g, '*') : ""}</span><br />
             </div>
             <label><strong>Location</strong></label>
            <div className='filled-in'>
@@ -384,7 +384,7 @@ const Sidebar = (props) => {
                       return(
                         <li>
                         <p><strong>{assist.full_name}</strong></p>
-                        <p>{assist.phone_number}</p>
+                        <p>{assist.phone_number.slice(0, 3) + assist.phone_number.slice(2).replace(/.(?=...)/g, '*')}</p>
                       </li>
                       )
                     })
