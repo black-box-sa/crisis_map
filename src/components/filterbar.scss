@@ -1,16 +1,16 @@
 
 @import './variables.scss';
 @import './mixins.scss';
-.sidebar_right {
+.sidebar_left {
     
     // General styling
     display: inline-block;
     position: fixed;
-    top: 12px;
+    top: 84px;
     // height: 100vh; // minus top height
     // overflow: hidden;
-    right: -450px;
-    width: 500px;
+    left: -250px;
+    width: 300px;
     transition: .2s all ease-in-out;
     z-index: 1000000000000;
     .error{
@@ -22,7 +22,7 @@
       text-align: center;
       box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
       background: white;
-      border-radius: 5px 0 0 5px;
+      border-radius: 0 5px 5px 0;
       cursor: pointer;
       &--trigger {
         padding: 18px;
@@ -42,24 +42,18 @@
       i {
         z-index: 1;
       }
-      .circle {
+      .filter {
         position: absolute;
-        left: 15px;
-        top: 11px;;
+        right: 15px;
+        top: 17px;;
         display: inline-flex;
         justify-content: center;
         align-items: center;
         cursor: pointer;
-        border-color: $brand-primary;
-        .fas, svg {
-          color: $brand-primary;
-          height: 2em;
-        }
         img {
-          width: 20px !important;
-          bottom: 1px !important;
-          right: 4px;
+          width: 23px;
         }
+        
       }
       &.short {
         background: #3388ff;
@@ -67,17 +61,14 @@
     }
     &--panel {
       margin: 0;
-      width: $panelWidth;
+      width: $filterPanelWidth;
       position: relative;
-      right: -$totalWidth + $panelWidth;
       background-color: white;
       padding: 0 $s-s $s-s;
       box-shadow: $box-shadow;
       border-radius: 0 0 0 $border-radius;
       height: calc(100vh - 50px);
-      overflow-y: scroll;
       z-index: 2;
-      @include custom-scrollbar ($red);
 
       h3 {
         margin: 0;
@@ -105,19 +96,30 @@
       }
 
     }
-    &.open {
-      right: 0;
-      i.circle {
-        transform: rotate(180deg);
+    &--toggle {
+      &--container {
+        display: flex;
+        justify-content: space-between;
+        p {
+          margin: 0;
+          padding: 2px 0;
+          font-size: 14px;
+          line-height: 2;
+        }
+        .toggle {
+          margin: 0;
+        }
       }
+    }
+    &.open {
+      left: 0;
     }
     span {
         margin-left: 15px;
     }
-    h1,h2,h3,h4,h5,h6,p,span,label,input:not(#react-select-3-input),select {
+    h1,h2,h3,h4,h5,h6,p,span,label,input,select {
       font-family: 'Montserrat';
       color: #31546D;
-      margin-top: 15px;
       &::placeholder {
         color: #31546D;
       }
@@ -125,23 +127,20 @@
     a {
       font-size: 18px;
       color :#6DA86D !important;
+      text-decoration: underline;
       cursor: pointer;
-
-   }
-   .i-can-assist {
       border: 1px solid #6DA86D;
       padding: 6px 15px;
       border-radius: 5px;
       margin-top: 22px;
       display: block;
-      text-decoration: none;
-      width: 129px;
-      font-family: 'Montserrat';
+      width: 125px;
+
    }
    .log-assist {
     background-color: #6DA86D;
     color: white !important;
-    padding: 5px 30px;
+    padding: 5px 15px;
     border-radius: 5px;
     text-decoration: none;
   }
@@ -151,7 +150,7 @@
       width: 150px;
       margin-left: 10px;
       margin-top: 0;
-      height: 46px;
+      height: 38px;
       color: white;
       background-color: #31546D;
       border-radius: 10px
@@ -162,12 +161,6 @@
      padding: 10px 0;
      border-radius: 5px;
      &--container {
-       .posted-date {
-        color: #31546d;
-        font-family: 'Montserrat';
-        font-style: italic;
-        font-weight: bold;
-       }
        label {
          margin-top: 15px;
        }
@@ -210,9 +203,9 @@
       // Mobile specific styling
       @media (max-width: $tablet) {
         width: $totalWidthMobile;
-        right: -$panelWidthMobile !important;
+        left: -$panelWidthMobile !important;
         &.open {
-            right: 0 !important;
+            left: 0 !important;
  
           }
           &--panel {
