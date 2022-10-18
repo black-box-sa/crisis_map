@@ -19,9 +19,8 @@ app.use(bodyParser.json());
 
 app.post('/new_need', (req, res) => {
     const need = req.body;
-    console.log(need)
-    let insertQuery = `insert into public."needs"(phone_number, full_name, lat, long, type, description ) 
-    values('${need.phone_number}', '${need.full_name}', '${need.location[0]}', '${need.location[1]}', '${need.type}', '${need.description}')`
+    let insertQuery = `insert into public."needs"(phone_number, full_name, lat, long, type, description, created_date ) 
+    values('${need.phone_number}', '${need.full_name}', '${need.location[0]}', '${need.location[1]}', '${need.type}', '${need.description}', '${new Date}')`
     client.query(insertQuery, (err, result) => {
         if (!err) {
             res.send('Insertion was successful')
@@ -36,8 +35,8 @@ app.post('/new_need', (req, res) => {
 app.post('/new_assist', (req, res) => {
     const need = req.body;
     console.log(need)
-    let insertQuery = `insert into public."assists"(need_id, phone_number, full_name ) 
-    values('${need.need_id}', '${need.phone_number}', '${need.full_name}')`
+    let insertQuery = `insert into public."assists"(need_id, phone_number, full_name, created_date ) 
+    values('${need.need_id}', '${need.phone_number}', '${need.full_name}', '${new Date}')`
     client.query(insertQuery, (err, result) => {
         if (!err) {
             res.send('Insertion was successful')
@@ -61,8 +60,8 @@ app.get('/assists/:id', (req, res)=>{
 app.post('/new_resource', (req, res) => {
     const need = req.body;
     console.log(need)
-    let insertQuery = `insert into public."resources"(phone_number, full_name, lat, long, type, description ) 
-                       values('${need.phone_number}', '${need.full_name}', '${need.location[0]}', '${need.location[1]}', '${need.type}', '${need.description}')`
+    let insertQuery = `insert into public."resources"(phone_number, full_name, lat, long, type, description, created_date ) 
+                       values('${need.phone_number}', '${need.full_name}', '${need.location[0]}', '${need.location[1]}', '${need.type}', '${need.description}', '${new Date}')`
     client.query(insertQuery, (err, result) => {
         if (!err) {
             res.send('Insertion was successful')
@@ -76,6 +75,15 @@ app.post('/new_resource', (req, res) => {
 
 app.get('/resources', (req, res) => {
     client.query(`Select * from public."resources"`, (err, result) => {
+        if (!err) {
+            res.send(result.rows);
+        }
+    });
+    client.end;
+})
+
+app.get('/assists', (req, res) => {
+    client.query(`SELECT DISTINCT need_id FROM public."assists"`, (err, result) => {
         if (!err) {
             res.send(result.rows);
         }
