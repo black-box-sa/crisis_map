@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Geocode from "react-geocode";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
+import faChevronLeft from '../img/chevron-left.svg'
 import PropTypes from 'prop-types';
 import GoogleInput from './googleInput';
 import './sidebar.scss';
@@ -43,6 +43,8 @@ const Sidebar = (props) => {
     description: false
   })
 
+  const DaysOfTheWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+  const months = ["January", "Febraury", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
   const emptyFormFields = ()=>{
     setPhoneNumber()
     setFullName()
@@ -134,7 +136,6 @@ const Sidebar = (props) => {
       }
       axios.post('/new_need', data)
       .then(res => {
-        console.log(res)
         props.getNeeds()
         setUseGps(false)
         setLoading(false)
@@ -169,14 +170,13 @@ const Sidebar = (props) => {
       }
       axios.post('/new_resource', data)
       .then(res => {
-        console.log(res)
         props.getResources()
         setUseGps(false)
         setLoading(false)
-        props.sidebarTrigger()
-        props.lognewTrigger()
-        props.setCenter(location)
         emptyFormFields()
+        props.sidebarTrigger()
+        //props.lognewTrigger()
+        props.setCenter(location)
         alert('Thank you, resource submitted successfully. To view it, find it on the map and click on the marker for details.')
       })
       .catch(err=>{
@@ -204,7 +204,6 @@ const Sidebar = (props) => {
       }
       axios.post('/new_assist', data)
       .then(res => {
-        console.log(res)
         props.getAssist(props.need.id)
         setUseGps(false)
         setLoading(false)
@@ -230,15 +229,11 @@ const Sidebar = (props) => {
     setValue(e.target.value);
   }
   const getLocation_ = (location) => {
-    // var fields = fields;
-    // fields["location"] = location;
-    // setFields(fields)
-    console.log('location', location)
     setAddress(location.label)
     Geocode.fromAddress(location.label).then(
       (response) => {
         const { lat, lng } = response.results[0].geometry.location;
-        console.log(lat, lng);
+        //console.log(lat, lng);
         setLocation([lat, lng])
       },
       (error) => {
@@ -253,7 +248,7 @@ const Sidebar = (props) => {
       <div className="sidebar_right--tab">
         <div className="sidebar_right--tab--trigger" onClick={props.sidebarTrigger}>
           <span>{props.title}</span>
-          <i className="circle"><FontAwesomeIcon icon={faChevronLeft} /></i>
+          <i className="circle"><img src={faChevronLeft} /></i>
 
         </div>
       </div>
@@ -272,8 +267,8 @@ const Sidebar = (props) => {
                 <div>
                   <h3>I have a:</h3>
                   <select className='select-resource' onChange={e=>{props.setUserType(e.target.value)}}>
-                    <option value="need">Need</option>
                     <option value="resource">Resource</option>
+                    <option value="need">Need</option>
                   </select>
                 </div>
                 :''
@@ -305,7 +300,7 @@ const Sidebar = (props) => {
               <option value="Electricity">Electricity (charging)</option>
               <option value="Missing Person/s">Missing person/s</option>
               <option value="Other">Other</option>
-            </select><br />
+            </select>
             <label>Need description</label>
             <textarea className={error['description'] ? 'error': ''} onChange={e => { setDescription(e.target.value) }} value={description} name="" rows="4" cols="">  </textarea>
             <div className='terms-box'>
@@ -329,7 +324,6 @@ const Sidebar = (props) => {
               {
                 use_gps && <div><input className='text-field' value={location} type="text" id="coords" readonly="readonly"/><br/></div>
               }
-            <br />
             <label>Resource type:</label>
             <select className={error['type'] ? 'select-resource error': 'select-resource'} onChange={e=>{setType(e.target.value)}}>
               <option value="Shelter">Shelter</option>
@@ -341,7 +335,7 @@ const Sidebar = (props) => {
               <option value="Electricity">Electricity (charging)</option>
               <option value="Missing Person/s">Missing person/s</option>
               <option value="Other">Other</option>
-            </select><br />
+            </select>
             <label>Resource description</label>
             <textarea className={error['description'] ? 'error': ''} onChange={e => { setDescription(e.target.value) }} value={description}  name="" rows="4" cols="">  </textarea>
             <div className='terms-box'>
@@ -353,7 +347,8 @@ const Sidebar = (props) => {
           </form>
            : props.user_type === "want-to-assist" ?
           <div className='filled-in--container'>
-            <label className={props.type === 'need' ? 'tag tag--need' : 'tag tag--resource'}  >{props.type === 'need' ? 'Need' : "Resource" } </label>
+            <label className={props.type === 'need' ? 'tag tag--need' : 'tag tag--resource'} style={props.need.assisted && props.type === 'need' ? {backgroundColor: '#2d9bf0'}: {}}  >{props.type === 'need' && !props.need.assisted ? 'Need' : "" } {props.type === 'resource' ? 'Resource' : "" } {props.need.assisted && props.type === 'need' ? 'Need assisted' : "" } </label>
+             <p className='posted-date'> {props.need.created_date ? DaysOfTheWeek[new Date(props.need.created_date).getDay()] +", "+ (new Date(props.need.created_date).getDate())+" "+ months[new Date(props.need.created_date).getMonth()] + ", "+new Date(props.need.created_date).getFullYear() : ""} </p>
              <h1>{props.need ? props.need.type : ""}</h1>
              <p>{props.need ? props.need.description : ""}</p>
 
@@ -395,7 +390,7 @@ const Sidebar = (props) => {
                 </div>
            }
 
-          {props.type === 'need' ? <a onClick={() => props.setUserType('assist')}>I am assisting / have assisted</a> : "" }
+          {props.type === 'need' ? <a class='i-can-assist' onClick={() => props.setUserType('assist')}>I can assist</a> : "" }
            
            </div>
        :
@@ -417,7 +412,8 @@ const Sidebar = (props) => {
         }
       </div>
 
-      <button class="log-new red" type='button' onClick={props.lognewTrigger}>I need help / I can help</button>
+      <button class="log-new log-new--need-help red" type='button' onClick={props.needHelpTrigger}>I need help</button>
+      <button class="log-new log-new--can-help green" type='button' onClick={props.canHelpTrigger}>I can help</button>
     </div>
 
   );
