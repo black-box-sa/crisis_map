@@ -1,6 +1,7 @@
 @import './variables.scss';
 .btn {
     color: $font-general !important;
+    font-family: 'Montserrat';
 }
 button {
     width: max-content;
@@ -10,20 +11,36 @@ button {
     border-radius: 5px;
     margin-top: 15px;
     cursor: pointer;
+    font-family: 'Montserrat';
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 12px;
     
     &.log-new {
         position: fixed;
-        bottom: 30px;
-        right: 30px;
         font-family: 'Montserrat';
         font-size: 16px;
         font-weight: bold;
         padding-left: 25pt;
         padding-right: 25pt;
         border-radius: 10px;
+        width: 170px;
+        &--need-help {
+            bottom: 100px;
+            right: 30px;
+        }
+        &--can-help {
+            bottom: 30px;
+            right: 30px;
+        }
     }
     &.submit {
         width: 200px;
+        font-family: 'Montserrat';
+        font-size: 14px;
+        font-weight: bold;
+        border-radius: 12px;
+        margin-bottom: 40px;
     }
     &.green {
         background-color: $green;
@@ -36,7 +53,8 @@ button {
     @media (max-width: $tablet) {
     &.log-new {
         right: calc((100vw / 2) - 130px);
-        bottom: 80px;
+        margin-bottom: 40px;
+       // bottom: 80px;
         }
     }
 }
