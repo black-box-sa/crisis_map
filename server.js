@@ -1,9 +1,12 @@
 const express = require('express')
 const bodyParser = require('body-parser');
 const app = express()
+const dotenv = require('dotenv'); 
+dotenv.config()
 const port = process.env.PORT || 5000;
 const path = require('path')
 const { Client } = require('pg')
+
 const client = new Client({
     connectionString: process.env.DATABASE_URL,
     ssl: {
