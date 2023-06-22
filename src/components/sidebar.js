@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Geocode from "react-geocode";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import faChevronLeft from '../img/chevron-left.svg'
 import PropTypes from 'prop-types';
 import GoogleInput from './googleInput';
