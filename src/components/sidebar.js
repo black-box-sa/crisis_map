@@ -13,9 +13,9 @@ Geocode.setLanguage("en");
 Geocode.enableDebug();
 
 const Sidebar = (props) => {
-  
+
   //check if any assists have been logged in
-  const [logged, setLogged] = useState(false); 
+  const [logged, setLogged] = useState(false);
 
   /**change template states*/
   const [value, setValue] = useState('want-to-assist');
@@ -253,7 +253,7 @@ const Sidebar = (props) => {
       </div>
 
       <div className="sidebar_right--panel container">
-        
+
         {props.user_type === 'need' ?
           <div>
                 <h3>I have a:</h3>
@@ -356,14 +356,14 @@ const Sidebar = (props) => {
 
            <label><strong>Phone number</strong></label>
            <div className='filled-in'>
-           <span >{props.need ? props.need.phone_number.slice(0, 3) + props.need.phone_number.slice(2).replace(/.(?=...)/g, '*') : ""}</span><br />
+           <span >{props.need ? props.need.phone_number : ""}</span><br />
             </div>
             <label><strong>Location</strong></label>
            <div className='filled-in'>
            <span> {props.assist_address ? props.assist_address : ""} </span><br />
            </div>
            {props.type === 'need' ? <label><strong>Assistance logged</strong></label> :""}
-           
+
            {props.type === 'need' && !props.assists.length > 0 ?
                 <div className='filled-in empty'>
                 <span>No Assistance Logged</span><br />
@@ -390,7 +390,7 @@ const Sidebar = (props) => {
            }
 
           {props.type === 'need' ? <a class='i-can-assist' onClick={() => props.setUserType('assist')}>I can assist</a> : "" }
-           
+
            </div>
        :
          <form onSubmit={new_assists}>

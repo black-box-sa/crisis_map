@@ -21,7 +21,7 @@ Geocode.enableDebug();
 //const google_link = 'https://drive.google.com/file/d/1EDUPswJQWhveDVfOwnU25lJ-xoDiFpvP/view?usp=sharing'
 
 const CapeTownMap = () => {
-  const [center, setCenter] = useState([-33.92626920481366, 18.79999763557369])
+  const [center, setCenter] = useState([-33.92626920481366, 18.59999763557369])
   const [needs, setNeeds] = useState([])
   const [harzard, setHarzard] = useState([])
   const [assists, setAssists] = useState([])
@@ -46,6 +46,20 @@ const CapeTownMap = () => {
   const [toggleOther, setToggleOther] = useState(true)
   const [toggleMissing, setToggleMissing] = useState(true)
   const [toggleWater, setToggleWater] = useState(true)
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768); // You can adjust the threshold
+
+  const updateIsMobile = () => {
+    setIsMobile(window.innerWidth <= 768); // Adjust the threshold as needed
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', updateIsMobile);
+
+    return () => {
+      window.removeEventListener('resize', updateIsMobile);
+    };
+  }, []);
+
 
   const need_icon = new L.Icon({
     iconUrl: needMarker,
@@ -297,8 +311,8 @@ const CapeTownMap = () => {
         toggleOther={toggleOther}
         setToggleOther={setToggleOther}
       />
-      <MapContainer center={center} zoom={10} maxBounds={bounds} maxBoundsViscosity={1} maxZoom={10} minZoom={10} >
-    
+      <MapContainer center={center} zoom={isMobile ? 9.2 : 10} maxBounds={bounds} maxBoundsViscosity={1} maxZoom={isMobile ? 9.2 : 10} minZoom={isMobile ? 9.2 : 10} >
+
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         {
            toggleHazard && harzard && harzard.map((need, index) => {
